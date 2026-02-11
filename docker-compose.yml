@@ -1,0 +1,130 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: n8n
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db-migrate:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    command: sh -c "cd packages/db && npx prisma db push --skip-generate"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  db-seed:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    command: >
+      node -e "
+        const { PrismaClient } = require('./packages/db/generated/prisma');
+        const p = new PrismaClient();
+        (async () => {
+          await p.availableTriggerNodes.upsert({where:{id:'webhook'},create:{id:'webhook',name:'Webhook'},update:{}});
+          await p.availableActionNodes.upsert({where:{id:'email'},create:{id:'email',name:'Email'},update:{}});
+          await p.availableActionNodes.upsert({where:{id:'sol'},create:{id:'sol',name:'Solana'},update:{}});
+          await p.availableActionNodes.upsert({where:{id:'telegram'},create:{id:'telegram',name:'Telegram'},update:{}});
+          console.log('Seeded');
+          process.exit(0);
+        })().catch(e => { console.error(e); process.exit(1); });
+      "
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+    depends_on:
+      db-migrate:
+        condition: service_completed_successfully
+    restart: "no"
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      JWT_SECRET: ${JWT_SECRET:-default-jwt-secret-change-me}
+    depends_on:
+      db-seed:
+        condition: service_completed_successfully
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://server:8000
+    depends_on:
+      - server
+
+  webhooks:
+    build:
+      context: .
+      dockerfile: apps/webhooks/Dockerfile
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+    depends_on:
+      db-seed:
+        condition: service_completed_successfully
+
+  processor:
+    build:
+      context: .
+      dockerfile: apps/processor/Dockerfile
+    restart: always
+    volumes:
+      - ./certs:/app/certs:ro
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      KAFKA_BROKER: ${KAFKA_BROKER:-localhost:9092}
+      KAFKA_CERTS_PATH: /app/certs
+    depends_on:
+      db-seed:
+        condition: service_completed_successfully
+
+  worker:
+    build:
+      context: .
+      dockerfile: apps/workers/Dockerfile
+    restart: always
+    volumes:
+      - ./certs:/app/certs:ro
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      KAFKA_BROKER: ${KAFKA_BROKER:-localhost:9092}
+      KAFKA_CERTS_PATH: /app/certs
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    depends_on:
+      db-seed:
+        condition: service_completed_successfully
+
+volumes:
+  postgres_data:

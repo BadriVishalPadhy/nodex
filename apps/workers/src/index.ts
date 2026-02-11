@@ -1,28 +1,43 @@
-//one WorkFlow will have many WorkFlowRuns
 import { Kafka } from "kafkajs";
 import { prismaClient } from "@repo/db";
 import { parse } from "./parse";
 import { sendEmail } from "./email";
 import { sendTelegram } from "./telegram";
-
-const kafka = new Kafka({
-  clientId: "my-app",
-  brokers: ["localhost:9092"],
-});
+import fs from "fs";
+import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
 
 const TOPIC_NAME = "OUTBOX";
+
+const isAiven = (process.env.KAFKA_BROKER || "").includes("aivencloud.com");
+
+const kafkaConfig: any = {
+  clientId: "my-app",
+  brokers: [process.env.KAFKA_BROKER || "localhost:9092"],
+};
+
+if (isAiven) {
+  const certsPath =
+    process.env.KAFKA_CERTS_PATH || path.join(__dirname, "..", "certs");
+  kafkaConfig.ssl = {
+    rejectUnauthorized: true,
+    ca: [fs.readFileSync(path.join(certsPath, "ca.pem"), "utf-8")],
+    key: fs.readFileSync(path.join(certsPath, "service.key"), "utf-8"),
+    cert: fs.readFileSync(path.join(certsPath, "service.cert"), "utf-8"),
+  };
+}
+
+const kafka = new Kafka(kafkaConfig);
 const consumer = kafka.consumer({ groupId: "worker" });
 
 async function main() {
   await consumer.connect();
-
   const producer = kafka.producer();
   await producer.connect();
+  console.log("✅ Worker connected to Kafka");
 
-  await consumer.subscribe({
-    topic: TOPIC_NAME,
-    fromBeginning: true,
-  });
+  await consumer.subscribe({ topic: TOPIC_NAME, fromBeginning: true });
 
   await consumer.run({
     autoCommit: false,
@@ -35,52 +50,29 @@ async function main() {
         const stage = obj.stage;
 
         console.log(
-          `Processing message: WorkflowRunId=${workflowRunId}, stage=${stage}`,
+          `Processing: WorkflowRunId=${workflowRunId}, stage=${stage}`,
         );
 
         const availableActions = await prismaClient.workFlowRun.findFirst({
-          where: {
-            id: workflowRunId,
-          },
+          where: { id: workflowRunId },
           include: {
             workflow: {
               include: {
                 actionsNodes: {
-                  include: {
-                    type: true,
-                  },
-                  orderBy: {
-                    sortingOrder: "asc",
-                  },
+                  include: { type: true },
+                  orderBy: { sortingOrder: "asc" },
                 },
               },
             },
           },
         });
 
-        if (!availableActions) {
-          console.log(`WorkflowRun not found for id: ${workflowRunId}`);
+        if (!availableActions?.workflow?.actionsNodes) {
+          console.log(`No workflow/actions found for: ${workflowRunId}`);
           await consumer.commitOffsets([
             {
               topic: TOPIC_NAME,
-              partition: partition,
-              offset: (parseInt(message.offset) + 1).toString(),
-            },
-          ]);
-          return;
-        }
-
-        if (
-          !availableActions.workflow ||
-          !availableActions.workflow.actionsNodes
-        ) {
-          console.log(
-            `Workflow has no actions for WorkflowRunId: ${workflowRunId}`,
-          );
-          await consumer.commitOffsets([
-            {
-              topic: TOPIC_NAME,
-              partition: partition,
+              partition,
               offset: (parseInt(message.offset) + 1).toString(),
             },
           ]);
@@ -92,56 +84,45 @@ async function main() {
         );
 
         if (!currentAction) {
-          console.log("Current action not found?");
+          console.log("Current action not found");
           await consumer.commitOffsets([
             {
               topic: TOPIC_NAME,
-              partition: partition,
+              partition,
               offset: (parseInt(message.offset) + 1).toString(),
             },
           ]);
           return;
         }
 
-        // This is the runtime data from the trigger event
         const workflowRunMetadata = availableActions.meta || {};
-
         console.log(`Executing stage ${stage}: ${currentAction.type.name}`);
 
-        // ── Email Action ─────────────────────────────────────────────────
+        // ── Email ────────────────────────────────────────────────
         if (currentAction.type.id === "email") {
           const metadata = currentAction.metadata as any;
-
           const body = parse(metadata?.body || "", workflowRunMetadata);
           const to = parse(metadata?.email || "", workflowRunMetadata);
           const subject = parse(metadata?.subject || "", workflowRunMetadata);
-
-          console.log(
-            `Sending email to ${to}, subject: ${subject}, body: ${body}`,
-          );
+          console.log(`Sending email to ${to}`);
           await sendEmail(to, subject, body);
         }
 
-        // ── Telegram Action ──────────────────────────────────────────────
+        // ── Telegram ─────────────────────────────────────────────
         if (currentAction.type.id === "telegram") {
           const metadata = currentAction.metadata as any;
-
           const chatId = parse(metadata?.chatId || "", workflowRunMetadata);
-          const message = parse(metadata?.message || "", workflowRunMetadata);
-
-          console.log(`Sending Telegram to chat ${chatId}: ${message}`);
-          await sendTelegram(chatId, message);
+          const msg = parse(metadata?.message || "", workflowRunMetadata);
+          console.log(`Sending Telegram to ${chatId}`);
+          await sendTelegram(chatId, msg);
         }
 
         await new Promise((r) => setTimeout(r, 500));
 
         const lastStage =
           (availableActions.workflow.actionsNodes?.length || 1) - 1;
-        console.log("Last stage:", lastStage);
-        console.log("Current stage:", stage);
 
         if (lastStage !== stage) {
-          console.log("Pushing back to the queue");
           await producer.send({
             topic: TOPIC_NAME,
             messages: [
@@ -156,21 +137,19 @@ async function main() {
         }
 
         console.log("Processing done");
-
         await consumer.commitOffsets([
           {
             topic: TOPIC_NAME,
-            partition: partition,
+            partition,
             offset: (parseInt(message.offset) + 1).toString(),
           },
         ]);
       } catch (error) {
         console.error("Error processing message:", error);
-
         await consumer.commitOffsets([
           {
             topic: TOPIC_NAME,
-            partition: partition,
+            partition,
             offset: (parseInt(message.offset) + 1).toString(),
           },
         ]);

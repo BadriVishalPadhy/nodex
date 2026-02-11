@@ -4,7 +4,6 @@ export function parse(
   startDelimeter = "{",
   endDelimeter = "}",
 ) {
-  // Guard against undefined/null text
   if (!text) return "";
 
   let startIndex = 0;

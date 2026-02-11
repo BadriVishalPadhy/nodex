@@ -28,5 +28,5 @@ export async function sendTelegram(
     );
   }
 
-  console.log(`Telegram message sent to chat ${chatId}`);
+  console.log(`✅ Telegram message sent to chat ${chatId}`);
 }
