@@ -38,6 +38,7 @@ services:
         const p = new PrismaClient();
         (async () => {
           await p.availableTriggerNodes.upsert({where:{id:'webhook'},create:{id:'webhook',name:'Webhook'},update:{}});
+          await p.availableTriggerNodes.upsert({where:{id:'manual'},create:{id:'manual',name:'Manual Trigger'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'email'},create:{id:'email',name:'Email'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'telegram'},create:{id:'telegram',name:'Telegram'},update:{}});
           console.log('Seeded');

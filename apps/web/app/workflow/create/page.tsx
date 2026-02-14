@@ -46,6 +46,7 @@ import { API_BASE_URL } from "../../../lib/api";
 
 type IconKey =
   | "webhook"
+  | "manual"
   | "email"
   | "database"
   | "schedule"
@@ -55,6 +56,7 @@ type IconKey =
 
 const iconMap: Record<IconKey, LucideIcon> = {
   webhook: Webhook,
+  manual: PlayCircle,
   email: Mail,
   database: Database,
   schedule: Calendar,
@@ -181,6 +183,10 @@ function getDefaultMetadata(actionId: string): Record<string, string> {
       return {
         name: "Webhook Trigger",
         walletAddress: "",
+      };
+    case "manual":
+      return {
+        name: "Manual Trigger",
       };
     default:
       return {};
@@ -422,7 +428,7 @@ export default function WorkflowBuilder() {
     const defaultMeta = getDefaultMetadata(item.id);
 
     // Skip modal for webhook trigger — add directly to canvas
-    if (item.id === "webhook" && sidebarType === "trigger") {
+    if ((item.id === "webhook" || item.id === "manual") && sidebarType === "trigger") {
       const nodeId = `node-${Date.now()}`;
       const newNode: CustomNodeType = {
         id: nodeId,
