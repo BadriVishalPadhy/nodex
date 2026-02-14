@@ -1,9 +1,9 @@
 // Dynamically resolve API base URL:
-// - In browser: use the current hostname (works on localhost AND deployed servers)
+// - In browser: use the current origin (routed through nginx reverse proxy)
 // - During SSR/build: fallback to env variable or localhost
 const getApiBaseUrl = (): string => {
   if (typeof window !== "undefined") {
-    return `http://${window.location.hostname}:8000`;
+    return window.location.origin;
   }
   return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 };
