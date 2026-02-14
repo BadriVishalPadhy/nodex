@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../lib/api";
 import {
   Plus,
   Activity,
@@ -78,7 +79,7 @@ export default function Dashboard() {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get("http://localhost:8000/api/v1/workflow", {
+      const res = await axios.get(`${API_BASE_URL}/api/v1/workflow`, {
         withCredentials: true,
       });
       setWorkflows(res.data.workFlows || []);
@@ -96,7 +97,7 @@ export default function Dashboard() {
   const handleRunWorkflow = async (workflowId: string) => {
     try {
       await axios.post(
-        `http://localhost:8000/api/v1/workflow/${workflowId}/execute`,
+        `${API_BASE_URL}/api/v1/workflow/${workflowId}/execute`,
         {},
         { withCredentials: true }
       );
@@ -110,7 +111,7 @@ export default function Dashboard() {
     if (!confirm("Are you sure you want to delete this workflow?")) return;
     try {
       await axios.delete(
-        `http://localhost:8000/api/v1/workflow/${workflowId}`,
+        `${API_BASE_URL}/api/v1/workflow/${workflowId}`,
         { withCredentials: true }
       );
       setWorkflows(workflows.filter((w) => w.id !== workflowId));
@@ -274,7 +275,7 @@ function WorkflowCard({
   const [copied, setCopied] = useState(false);
   const webhookUrl =
     typeof window !== "undefined"
-      ? `localhost:4000/hooks/catch/${workflow.userId}/${workflow.id}`
+      ? `${window.location.hostname}:4000/hooks/catch/${workflow.userId}/${workflow.id}`
       : "";
 
   const handleCopyWebhook = () => {

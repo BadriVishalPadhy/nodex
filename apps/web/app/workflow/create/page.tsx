@@ -40,6 +40,7 @@ import {
 } from "lucide-react";
 import axios, { type AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { API_BASE_URL } from "../../../lib/api";
 
 // ── Icon Map ───────────────────────────────────────────────────────────────────
 
@@ -328,11 +329,11 @@ export default function WorkflowBuilder() {
     try {
       const [triggerRes, actionRes] = await Promise.all([
         axios.get<{ value: AvailableNode[] }>(
-          "http://localhost:8000/api/v1/availableTrigger",
+          `${API_BASE_URL}/api/v1/availableTrigger`,
           { withCredentials: true }
         ),
         axios.get<{ availableActionNodes: AvailableNode[] }>(
-          "http://localhost:8000/api/v1/availableActions",
+          `${API_BASE_URL}/api/v1/availableActions`,
           { withCredentials: true }
         ),
       ]);
@@ -555,7 +556,7 @@ export default function WorkflowBuilder() {
     };
 
     try {
-      const saveRes = await axios.post("http://localhost:8000/api/v1/workflow", payload, {
+      const saveRes = await axios.post(`${API_BASE_URL}/api/v1/workflow`, payload, {
         withCredentials: true,
       });
 
@@ -564,7 +565,7 @@ export default function WorkflowBuilder() {
       if (walletAddress && walletAddress.trim().length > 0) {
         try {
           await axios.post(
-            "http://localhost:8000/api/v1/helius/register",
+            `${API_BASE_URL}/api/v1/helius/register`,
             {
               workflowId: saveRes.data.workflowId,
               walletAddress: walletAddress.trim(),
