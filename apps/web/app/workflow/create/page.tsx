@@ -419,8 +419,25 @@ export default function WorkflowBuilder() {
   // ── Sidebar item click ─────────────────────────────────────────────────────
 
   function handleSidebarItemClick(item: AvailableNode): void {
+    const defaultMeta = getDefaultMetadata(item.id);
+
+    // Skip modal for webhook trigger — add directly to canvas
+    if (item.id === "webhook" && sidebarType === "trigger") {
+      const nodeId = `node-${Date.now()}`;
+      const newNode: CustomNodeType = {
+        id: nodeId,
+        type: "custom",
+        position: { x: 400, y: 80 },
+        data: buildNodeData(nodeId, item, "trigger", defaultMeta, 0),
+      };
+      setNodes((nds) => [...nds, newNode]);
+      setSidebarOpen(false);
+      setSidebarType("action");
+      return;
+    }
+
     setSelectedItem(item);
-    setMetadata(getDefaultMetadata(item.id));
+    setMetadata(defaultMeta);
     setSidebarOpen(false);
     setModalOpen(true);
   }
