@@ -164,7 +164,7 @@ function getDefaultMetadata(actionId: string): Record<string, string> {
           "",
           "A workflow event was triggered.",
           "",
-          "— FlowPilot Automation",
+          "— nodex Automation",
         ].join("\n"),
       };
     case "telegram":

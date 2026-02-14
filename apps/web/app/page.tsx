@@ -17,7 +17,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
               </svg>
             </div>
-            <span className="text-lg font-semibold text-white">FlowPilot</span>
+            <span className="text-lg font-semibold text-white">nodex</span>
           </div>
 
           <div className="hidden md:flex items-center gap-8">
@@ -265,7 +265,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
               </svg>
             </div>
-            <span className="text-neutral-500 text-sm">© 2026 FlowPilot. All rights reserved.</span>
+            <span className="text-neutral-500 text-sm">© 2026 nodex. All rights reserved.</span>
           </div>
           <div className="flex gap-8">
             <a href="#" className="text-neutral-500 hover:text-neutral-300 transition-colors text-sm">Privacy</a>

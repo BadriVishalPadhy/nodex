@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FlowPilot — Workflow Automation",
+  title: "nodex — Workflow Automation",
   description: "Build powerful workflow automations visually. Connect triggers and actions without writing code.",
 };
 
