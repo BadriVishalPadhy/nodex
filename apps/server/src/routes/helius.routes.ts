@@ -30,7 +30,7 @@ heliusRouter.post("/register", authMiddleware, async (req, res) => {
       {
         webhookURL: webhookUrl,
         accountAddresses: [walletAddress],
-        transactionTypes: ["TRANSFER"], // Triggers on any fund movement
+        transactionTypes: ["ANY"], // Triggers on any transaction involving this wallet
         webhookType: "enhanced", // Rich parsed data
       },
     );

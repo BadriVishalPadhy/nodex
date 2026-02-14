@@ -39,7 +39,6 @@ services:
         (async () => {
           await p.availableTriggerNodes.upsert({where:{id:'webhook'},create:{id:'webhook',name:'Webhook'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'email'},create:{id:'email',name:'Email'},update:{}});
-          await p.availableActionNodes.upsert({where:{id:'sol'},create:{id:'sol',name:'Solana'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'telegram'},create:{id:'telegram',name:'Telegram'},update:{}});
           console.log('Seeded');
           process.exit(0);
@@ -62,6 +61,8 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
       JWT_SECRET: ${JWT_SECRET:-default-jwt-secret-change-me}
+      HELIUS_API_KEY: ${HELIUS_API_KEY:-}
+      HOOKS_BASE_URL: ${HOOKS_BASE_URL:-}
     depends_on:
       db-seed:
         condition: service_completed_successfully

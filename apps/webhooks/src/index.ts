@@ -7,7 +7,7 @@ const PORT = 4000;
 
 /**
  * Automatically extract human-readable fields from a Helius enhanced payload.
- * This means users can just use {fromWallet}, {toWallet}, {solAmount}, {signature}
+ * This means users can just use {fromWallet}, {toWallet}, {amount}, {signature}
  * in their email/telegram templates — no manual filling needed.
  */
 function flattenHeliusMeta(body: any): Record<string, string> {
@@ -38,20 +38,20 @@ function flattenHeliusMeta(body: any): Record<string, string> {
   const toWallet =
     nativeTransfer?.toUserAccount ?? tokenTransfer?.toUserAccount ?? "unknown";
 
-  // Native transfers are in lamports (1 SOL = 1,000,000,000 lamports)
-  const lamports = nativeTransfer?.amount ?? 0;
-  const solAmount = (lamports / 1_000_000_000).toFixed(4);
+  // Native transfers amount (raw units)
+  const rawAmount = nativeTransfer?.amount ?? 0;
+  const amount = (rawAmount / 1_000_000_000).toFixed(4);
 
   // Token transfer amount (already in token units from Helius)
   const tokenAmount = tokenTransfer?.tokenAmount ?? "0";
   const tokenMint = tokenTransfer?.mint ?? "";
 
   // Account balance changes
-  const balanceChange = payload.accountData?.[0]?.nativeBalanceChange ?? 0;
-  const balanceChangeSol = (Math.abs(balanceChange) / 1_000_000_000).toFixed(4);
+  const balanceChangeRaw = payload.accountData?.[0]?.nativeBalanceChange ?? 0;
+  const balanceChange = (Math.abs(balanceChangeRaw) / 1_000_000_000).toFixed(4);
 
   return {
-    // Core fields — users just write {fromWallet}, {solAmount}, etc.
+    // Core fields — users just write {fromWallet}, {amount}, etc.
     signature: payload.signature ?? "",
     type: payload.type ?? "UNKNOWN",
     timestamp: payload.timestamp
@@ -59,11 +59,11 @@ function flattenHeliusMeta(body: any): Record<string, string> {
       : "",
     fromWallet,
     toWallet,
-    solAmount,
-    lamports: String(lamports),
+    amount,
+    rawAmount: String(rawAmount),
     tokenAmount: String(tokenAmount),
     tokenMint,
-    balanceChangeSol,
+    balanceChange,
     // Keep source marker for the worker
     source: "helius",
     // Stringify the full raw payload in case someone needs it
@@ -100,7 +100,7 @@ app.post("/hooks/catch/:userId/:workflow", async (req, res) => {
     extractedData: {
       fromWallet: meta.fromWallet,
       toWallet: meta.toWallet,
-      solAmount: meta.solAmount,
+      amount: meta.amount,
       signature: meta.signature,
     },
   });
