@@ -660,9 +660,9 @@ export default function WorkflowBuilder() {
         >
           <Background
             variant={BackgroundVariant.Dots}
-            gap={20}
-            size={1}
-            color="#1a1a1a"
+            gap={24}
+            size={1.5}
+            color="#333"
           />
           <Controls className="!bg-neutral-900/80 !backdrop-blur-xl !border !border-neutral-800 !rounded-xl !shadow-xl [&>button]:!bg-neutral-800 [&>button]:!border-neutral-700 [&>button]:!text-neutral-400 [&>button:hover]:!bg-neutral-700" />
           <MiniMap
@@ -984,23 +984,7 @@ export default function WorkflowBuilder() {
                 </>
               )}
 
-              {/* ── Webhook fields ──────────────────────────────────────── */}
-              {selectedItem.id === "webhook" && (
-                <div>
-                  <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
-                    Webhook URL
-                  </label>
-                  <input
-                    type="url"
-                    placeholder="https://example.com/webhook"
-                    value={metadata.webhookUrl ?? ""}
-                    onChange={(e) =>
-                      setMetadata({ ...metadata, webhookUrl: e.target.value })
-                    }
-                    className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all text-sm"
-                  />
-                </div>
-              )}
+
 
               {/* Description */}
               <div>

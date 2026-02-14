@@ -11,7 +11,17 @@ const PORT = 8000;
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://139.59.27.112:3000"],
+    origin: [
+      "http://localhost:3000",
+      "http://139.59.27.112:3000",
+      "http://139.59.27.112",
+      "http://nodex.codes:3000",
+      "http://www.nodex.codes:3000",
+      "http://nodex.codes",
+      "http://www.nodex.codes",
+      "https://nodex.codes",
+      "https://www.nodex.codes",
+    ],
     credentials: true,
   }),
 );
