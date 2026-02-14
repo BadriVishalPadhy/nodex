@@ -5,27 +5,26 @@ import path from "path";
 
 const TOPIC_NAME = "OUTBOX";
 
-const isAiven = (process.env.KAFKA_BROKER || "").includes("aivencloud.com");
-
-const kafkaConfig: any = {
-  clientId: "outbox-processor",
-  brokers: [process.env.KAFKA_BROKER || "localhost:9092"],
-};
-
-if (isAiven) {
-  const certsPath =
-    process.env.KAFKA_CERTS_PATH || path.join(__dirname, "..", "certs");
-  kafkaConfig.ssl = {
-    rejectUnauthorized: true,
-    ca: [fs.readFileSync(path.join(certsPath, "ca.pem"), "utf-8")],
-    key: fs.readFileSync(path.join(certsPath, "service.key"), "utf-8"),
-    cert: fs.readFileSync(path.join(certsPath, "service.cert"), "utf-8"),
-  };
-}
-
-const kafka = new Kafka(kafkaConfig);
-
 async function main() {
+  const isAiven = (process.env.KAFKA_BROKER || "").includes("aivencloud.com");
+
+  const kafkaConfig: any = {
+    clientId: "outbox-processor",
+    brokers: [process.env.KAFKA_BROKER || "localhost:9092"],
+  };
+
+  if (isAiven) {
+    const certsPath =
+      process.env.KAFKA_CERTS_PATH || path.join(__dirname, "..", "certs");
+    kafkaConfig.ssl = {
+      rejectUnauthorized: true,
+      ca: [fs.readFileSync(path.join(certsPath, "ca.pem"), "utf-8")],
+      key: fs.readFileSync(path.join(certsPath, "service.key"), "utf-8"),
+      cert: fs.readFileSync(path.join(certsPath, "service.cert"), "utf-8"),
+    };
+  }
+
+  const kafka = new Kafka(kafkaConfig);
   const producer = kafka.producer();
   await producer.connect();
   console.log("✅ Processor connected to Kafka");
