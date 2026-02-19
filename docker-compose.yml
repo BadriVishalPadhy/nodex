@@ -3,15 +3,15 @@ services:
     image: postgres:16-alpine
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: n8n
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -22,7 +22,7 @@ services:
       dockerfile: apps/server/Dockerfile
     command: sh -c "cd packages/db && npx prisma db push --skip-generate"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       postgres:
         condition: service_healthy
@@ -46,7 +46,7 @@ services:
         })().catch(e => { console.error(e); process.exit(1); });
       "
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       db-migrate:
         condition: service_completed_successfully
@@ -60,8 +60,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
-      JWT_SECRET: ${JWT_SECRET:-default-jwt-secret-change-me}
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      NODE_ENV: production
       HELIUS_API_KEY: ${HELIUS_API_KEY:-}
       HOOKS_BASE_URL: ${HOOKS_BASE_URL:-}
     depends_on:
@@ -88,7 +89,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       db-seed:
         condition: service_completed_successfully
@@ -101,7 +102,7 @@ services:
     volumes:
       - ./certs:/app/certs:ro
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      DATABASE_URL: ${DATABASE_URL}
       KAFKA_BROKER: ${KAFKA_BROKER:-localhost:9092}
       KAFKA_CERTS_PATH: /app/certs
     depends_on:
@@ -116,7 +117,7 @@ services:
     volumes:
       - ./certs:/app/certs:ro
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/n8n
+      DATABASE_URL: ${DATABASE_URL}
       KAFKA_BROKER: ${KAFKA_BROKER:-localhost:9092}
       KAFKA_CERTS_PATH: /app/certs
       SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}

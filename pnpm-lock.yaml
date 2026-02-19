@@ -18,22 +18,6 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
-  apps/hooks:
-    dependencies:
-      '@types/express':
-        specifier: ^5.0.6
-        version: 5.0.6
-      express:
-        specifier: ^5.2.1
-        version: 5.2.1
-    devDependencies:
-      '@repo/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
-
   apps/processor:
     dependencies:
       '@types/express':
