@@ -68,6 +68,11 @@ services:
     depends_on:
       db-seed:
         condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   web:
     build:

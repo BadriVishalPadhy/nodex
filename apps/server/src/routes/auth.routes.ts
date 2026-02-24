@@ -85,14 +85,18 @@ authRouter.post("/signin", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours — match JWT expiry
     });
 
     res.json({
       success: true,
     });
   } catch (error) {
-    console.error("Signin error:", error);
+    console.error(
+      "Signin error:",
+      error instanceof Error ? error.stack : error,
+    );
     return res.status(500).json({ error: "Internal server error" });
   }
 });

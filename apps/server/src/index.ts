@@ -9,6 +9,11 @@ import cors from "cors";
 
 const PORT = 8000;
 const app = express();
+
+// Trust the first proxy (nginx) so Express sees the real protocol (HTTPS).
+// Without this, secure cookies silently fail behind a reverse proxy.
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: [
@@ -35,6 +40,34 @@ app.use("/api/v1/availableTrigger", triggerRouter);
 app.use("/api/v1/availableActions", actionRouter);
 app.use("/api/v1/helius", heliusRouter);
 
+// Health check
+app.get("/health", (_req, res) => {
+  res.json({ status: "ok" });
+});
+
+// Global error handler (must be after all routes)
+app.use(
+  (
+    err: Error,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction,
+  ) => {
+    console.error("Unhandled error:", err.stack || err);
+    res.status(500).json({ error: "Internal server error" });
+  },
+);
+
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled Rejection:", reason);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  process.exit(1);
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
 });
+
