@@ -14,6 +14,7 @@ COPY packages/ ./packages/
 COPY apps/workers/ ./apps/workers/
 
 RUN cd packages/db && pnpm db:generate
+RUN cd packages/db && pnpm build
 RUN cd apps/workers && pnpm build
 
 CMD ["node", "apps/workers/dist/index.js"]

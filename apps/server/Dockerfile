@@ -14,6 +14,7 @@ COPY packages/ ./packages/
 COPY apps/server/ ./apps/server/
 
 RUN cd packages/db && pnpm db:generate
+RUN cd packages/db && pnpm build
 RUN cd apps/server && pnpm build
 
 EXPOSE 8000
