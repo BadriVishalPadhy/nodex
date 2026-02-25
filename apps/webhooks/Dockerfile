@@ -14,6 +14,7 @@ COPY packages/ ./packages/
 COPY apps/webhooks/ ./apps/webhooks/
 
 RUN cd packages/db && pnpm db:generate
+RUN cd packages/db && pnpm build
 RUN cd apps/webhooks && pnpm build
 
 EXPOSE 4000
