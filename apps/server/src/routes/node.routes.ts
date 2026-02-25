@@ -69,54 +69,120 @@ nodeRouter.post("/", authMiddleware, async (req, res) => {
 
 nodeRouter.get("/", authMiddleware, async (req, res) => {
   const id: string = req.user?.id;
-  const workFlows = await prismaClient.workFlow.findMany({
-    where: {
-      userId: id,
-    },
-    include: {
-      actionsNodes: {
-        include: {
-          type: true,
+  try {
+    const workFlows = await prismaClient.workFlow.findMany({
+      where: {
+        userId: id,
+      },
+      include: {
+        actionsNodes: {
+          include: {
+            type: true,
+          },
+        },
+        triggerNodes: {
+          include: {
+            type: true,
+          },
         },
       },
-      triggerNodes: {
-        include: {
-          type: true,
-        },
-      },
-    },
-  });
-  console.log("workFlows handler");
-  return res.json({
-    workFlows,
-  });
+    });
+    console.log("workFlows handler");
+    return res.json({
+      workFlows,
+    });
+  } catch (error) {
+    console.error("Error fetching workflows:", error);
+    return res.status(500).json({ error: "Failed to fetch workflows" });
+  }
 });
 
 nodeRouter.get("/:workFlowId", authMiddleware, async (req, res) => {
   const id: string = req.user?.id;
   const workFlowId = req.params.workFlowId;
-  const workFlows = await prismaClient.workFlow.findMany({
-    where: {
-      id: workFlowId,
-      userId: id,
-    },
-    include: {
-      actionsNodes: {
-        include: {
-          type: true,
+  try {
+    const workFlows = await prismaClient.workFlow.findMany({
+      where: {
+        id: workFlowId,
+        userId: id,
+      },
+      include: {
+        actionsNodes: {
+          include: {
+            type: true,
+          },
+        },
+        triggerNodes: {
+          include: {
+            type: true,
+          },
         },
       },
-      triggerNodes: {
-        include: {
-          type: true,
-        },
-      },
-    },
-  });
+    });
 
-  return res.json({
-    workFlows,
-  });
+    return res.json({
+      workFlows,
+    });
+  } catch (error) {
+    console.error("Error fetching workflow:", error);
+    return res.status(500).json({ error: "Failed to fetch workflow" });
+  }
+});
+
+nodeRouter.delete("/:workFlowId", authMiddleware, async (req, res) => {
+  const id: string = req.user?.id;
+  const workFlowId = req.params.workFlowId;
+  try {
+    // Verify the workflow belongs to this user
+    const workflow = await prismaClient.workFlow.findFirst({
+      where: { id: workFlowId, userId: id },
+    });
+    if (!workflow) {
+      return res.status(404).json({ error: "Workflow not found" });
+    }
+
+    // Delete related records then the workflow
+    await prismaClient.$transaction(async (tx) => {
+      await tx.actionNodes.deleteMany({ where: { workflowId: workFlowId } });
+      await tx.triggerNodes.deleteMany({ where: { workflowId: workFlowId } });
+      await tx.workFlowRun.deleteMany({ where: { workflowId: workFlowId } });
+      await tx.workFlow.delete({ where: { id: workFlowId } });
+    });
+
+    return res.json({ message: "Workflow deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting workflow:", error);
+    return res.status(500).json({ error: "Failed to delete workflow" });
+  }
+});
+
+nodeRouter.post("/:workFlowId/execute", authMiddleware, async (req, res) => {
+  const id: string = req.user?.id;
+  const workFlowId = req.params.workFlowId;
+  try {
+    const workflow = await prismaClient.workFlow.findFirst({
+      where: { id: workFlowId, userId: id },
+      include: {
+        actionsNodes: { include: { type: true } },
+        triggerNodes: { include: { type: true } },
+      },
+    });
+
+    if (!workflow) {
+      return res.status(404).json({ error: "Workflow not found" });
+    }
+
+    // For now, acknowledge the execution request.
+    // The actual execution is handled by the processor/worker services.
+    return res.json({
+      message: "Workflow execution triggered",
+      workflowId: workFlowId,
+    });
+  } catch (error) {
+    console.error("Error executing workflow:", error);
+    return res.status(500).json({ error: "Failed to execute workflow" });
+  }
 });
 
 export default nodeRouter;
+
