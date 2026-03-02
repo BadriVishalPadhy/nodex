@@ -77,7 +77,7 @@ export default function Home() {
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-neutral-400 hover:text-white transition-colors text-sm">Features</a>
+            <a href="#architecture" className="text-neutral-400 hover:text-white transition-colors text-sm">Architecture</a>
             <a href="#how-it-works" className="text-neutral-400 hover:text-white transition-colors text-sm">How it Works</a>
             <a href="#pricing" className="text-neutral-400 hover:text-white transition-colors text-sm">Pricing</a>
           </div>
@@ -123,7 +123,7 @@ export default function Home() {
               Start Building — Free
             </Link>
             <a
-              href="#features"
+              href="#architecture"
               className="px-8 py-4 border border-neutral-700 hover:border-neutral-600 bg-neutral-900/40 backdrop-blur-sm text-neutral-300 hover:text-white rounded-xl transition-all text-lg font-medium"
             >
               Explore Features
@@ -206,60 +206,25 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Features Section */}
-      <section id="features" className="py-24 px-6 relative z-10">
+      {/* Architecture Section */}
+      <section id="architecture" className="py-24 px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-wider text-neutral-500 font-medium mb-3">Features</p>
+            <p className="text-xs uppercase tracking-wider text-neutral-500 font-medium mb-3">Architecture</p>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              Everything you need to automate
+              Built for scale &amp; reliability
             </h2>
             <p className="text-neutral-400 max-w-xl mx-auto">
-              Powerful building blocks for your workflow automations, no code required.
+              Event-driven architecture with transactional guarantees, message queues, and parallel workers.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: (
-                  <svg className="w-6 h-6 text-black group-hover:animate-pulse-opacity" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                  </svg>
-                ),
-                title: "Visual Builder",
-                desc: "Drag-and-drop workflow editor. Connect triggers to actions with an intuitive canvas.",
-              },
-              {
-                icon: (
-                  <svg className="w-6 h-6 text-black group-hover:animate-pulse-opacity" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                ),
-                title: "Event Monitoring",
-                desc: "Track events in real-time. Trigger automations on incoming webhooks and schedules.",
-              },
-              {
-                icon: (
-                  <svg className="w-6 h-6 text-black group-hover:animate-spin-slow origin-center" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                  </svg>
-                ),
-                title: "Multi-Channel Alerts",
-                desc: "Send notifications via Email and Telegram. Template variables auto-filled from triggers.",
-              },
-            ].map((f, i) => (
-              <div
-                key={i}
-                className="group bg-neutral-900/60 backdrop-blur-xl border border-neutral-800 hover:border-neutral-700 rounded-2xl p-8 transition-all hover:shadow-[0_0_40px_rgba(255,255,255,0.03)]"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center mb-5 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300">
-                  {f.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{f.title}</h3>
-                <p className="text-neutral-400 leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
+          <div className="bg-neutral-900/60 max-w-2xl mx-auto backdrop-blur-xl border border-neutral-800 rounded-2xl shadow-2xl shadow-white/[0.03] overflow-hidden">
+            <img
+              src="/architecture.png"
+              alt="System architecture diagram showing Frontend workflow pipeline, Webhook processing, Transactional Outbox Pattern, Processor, Kafka message bus, and parallel Workers"
+              className="w-full h-auto"
+            />
           </div>
         </div>
       </section>
