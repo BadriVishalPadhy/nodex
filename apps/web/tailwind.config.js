@@ -8,6 +8,11 @@ module.exports = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			heading: ["'Instrument Serif'", "serif"],
+  			body: ["'Barlow'", "sans-serif"],
+			pixel: ["var(--font-geist-pixel-square)", "monospace"],
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

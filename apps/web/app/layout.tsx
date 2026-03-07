@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { GeistPixelSquare } from "geist/font/pixel";
 
 import './globals.css'
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "nodex — Workflow Automation",
@@ -19,13 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} font-sans antialiased bg-[#0a0a0a] text-white`}
-      >
+    <html lang="en" className={GeistPixelSquare.variable}>
+      <body className="antialiased">
         {children}
       </body>
     </html>
   );
 }
-
