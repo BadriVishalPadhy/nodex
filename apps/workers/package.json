@@ -21,7 +21,8 @@
     "json-templates": "^5.2.0",
     "kafkajs": "^2.2.4",
     "node-fetch": "2",
-    "nodemailer": "^7.0.13"
+    "nodemailer": "^7.0.13",
+    "resend": "^6.9.3"
   },
   "keywords": [],
   "author": "",
