@@ -39,6 +39,7 @@ services:
           await p.availableTriggerNodes.upsert({where:{id:'manual'},create:{id:'manual',name:'Manual Trigger'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'email'},create:{id:'email',name:'Email'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'telegram'},create:{id:'telegram',name:'Telegram'},update:{}});
+          await p.availableActionNodes.upsert({where:{id:'discord'},create:{id:'discord',name:'Discord'},update:{}});
           console.log('Seeded');
           process.exit(0);
         })().catch(e => { console.error(e); process.exit(1); });

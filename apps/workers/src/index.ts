@@ -3,6 +3,7 @@ import { prismaClient } from "@repo/db";
 import { parse } from "./parse";
 import { sendEmail } from "./email";
 import { sendTelegram } from "./telegram";
+import { sendDiscord } from "./discord";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
@@ -122,6 +123,17 @@ async function main() {
           const msg = parse(metadata?.message || "", workflowRunMetadata);
           console.log(`Sending Telegram to ${chatId}`);
           await sendTelegram(chatId, msg);
+        }
+
+        // ── Discord ──────────────────────────────────────────────
+        if (currentAction.type.id === "discord") {
+          const metadata = currentAction.metadata as any;
+          const webhookUrl = parse(metadata?.webhookUrl || "", workflowRunMetadata);
+          const content = parse(metadata?.content || "", workflowRunMetadata);
+          const username = parse(metadata?.username || "", workflowRunMetadata);
+          const avatarUrl = parse(metadata?.avatarUrl || "", workflowRunMetadata);
+          console.log(`Sending Discord message`);
+          await sendDiscord(webhookUrl, content, username || undefined, avatarUrl || undefined);
         }
 
         await new Promise((r) => setTimeout(r, 500));

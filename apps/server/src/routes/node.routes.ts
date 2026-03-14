@@ -172,11 +172,31 @@ nodeRouter.post("/:workFlowId/execute", authMiddleware, async (req, res) => {
       return res.status(404).json({ error: "Workflow not found" });
     }
 
-    // For now, acknowledge the execution request.
-    // The actual execution is handled by the processor/worker services.
+    // Create a WorkFlowRun + OutBox entry so the processor picks it up
+    const run = await prismaClient.$transaction(async (tx) => {
+      const r = await tx.workFlowRun.create({
+        data: {
+          workflowId: workFlowId as string,
+          meta: {
+            trigger: "manual",
+            timestamp: new Date().toISOString(),
+          },
+        },
+      });
+
+      await tx.workFlowOutBox.create({
+        data: {
+          WorkFlowRunId: r.id,
+        },
+      });
+
+      return r;
+    });
+
     return res.json({
       message: "Workflow execution triggered",
       workflowId: workFlowId,
+      runId: run.id,
     });
   } catch (error) {
     console.error("Error executing workflow:", error);

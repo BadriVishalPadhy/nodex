@@ -33,6 +33,7 @@ import {
   PlayCircle,
   GitBranch,
   Send,
+  MessageCircle,
   Check,
   AlertCircle,
   ArrowLeft,
@@ -52,7 +53,8 @@ type IconKey =
   | "schedule"
   | "file"
   | "api"
-  | "telegram";
+  | "telegram"
+  | "discord";
 
 const iconMap: Record<IconKey, LucideIcon> = {
   webhook: Webhook,
@@ -63,6 +65,7 @@ const iconMap: Record<IconKey, LucideIcon> = {
   file: FileText,
   api: Zap,
   telegram: Send,
+  discord: MessageCircle,
 };
 
 function NodeIcon({
@@ -187,6 +190,13 @@ function getDefaultMetadata(actionId: string): Record<string, string> {
     case "manual":
       return {
         name: "Manual Trigger",
+      };
+    case "discord":
+      return {
+        name: "Discord Message",
+        webhookUrl: "",
+        content: "",
+        username: "",
       };
     default:
       return {};
@@ -1007,6 +1017,56 @@ export default function WorkflowBuilder() {
                 </>
               )}
 
+              {/* ── Discord fields ────────────────────────────────────── */}
+              {selectedItem.id === "discord" && (
+                <>
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
+                      Webhook URL
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="https://discord.com/api/webhooks/..."
+                      value={metadata.webhookUrl ?? ""}
+                      onChange={(e) =>
+                        setMetadata({ ...metadata, webhookUrl: e.target.value })
+                      }
+                      className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all text-sm font-mono"
+                    />
+                    <p className="text-neutral-600 text-[10px] mt-1.5">
+                      Go to Channel Settings → Integrations → Webhooks to create one
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
+                      Message Content
+                    </label>
+                    <textarea
+                      value={metadata.content ?? ""}
+                      onChange={(e) =>
+                        setMetadata({ ...metadata, content: e.target.value })
+                      }
+                      rows={4}
+                      placeholder="Enter the message to send..."
+                      className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all resize-none font-mono text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
+                      Bot Username (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Workflow Bot"
+                      value={metadata.username ?? ""}
+                      onChange={(e) =>
+                        setMetadata({ ...metadata, username: e.target.value })
+                      }
+                      className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all text-sm"
+                    />
+                  </div>
+                </>
+              )}
 
 
               {/* Description */}
