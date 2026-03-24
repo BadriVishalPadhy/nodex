@@ -1,32 +1,30 @@
-import nodemailer from "nodemailer";
+import sgMail from "@sendgrid/mail";
 import dotenv from "dotenv";
 dotenv.config();
 
-const smtpPort = Number(process.env.SMTP_PORT) || 587;
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "smtp.gmail.com",
-  port: smtpPort,
-  secure: smtpPort === 465,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD,
-  },
-});
+if (!process.env.SENDGRID_API_KEY) {
+  console.warn("Warning: SENDGRID_API_KEY is not set. Email sending will fail.");
+} else {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 export async function sendEmail(to: string, subject: string, body: string) {
   try {
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_FROM || process.env.SMTP_USER,
+    const [response] = await sgMail.send({
       to,
+      from: process.env.SENDGRID_FROM_EMAIL || "noreply@example.com",
       subject,
       html: body,
     });
 
-    console.log("Message sent: %s", info.messageId);
-    return info;
-  } catch (error) {
-    console.error("Error sending email:", error);
+    console.log("Email sent via SendGrid, status: %d", response.statusCode);
+    return response;
+  } catch (error: any) {
+    if (error.response) {
+      console.error("SendGrid API error:", error.response.body);
+    } else {
+      console.error("Error sending email:", error);
+    }
     throw error;
   }
 }

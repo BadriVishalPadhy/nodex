@@ -204,7 +204,7 @@ export default function Home() {
                 {
                   icon: Mail,
                   title: "Multi-Channel Actions",
-                  desc: "Workers support Email (via SMTP/Nodemailer) and Telegram (via Bot API) actions out of the box. Template interpolation replaces {variables} with live event data, so notifications are dynamic and contextual.",
+                  desc: "Workers support Email (via SendGrid API) and Telegram (via Bot API) actions out of the box. Template interpolation replaces {variables} with live event data, so notifications are dynamic and contextual.",
                 },
                 {
                   icon: Shield,
@@ -329,7 +329,7 @@ export default function Home() {
                 {
                   icon: Mail,
                   title: "Email Alerts",
-                  desc: "SMTP-powered email delivery with customizable subject, body, and recipient templates.",
+                  desc: "SendGrid-powered email delivery with customizable subject, body, and recipient templates.",
                 },
                 {
                   icon: Send,
