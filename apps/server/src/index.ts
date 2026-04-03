@@ -5,6 +5,7 @@ import nodeRouter from "./routes/node.routes";
 import triggerRouter from "./routes/trigger.routes";
 import actionRouter from "./routes/action.routes";
 import heliusRouter from "./routes/helius.routes";
+import agentRouter from "./routes/agent.routes";
 import cors from "cors";
 
 const PORT = 8000;
@@ -39,6 +40,7 @@ app.use("/api/v1/workflow", nodeRouter);
 app.use("/api/v1/availableTrigger", triggerRouter);
 app.use("/api/v1/availableActions", actionRouter);
 app.use("/api/v1/helius", heliusRouter);
+app.use("/api/v1/agent", agentRouter);
 
 // Health check
 app.get("/health", (_req, res) => {

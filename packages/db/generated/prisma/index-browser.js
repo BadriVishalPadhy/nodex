@@ -132,8 +132,12 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.WorkFlowScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   triggerId: 'triggerId',
-  userId: 'userId'
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.TriggerNodesScalarFieldEnum = {
@@ -172,6 +176,22 @@ exports.Prisma.WorkFlowOutBoxScalarFieldEnum = {
   WorkFlowRunId: 'WorkFlowRunId'
 };
 
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  role: 'role',
+  content: 'content',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -206,7 +226,9 @@ exports.Prisma.ModelName = {
   ActionNodes: 'ActionNodes',
   AvailableActionNodes: 'AvailableActionNodes',
   WorkFlowRun: 'WorkFlowRun',
-  WorkFlowOutBox: 'WorkFlowOutBox'
+  WorkFlowOutBox: 'WorkFlowOutBox',
+  Conversation: 'Conversation',
+  Message: 'Message'
 };
 
 /**

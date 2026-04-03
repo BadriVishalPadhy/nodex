@@ -645,7 +645,7 @@ export default function WorkflowBuilder() {
   // ── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="w-full h-screen bg-[#0a0a0a] flex relative">
+    <div className="w-full h-screen bg-[#2F2F2F] flex relative">
       {/* Toast container */}
       <div className="fixed top-6 right-6 z-[70] flex flex-col gap-3">
         {toasts.map((t) => (
@@ -678,7 +678,7 @@ export default function WorkflowBuilder() {
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           fitView
-          className="bg-[#0a0a0a]"
+          className="bg-[#2F2F2F]"
           defaultEdgeOptions={{
             animated: true,
             type: "smoothstep",
@@ -695,7 +695,7 @@ export default function WorkflowBuilder() {
             variant={BackgroundVariant.Dots}
             gap={24}
             size={1.5}
-            color="#333"
+            color="#989898"
           />
           <Controls className="!bg-neutral-900/80 !backdrop-blur-xl !border !border-neutral-800 !rounded-xl !shadow-xl [&>button]:!bg-neutral-800 [&>button]:!border-neutral-700 [&>button]:!text-neutral-400 [&>button:hover]:!bg-neutral-700" />
           <MiniMap

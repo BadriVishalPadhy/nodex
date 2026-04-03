@@ -21,3 +21,23 @@ export const nodeCreateSchema = z.object({
     }),
   ),
 });
+
+export const workflowUpdateSchema = z
+  .object({
+    name: z.string().min(1).max(255).optional(),
+    availableTriggerId: z.string().optional(),
+    triggerMeta: z.any().optional(),
+    actions: z
+      .array(
+        z.object({
+          availableActionId: z.string(),
+          actionMeta: z.any().optional(),
+          sortingOrder: z.number().int().min(0).optional(),
+        }),
+      )
+      .optional(),
+    metadata: z.record(z.string(), z.any()).optional(),
+  })
+  .refine((data) => Object.keys(data).length > 0, {
+    message: "At least one field must be provided for update",
+  });

@@ -14,6 +14,7 @@ import {
   RefreshCw,
   Calendar,
   LogOut,
+  Sparkles,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -205,6 +206,13 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => router.push("/agent")}
+              className="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white rounded-xl transition-all flex items-center gap-2 font-medium shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] active:scale-[0.98] text-sm"
+            >
+              <Sparkles className="w-4 h-4" />
+              AI Agent
+            </button>
             <button
               onClick={handleCreateWorkflow}
               className="px-5 py-2.5 bg-white hover:bg-neutral-200 text-black rounded-xl transition-all flex items-center gap-2 font-medium shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] text-sm"

@@ -104,8 +104,12 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.WorkFlowScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   triggerId: 'triggerId',
-  userId: 'userId'
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.TriggerNodesScalarFieldEnum = {
@@ -144,6 +148,22 @@ exports.Prisma.WorkFlowOutBoxScalarFieldEnum = {
   WorkFlowRunId: 'WorkFlowRunId'
 };
 
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  role: 'role',
+  content: 'content',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -178,7 +198,9 @@ exports.Prisma.ModelName = {
   ActionNodes: 'ActionNodes',
   AvailableActionNodes: 'AvailableActionNodes',
   WorkFlowRun: 'WorkFlowRun',
-  WorkFlowOutBox: 'WorkFlowOutBox'
+  WorkFlowOutBox: 'WorkFlowOutBox',
+  Conversation: 'Conversation',
+  Message: 'Message'
 };
 /**
  * Create the Client
@@ -191,7 +213,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/badrvishalpadhy/Desktop/projects/n8n-1/n8n/packages/db/generated/prisma",
+      "value": "/Users/badrvishalpadhy/Desktop/projects/n8n-2/n8n/packages/db/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -205,12 +227,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/badrvishalpadhy/Desktop/projects/n8n-1/n8n/packages/db/prisma/schema.prisma",
+    "sourceFilePath": "/Users/badrvishalpadhy/Desktop/projects/n8n-2/n8n/packages/db/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../prisma/.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.19.2",
@@ -219,7 +240,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -228,13 +248,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String     @id @default(uuid())\n  email     String     @unique\n  password  String\n  name      String?\n  createdAt DateTime   @default(now())\n  updatedAt DateTime   @updatedAt\n  workflows WorkFlow[]\n}\n\nmodel WorkFlow {\n  id           String        @id @default(uuid())\n  triggerId    String\n  user         User          @relation(fields: [userId], references: [id])\n  userId       String\n  triggerNodes TriggerNodes?\n  actionsNodes ActionNodes[]\n  workflowRun  WorkFlowRun[]\n}\n\nmodel TriggerNodes {\n  id            String                @id @default(uuid())\n  workflow      WorkFlow              @relation(fields: [workflowId], references: [id])\n  workflowId    String                @unique\n  metadata      Json                  @default(\"{}\")\n  TriggerNodeId String\n  type          AvailableTriggerNodes @relation(fields: [TriggerNodeId], references: [id])\n}\n\nmodel AvailableTriggerNodes {\n  id          String         @id @default(uuid())\n  name        String\n  TriggerNode TriggerNodes[]\n}\n\nmodel ActionNodes {\n  id           String               @id @default(uuid())\n  workflow     WorkFlow             @relation(fields: [workflowId], references: [id])\n  workflowId   String\n  ActionNodeId String\n  metadata     Json                 @default(\"{}\")\n  sortingOrder Int                  @default(0)\n  type         AvailableActionNodes @relation(fields: [ActionNodeId], references: [id])\n}\n\nmodel AvailableActionNodes {\n  id          String        @id @default(uuid())\n  name        String\n  actionNodes ActionNodes[]\n}\n\nmodel WorkFlowRun {\n  id         String          @id @default(uuid())\n  workflow   WorkFlow        @relation(fields: [workflowId], references: [id])\n  workflowId String\n  meta       Json\n  outbox     WorkFlowOutBox?\n}\n\nmodel WorkFlowOutBox {\n  id            String      @id @default(uuid())\n  WorkFlowRunId String      @unique\n  workFlowRun   WorkFlowRun @relation(fields: [WorkFlowRunId], references: [id])\n}\n",
-  "inlineSchemaHash": "ace42019c1a78d9d881cad2142cf5826bf9a219656f099e2ce6a3e5bc4e11838",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String         @id @default(uuid())\n  email         String         @unique\n  password      String\n  name          String?\n  createdAt     DateTime       @default(now())\n  updatedAt     DateTime       @updatedAt\n  workflows     WorkFlow[]\n  conversations Conversation[]\n}\n\nmodel WorkFlow {\n  id           String        @id @default(uuid())\n  name         String        @default(\"Untitled Workflow\")\n  triggerId    String\n  user         User          @relation(fields: [userId], references: [id])\n  userId       String\n  triggerNodes TriggerNodes?\n  actionsNodes ActionNodes[]\n  workflowRun  WorkFlowRun[]\n  createdAt    DateTime      @default(now())\n  updatedAt    DateTime      @default(now()) @updatedAt\n  deletedAt    DateTime?\n}\n\nmodel TriggerNodes {\n  id            String                @id @default(uuid())\n  workflow      WorkFlow              @relation(fields: [workflowId], references: [id])\n  workflowId    String                @unique\n  metadata      Json                  @default(\"{}\")\n  TriggerNodeId String\n  type          AvailableTriggerNodes @relation(fields: [TriggerNodeId], references: [id])\n}\n\nmodel AvailableTriggerNodes {\n  id          String         @id @default(uuid())\n  name        String\n  TriggerNode TriggerNodes[]\n}\n\nmodel ActionNodes {\n  id           String               @id @default(uuid())\n  workflow     WorkFlow             @relation(fields: [workflowId], references: [id])\n  workflowId   String\n  ActionNodeId String\n  metadata     Json                 @default(\"{}\")\n  sortingOrder Int                  @default(0)\n  type         AvailableActionNodes @relation(fields: [ActionNodeId], references: [id])\n}\n\nmodel AvailableActionNodes {\n  id          String        @id @default(uuid())\n  name        String\n  actionNodes ActionNodes[]\n}\n\nmodel WorkFlowRun {\n  id         String          @id @default(uuid())\n  workflow   WorkFlow        @relation(fields: [workflowId], references: [id])\n  workflowId String\n  meta       Json\n  outbox     WorkFlowOutBox?\n}\n\nmodel WorkFlowOutBox {\n  id            String      @id @default(uuid())\n  WorkFlowRunId String      @unique\n  workFlowRun   WorkFlowRun @relation(fields: [WorkFlowRunId], references: [id])\n}\n\nmodel Conversation {\n  id        String    @id @default(uuid())\n  user      User      @relation(fields: [userId], references: [id])\n  userId    String\n  title     String    @default(\"New Chat\")\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @default(now()) @updatedAt\n  messages  Message[]\n}\n\nmodel Message {\n  id             String       @id @default(uuid())\n  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)\n  conversationId String\n  role           String\n  content        Json\n  createdAt      DateTime     @default(now())\n}\n",
+  "inlineSchemaHash": "39cf59e9321c4b8d7344ee0b7223b5146bea9e386fbf03b1784eca1836d17726",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"workflows\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"UserToWorkFlow\"}],\"dbName\":null},\"WorkFlow\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"triggerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToWorkFlow\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"triggerNodes\",\"kind\":\"object\",\"type\":\"TriggerNodes\",\"relationName\":\"TriggerNodesToWorkFlow\"},{\"name\":\"actionsNodes\",\"kind\":\"object\",\"type\":\"ActionNodes\",\"relationName\":\"ActionNodesToWorkFlow\"},{\"name\":\"workflowRun\",\"kind\":\"object\",\"type\":\"WorkFlowRun\",\"relationName\":\"WorkFlowToWorkFlowRun\"}],\"dbName\":null},\"TriggerNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workflow\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"TriggerNodesToWorkFlow\"},{\"name\":\"workflowId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"TriggerNodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"object\",\"type\":\"AvailableTriggerNodes\",\"relationName\":\"AvailableTriggerNodesToTriggerNodes\"}],\"dbName\":null},\"AvailableTriggerNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"TriggerNode\",\"kind\":\"object\",\"type\":\"TriggerNodes\",\"relationName\":\"AvailableTriggerNodesToTriggerNodes\"}],\"dbName\":null},\"ActionNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workflow\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"ActionNodesToWorkFlow\"},{\"name\":\"workflowId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ActionNodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"sortingOrder\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"type\",\"kind\":\"object\",\"type\":\"AvailableActionNodes\",\"relationName\":\"ActionNodesToAvailableActionNodes\"}],\"dbName\":null},\"AvailableActionNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"actionNodes\",\"kind\":\"object\",\"type\":\"ActionNodes\",\"relationName\":\"ActionNodesToAvailableActionNodes\"}],\"dbName\":null},\"WorkFlowRun\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workflow\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"WorkFlowToWorkFlowRun\"},{\"name\":\"workflowId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"meta\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"outbox\",\"kind\":\"object\",\"type\":\"WorkFlowOutBox\",\"relationName\":\"WorkFlowOutBoxToWorkFlowRun\"}],\"dbName\":null},\"WorkFlowOutBox\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"WorkFlowRunId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workFlowRun\",\"kind\":\"object\",\"type\":\"WorkFlowRun\",\"relationName\":\"WorkFlowOutBoxToWorkFlowRun\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"workflows\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"UserToWorkFlow\"},{\"name\":\"conversations\",\"kind\":\"object\",\"type\":\"Conversation\",\"relationName\":\"ConversationToUser\"}],\"dbName\":null},\"WorkFlow\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"triggerId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToWorkFlow\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"triggerNodes\",\"kind\":\"object\",\"type\":\"TriggerNodes\",\"relationName\":\"TriggerNodesToWorkFlow\"},{\"name\":\"actionsNodes\",\"kind\":\"object\",\"type\":\"ActionNodes\",\"relationName\":\"ActionNodesToWorkFlow\"},{\"name\":\"workflowRun\",\"kind\":\"object\",\"type\":\"WorkFlowRun\",\"relationName\":\"WorkFlowToWorkFlowRun\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"TriggerNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workflow\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"TriggerNodesToWorkFlow\"},{\"name\":\"workflowId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"TriggerNodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"object\",\"type\":\"AvailableTriggerNodes\",\"relationName\":\"AvailableTriggerNodesToTriggerNodes\"}],\"dbName\":null},\"AvailableTriggerNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"TriggerNode\",\"kind\":\"object\",\"type\":\"TriggerNodes\",\"relationName\":\"AvailableTriggerNodesToTriggerNodes\"}],\"dbName\":null},\"ActionNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workflow\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"ActionNodesToWorkFlow\"},{\"name\":\"workflowId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ActionNodeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"sortingOrder\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"type\",\"kind\":\"object\",\"type\":\"AvailableActionNodes\",\"relationName\":\"ActionNodesToAvailableActionNodes\"}],\"dbName\":null},\"AvailableActionNodes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"actionNodes\",\"kind\":\"object\",\"type\":\"ActionNodes\",\"relationName\":\"ActionNodesToAvailableActionNodes\"}],\"dbName\":null},\"WorkFlowRun\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workflow\",\"kind\":\"object\",\"type\":\"WorkFlow\",\"relationName\":\"WorkFlowToWorkFlowRun\"},{\"name\":\"workflowId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"meta\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"outbox\",\"kind\":\"object\",\"type\":\"WorkFlowOutBox\",\"relationName\":\"WorkFlowOutBoxToWorkFlowRun\"}],\"dbName\":null},\"WorkFlowOutBox\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"WorkFlowRunId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"workFlowRun\",\"kind\":\"object\",\"type\":\"WorkFlowRun\",\"relationName\":\"WorkFlowOutBoxToWorkFlowRun\"}],\"dbName\":null},\"Conversation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ConversationToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"messages\",\"kind\":\"object\",\"type\":\"Message\",\"relationName\":\"ConversationToMessage\"}],\"dbName\":null},\"Message\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"conversation\",\"kind\":\"object\",\"type\":\"Conversation\",\"relationName\":\"ConversationToMessage\"},{\"name\":\"conversationId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
