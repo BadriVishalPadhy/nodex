@@ -42,6 +42,8 @@ services:
           await p.availableActionNodes.upsert({where:{id:'email'},create:{id:'email',name:'Email'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'telegram'},create:{id:'telegram',name:'Telegram'},update:{}});
           await p.availableActionNodes.upsert({where:{id:'discord'},create:{id:'discord',name:'Discord'},update:{}});
+          await p.availableActionNodes.upsert({where:{id:'ai-agent'},create:{id:'ai-agent',name:'AI Agent'},update:{}});
+
           console.log('Seeded');
           process.exit(0);
         })().catch(e => { console.error(e); process.exit(1); });
@@ -64,8 +66,10 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
       NODE_ENV: production
-      HELIUS_API_KEY: ${HELIUS_API_KEY:-}
-      HOOKS_BASE_URL: ${HOOKS_BASE_URL:-}
+
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY:-}
+      SENDGRID_FROM_EMAIL: ${SENDGRID_FROM_EMAIL:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
     depends_on:
       db-seed:
         condition: service_completed_successfully
@@ -80,12 +84,12 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://server:8000
+        NEXT_PUBLIC_API_URL: http://localhost:8000
     restart: always
     ports:
       - "3000:3000"
     environment:
-      NEXT_PUBLIC_API_URL: http://server:8000
+      NEXT_PUBLIC_API_URL: http://localhost:8000
     depends_on:
       - server
 
@@ -107,12 +111,12 @@ services:
       context: .
       dockerfile: apps/processor/Dockerfile
     restart: always
-    volumes:
-      - ./certs:/app/certs:ro
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      KAFKA_BROKER: ${KAFKA_BROKER:-localhost:9092}
+      KAFKA_BROKER: ${KAFKA_BROKER:?KAFKA_BROKER is required (e.g. your Aiven Kafka service URI)}
       KAFKA_CERTS_PATH: /app/certs
+    volumes:
+      - ./certs:/app/certs:ro
     depends_on:
       db-seed:
         condition: service_completed_successfully
@@ -122,15 +126,16 @@ services:
       context: .
       dockerfile: apps/workers/Dockerfile
     restart: always
-    volumes:
-      - ./certs:/app/certs:ro
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      KAFKA_BROKER: ${KAFKA_BROKER:-localhost:9092}
+      KAFKA_BROKER: ${KAFKA_BROKER:?KAFKA_BROKER is required (e.g. your Aiven Kafka service URI)}
       KAFKA_CERTS_PATH: /app/certs
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
       SENDGRID_API_KEY: ${SENDGRID_API_KEY:-}
       SENDGRID_FROM_EMAIL: ${SENDGRID_FROM_EMAIL:-}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    volumes:
+      - ./certs:/app/certs:ro
     depends_on:
       db-seed:
         condition: service_completed_successfully

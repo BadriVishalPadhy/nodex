@@ -6,9 +6,11 @@ WORKDIR /app
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml turbo.json ./
 COPY packages/db/package.json ./packages/db/package.json
 COPY packages/ui/package.json ./packages/ui/package.json
+COPY packages/typescript-config/package.json ./packages/typescript-config/package.json
+COPY packages/eslint-config/package.json ./packages/eslint-config/package.json
 COPY apps/web/package.json ./apps/web/package.json
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 COPY packages/ ./packages/
 COPY apps/web/ ./apps/web/
@@ -16,6 +18,10 @@ COPY apps/web/ ./apps/web/
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN cd apps/web && pnpm build
+
+# Drop root privileges (node:alpine ships a non-root `node` user)
+RUN chown -R node:node /app
+USER node
 
 EXPOSE 3000
 CMD ["pnpm", "--filter", "web", "start"]

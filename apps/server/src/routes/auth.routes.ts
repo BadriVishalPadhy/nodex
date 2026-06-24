@@ -3,12 +3,7 @@ import { signinSchema, signupSchema } from "../types/type";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import express from "express";
-import { Response, Request, NextFunction, Router } from "express";
-
-const app = express();
-
-app.use(express.json());
+import { Router } from "express";
 
 const authRouter: Router = Router();
 
@@ -82,10 +77,11 @@ authRouter.post("/signin", async (req, res) => {
       expiresIn: "24h",
     });
 
+    const isProd = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
       maxAge: 24 * 60 * 60 * 1000, // 24 hours — match JWT expiry
     });
 
@@ -99,6 +95,18 @@ authRouter.post("/signin", async (req, res) => {
     );
     return res.status(500).json({ error: "Internal server error" });
   }
+});
+
+authRouter.post("/signout", (req, res) => {
+  // clearCookie must mirror the attributes the cookie was set with
+  // (secure/sameSite/path) or the browser will not remove it.
+  const isProd = process.env.NODE_ENV === "production";
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
+  });
+  return res.json({ success: true });
 });
 
 export default authRouter;

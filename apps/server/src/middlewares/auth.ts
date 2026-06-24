@@ -5,8 +5,6 @@ import jwt from "jsonwebtoken";
 async function authMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     const token = req.cookies.token;
-    console.log("Auth middleware - cookies received:", req.cookies);
-    console.log("Auth middleware - token:", token ? "present" : "missing");
 
     if (!token) {
       return res.status(401).json({ error: "Authentication Required!" });

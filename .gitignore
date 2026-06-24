@@ -39,3 +39,6 @@ yarn-error.log*
 
 # Certificates
 certs/
+
+# Editor backup files
+*.save

@@ -176,20 +176,25 @@ exports.Prisma.WorkFlowOutBoxScalarFieldEnum = {
   WorkFlowRunId: 'WorkFlowRunId'
 };
 
-exports.Prisma.ConversationScalarFieldEnum = {
+exports.Prisma.ScheduledMessageScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
-  title: 'title',
+  channel: 'channel',
+  recipient: 'recipient',
+  message: 'message',
+  subject: 'subject',
+  username: 'username',
+  scheduledAt: 'scheduledAt',
+  status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  sentAt: 'sentAt',
+  error: 'error',
+  userId: 'userId'
 };
 
-exports.Prisma.MessageScalarFieldEnum = {
-  id: 'id',
-  conversationId: 'conversationId',
-  role: 'role',
-  content: 'content',
-  createdAt: 'createdAt'
+exports.Prisma.ProcessedStageScalarFieldEnum = {
+  workFlowRunId: 'workFlowRunId',
+  stage: 'stage',
+  processedAt: 'processedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -227,8 +232,8 @@ exports.Prisma.ModelName = {
   AvailableActionNodes: 'AvailableActionNodes',
   WorkFlowRun: 'WorkFlowRun',
   WorkFlowOutBox: 'WorkFlowOutBox',
-  Conversation: 'Conversation',
-  Message: 'Message'
+  ScheduledMessage: 'ScheduledMessage',
+  ProcessedStage: 'ProcessedStage'
 };
 
 /**

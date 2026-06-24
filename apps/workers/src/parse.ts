@@ -13,17 +13,30 @@ export function parse(
   while (endIndex < text.length) {
     if (text[startIndex] === startDelimeter) {
       let endPoint = startIndex + 2;
-      while (text[endPoint] !== endDelimeter) {
+      // Bound the scan: an unterminated delimiter (e.g. "{name" with no "}")
+      // would otherwise loop forever past the end of the string and hang the
+      // worker. Emit the remaining text literally and stop.
+      while (endPoint < text.length && text[endPoint] !== endDelimeter) {
         endPoint++;
+      }
+      if (endPoint >= text.length) {
+        finalString += text.slice(startIndex);
+        return finalString;
       }
       let stringHoldingValue = text.slice(startIndex + 1, endPoint);
       const keys = stringHoldingValue.split(".");
-      let localValues = {
+      let localValues: any = {
         ...values,
       };
       for (let i = 0; i < keys.length; i++) {
+        if (localValues == null) break;
         if (typeof localValues === "string") {
-          localValues = JSON.parse(localValues);
+          try {
+            localValues = JSON.parse(localValues);
+          } catch {
+            localValues = undefined;
+            break;
+          }
         }
         localValues = localValues[keys[i]!];
       }

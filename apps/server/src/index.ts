@@ -4,11 +4,24 @@ import authRouter from "./routes/auth.routes";
 import nodeRouter from "./routes/node.routes";
 import triggerRouter from "./routes/trigger.routes";
 import actionRouter from "./routes/action.routes";
-import heliusRouter from "./routes/helius.routes";
-import agentRouter from "./routes/agent.routes";
+import scheduleRouter from "./routes/schedule.routes";
+
+
 import cors from "cors";
 
 const PORT = 8000;
+
+// Fail fast on missing critical config rather than issuing/verifying
+// tokens against an undefined secret on every request.
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is required");
+}
+if (process.env.NODE_ENV !== "production") {
+  console.warn(
+    "NODE_ENV is not 'production'; auth cookies will be issued without Secure/SameSite=None",
+  );
+}
+
 const app = express();
 
 // Trust the first proxy (nginx) so Express sees the real protocol (HTTPS).
@@ -19,6 +32,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
+      "http://localhost:3001",
       "http://139.59.27.112:3000",
       "http://139.59.27.112",
       "http://nodex.codes:3000",
@@ -39,8 +53,9 @@ app.use("/api/v1/user", authRouter);
 app.use("/api/v1/workflow", nodeRouter);
 app.use("/api/v1/availableTrigger", triggerRouter);
 app.use("/api/v1/availableActions", actionRouter);
-app.use("/api/v1/helius", heliusRouter);
-app.use("/api/v1/agent", agentRouter);
+app.use("/api/v1/schedule", scheduleRouter);
+
+
 
 // Health check
 app.get("/health", (_req, res) => {

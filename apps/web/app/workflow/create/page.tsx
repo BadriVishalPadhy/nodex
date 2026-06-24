@@ -37,6 +37,18 @@ import {
   Check,
   AlertCircle,
   ArrowLeft,
+  Bot,
+  Code,
+  Brain,
+  Calculator,
+  Clock,
+  Trash2,
+  Key,
+  Shield,
+  FileOutput,
+  Settings,
+  Eye,
+  EyeOff,
   type LucideIcon,
 } from "lucide-react";
 import axios, { type AxiosError } from "axios";
@@ -54,7 +66,8 @@ type IconKey =
   | "file"
   | "api"
   | "telegram"
-  | "discord";
+  | "discord"
+  | "ai-agent";
 
 const iconMap: Record<IconKey, LucideIcon> = {
   webhook: Webhook,
@@ -66,6 +79,7 @@ const iconMap: Record<IconKey, LucideIcon> = {
   api: Zap,
   telegram: Send,
   discord: MessageCircle,
+  "ai-agent": Bot,
 };
 
 function NodeIcon({
@@ -99,6 +113,44 @@ interface CustomNodeData {
 }
 
 type CustomNodeType = Node<CustomNodeData, "custom">;
+
+// ── AI Agent Sub-Node Types ────────────────────────────────────────────────────
+
+interface AIAgentNodeData {
+  label: string;
+  subtitle: string;
+  type: "action";
+  availableActionId: "ai-agent";
+  metadata: Record<string, string>;
+  childCount: number;
+  onDelete: () => void;
+  onAdd: () => void;
+  onAddModel: () => void;
+  onAddMemory: () => void;
+  onAddTool: () => void;
+  onAddOutput: () => void;
+  modelAttached: boolean;
+  memoryAttached: boolean;
+  toolCount: number;
+  outputAttached: boolean;
+  [key: string]: unknown;
+}
+
+type AIAgentNodeType = Node<AIAgentNodeData, "aiAgent">;
+
+interface SubNodeData {
+  label: string;
+  subType: "model" | "memory" | "tool" | "output";
+  icon: string;
+  parentAgentId: string;
+  config: Record<string, string>;
+  onDelete: () => void;
+  [key: string]: unknown;
+}
+
+type SubNodeType = Node<SubNodeData, "subNode">;
+
+type AnyNodeType = CustomNodeType | AIAgentNodeType | SubNodeType;
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -136,7 +188,7 @@ function getErrorMessage(err: unknown): string {
 }
 
 function getChildPosition(
-  parent: CustomNodeType,
+  parent: Node,
   existingChildCount: number
 ): { x: number; y: number } {
   const baseX = parent.position.x;
@@ -197,6 +249,40 @@ function getDefaultMetadata(actionId: string): Record<string, string> {
         webhookUrl: "",
         content: "",
         username: "",
+      };
+    case "ai-agent":
+      return {
+        name: "AI Agent",
+        systemPrompt: [
+          "You are an AI agent with a Timer tool operating inside an automation workflow.",
+          "",
+          "Role:",
+          "- Process incoming requests and trigger events",
+          "- Extract timer/reminder/delay requests from natural language",
+          "- Schedule messages to be sent at specific times via email, telegram, or discord",
+          "",
+          "Timer Capabilities:",
+          "- Extract durations ('5 minutes', 'an hour', '30 seconds') and convert to total seconds",
+          "- Identify the specific task or reason for the timer",
+          "- Understand relative time ('in two hours', 'tomorrow at 3pm')",
+          "",
+          "Instructions:",
+          "- When a user asks to set a timer, reminder, or delay, use the set_timer tool",
+          "- Always convert time to seconds for delay_seconds",
+          "- If no reason given, use 'General Timer' as the default label",
+          "- Confirm to the user once the tool has executed",
+          "",
+          "Duration Conversions:",
+          "- 30 seconds = 30, 5 minutes = 300, 1 hour = 3600, 1 day = 86400",
+          "",
+          "Timer Behavior:",
+          "- Short timers (<=60s): Active wait, message sent immediately after delay",
+          "- Long timers (>60s): Scheduled in DB, background worker sends at scheduled time",
+          "",
+          "After setting a timer, confirm with: what will be sent, to whom, via which channel, and when.",
+        ].join("\n"),
+        model: "llama-3.3-70b-versatile",
+        maxSteps: "6",
       };
     default:
       return {};
@@ -281,8 +367,214 @@ function CustomNode({ data }: NodeProps<CustomNodeType>) {
   );
 }
 
+// ── AI Agent Compound Node ─────────────────────────────────────────────────────
+
+const TOOL_SUB_NODES = [
+  { id: "scheduleTimer", name: "Timer", icon: "clock", description: "Schedule message for a specific date/time" },
+];
+
+function getSubNodeIcon(iconId: string, className?: string) {
+  switch (iconId) {
+    case "calculator": return <Calculator className={className} />;
+    case "code": return <Code className={className} />;
+    case "clock": return <Clock className={className} />;
+    case "brain": return <Brain className={className} />;
+    case "email": return <Mail className={className} />;
+    case "discord": return <MessageCircle className={className} />;
+    case "telegram": return <Send className={className} />;
+    case "database": return <Database className={className} />;
+    case "output": return <FileOutput className={className} />;
+    case "key": return <Key className={className} />;
+    case "groq": return <span className={`font-bold text-sm ${className}`}>G</span>;
+    case "gemini": return <span className={`font-bold text-lg ${className}`}>G</span>;
+    default: return <Code className={className} />;
+  }
+}
+
+function AIAgentNode({ data }: NodeProps<AIAgentNodeType>) {
+  return (
+    <div className="relative group">
+      <Handle
+        type="target"
+        position={Position.Left}
+        className="w-4 h-4 !bg-neutral-600 !border-2 !border-neutral-500 hover:!bg-white transition-colors"
+      />
+
+      {/* Main Agent Box */}
+      <div className="bg-neutral-800/90 backdrop-blur-xl border-2 border-amber-500/30 rounded-2xl p-5 shadow-2xl min-w-[320px] hover:border-amber-500/50 transition-all">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-neutral-700 rounded-xl flex items-center justify-center">
+            <Bot className="w-7 h-7 text-white" />
+          </div>
+          <div>
+            <p className="text-white font-semibold text-base">{data.label}</p>
+            <p className="text-amber-400/70 text-xs">Groq Agent</p>
+          </div>
+        </div>
+
+        {/* Diamond Sub-Handles — 4 nodes */}
+        <div className="flex items-start justify-center gap-5 pt-3 border-t border-neutral-700/50">
+          {/* LLM (Groq) */}
+          <div className="flex flex-col items-center gap-1">
+            <button
+              onClick={data.onAddModel}
+              className={`w-7 h-7 rotate-45 border-2 flex items-center justify-center transition-all ${
+                data.modelAttached
+                  ? "bg-emerald-500/20 border-emerald-500/50"
+                  : "bg-neutral-700 border-neutral-500 hover:border-white/50"
+              }`}
+            >
+              {data.modelAttached ? (
+                <Check className="w-3 h-3 -rotate-45 text-emerald-400" />
+              ) : (
+                <Plus className="w-3 h-3 -rotate-45 text-neutral-400" />
+              )}
+            </button>
+            <span className="text-[9px] text-neutral-500 mt-1">
+              LLM{!data.modelAttached && <span className="text-red-400">*</span>}
+            </span>
+          </div>
+
+          {/* Memory (PostgreSQL) */}
+          <div className="flex flex-col items-center gap-1">
+            <button
+              onClick={data.onAddMemory}
+              className={`w-7 h-7 rotate-45 border-2 flex items-center justify-center transition-all ${
+                data.memoryAttached
+                  ? "bg-blue-500/20 border-blue-500/50"
+                  : "bg-neutral-700 border-neutral-500 hover:border-white/50"
+              }`}
+            >
+              {data.memoryAttached ? (
+                <Check className="w-3 h-3 -rotate-45 text-blue-400" />
+              ) : (
+                <Plus className="w-3 h-3 -rotate-45 text-neutral-400" />
+              )}
+            </button>
+            <span className="text-[9px] text-neutral-500 mt-1">Memory</span>
+          </div>
+
+          {/* Tool */}
+          <div className="flex flex-col items-center gap-1">
+            <button
+              onClick={data.onAddTool}
+              className={`w-7 h-7 rotate-45 border-2 flex items-center justify-center transition-all ${
+                data.toolCount > 0
+                  ? "bg-violet-500/20 border-violet-500/50 hover:border-violet-400"
+                  : "bg-neutral-700 border-neutral-500 hover:border-white/50"
+              }`}
+            >
+              {data.toolCount > 0 ? (
+                <span className="text-[8px] -rotate-45 text-violet-400 font-bold">{data.toolCount}</span>
+              ) : (
+                <Plus className="w-3 h-3 -rotate-45 text-neutral-400" />
+              )}
+            </button>
+            <span className="text-[9px] text-neutral-500 mt-1">Tools</span>
+          </div>
+
+          {/* Output */}
+          <div className="flex flex-col items-center gap-1">
+            <button
+              onClick={data.onAddOutput}
+              className={`w-7 h-7 rotate-45 border-2 flex items-center justify-center transition-all ${
+                data.outputAttached
+                  ? "bg-orange-500/20 border-orange-500/50"
+                  : "bg-neutral-700 border-neutral-500 hover:border-white/50"
+              }`}
+            >
+              {data.outputAttached ? (
+                <Check className="w-3 h-3 -rotate-45 text-orange-400" />
+              ) : (
+                <Plus className="w-3 h-3 -rotate-45 text-neutral-400" />
+              )}
+            </button>
+            <span className="text-[9px] text-neutral-500 mt-1">Output</span>
+          </div>
+        </div>
+      </div>
+
+      <Handle
+        type="source"
+        position={Position.Right}
+        className="w-4 h-4 !bg-neutral-600 !border-2 !border-neutral-500 hover:!bg-white transition-colors"
+      />
+
+      {/* Delete button */}
+      <button
+        onClick={data.onDelete}
+        className="absolute top-2 right-2 p-1 hover:bg-red-500/20 rounded transition-colors opacity-0 group-hover:opacity-100"
+      >
+        <X className="w-3.5 h-3.5 text-neutral-500 hover:text-red-400" />
+      </button>
+
+      {/* Add next action button */}
+      <button
+        className="absolute -right-4 top-8 w-7 h-7 bg-white hover:bg-neutral-200 border border-neutral-300 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-[0_0_12px_rgba(255,255,255,0.1)]"
+        onClick={data.onAdd}
+        title="Add action from this node"
+      >
+        <Plus className="w-4 h-4 text-black" />
+      </button>
+    </div>
+  );
+}
+
+
+// ── Sub-Node Component ─────────────────────────────────────────────────────────
+
+function SubNode({ data }: NodeProps<SubNodeType>) {
+  const colorMap = {
+    model:  { border: "border-emerald-500/40", bg: "bg-emerald-500/5", accent: "text-emerald-400", ring: "ring-emerald-500/20" },
+    memory: { border: "border-blue-500/40",    bg: "bg-blue-500/5",    accent: "text-blue-400",    ring: "ring-blue-500/20" },
+    tool:   { border: "border-violet-500/40",  bg: "bg-violet-500/5",  accent: "text-violet-400",  ring: "ring-violet-500/20" },
+    output: { border: "border-orange-500/40",  bg: "bg-orange-500/5",  accent: "text-orange-400",  ring: "ring-orange-500/20" },
+  };
+  const colors = colorMap[data.subType] || colorMap.tool;
+
+  return (
+    <div className="relative group flex flex-col items-center">
+      {/* Circular node */}
+      <div
+        className={`w-16 h-16 rounded-full ${colors.bg} border-2 ${colors.border} flex items-center justify-center shadow-lg ring-4 ${colors.ring} hover:scale-105 transition-all cursor-default`}
+      >
+        {getSubNodeIcon(data.icon, `w-6 h-6 ${colors.accent}`)}
+
+        {/* Checkmark badge */}
+        <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center border-2 border-neutral-900">
+          <Check className="w-3 h-3 text-white" />
+        </div>
+      </div>
+
+      {/* Label */}
+      <div className="mt-2 text-center">
+        <p className={`text-xs font-medium ${colors.accent}`}>{data.label}</p>
+        {data.subType === "model" && (
+          <p className="text-[9px] text-neutral-600">Groq LLM</p>
+        )}
+        {data.subType === "memory" && (
+          <p className="text-[9px] text-neutral-600">PostgreSQL</p>
+        )}
+        {data.subType === "output" && (
+          <p className="text-[9px] text-neutral-600">Response Format</p>
+        )}
+      </div>
+
+      {/* Delete button */}
+      <button
+        onClick={data.onDelete}
+        className="absolute -top-1 -right-1 w-5 h-5 bg-red-500/80 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
+      >
+        <X className="w-3 h-3 text-white" />
+      </button>
+    </div>
+  );
+}
+
 const nodeTypes = {
   custom: CustomNode,
+  aiAgent: AIAgentNode,
+  subNode: SubNode,
 };
 
 // ── Toast Types ────────────────────────────────────────────────────────────────
@@ -299,7 +591,7 @@ let toastIdCounter = 0;
 
 export default function WorkflowBuilder() {
   const router = useRouter();
-  const [nodes, setNodes, onNodesChange] = useNodesState<CustomNodeType>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarType, setSidebarType] = useState<"trigger" | "action">(
@@ -314,6 +606,8 @@ export default function WorkflowBuilder() {
   const [metadata, setMetadata] = useState<Record<string, string>>({});
   const [addAfterNodeId, setAddAfterNodeId] = useState<string | null>(null);
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [toolPickerOpen, setToolPickerOpen] = useState(false);
+  const [toolPickerAgentId, setToolPickerAgentId] = useState<string | null>(null);
 
   const addToast = (message: string, type: "success" | "error" | "info") => {
     const id = ++toastIdCounter;
@@ -452,18 +746,276 @@ export default function WorkflowBuilder() {
       return;
     }
 
+    // Removed ai-agent auto-skip logic to allow modal to open
+
     setSelectedItem(item);
     setMetadata(defaultMeta);
     setSidebarOpen(false);
     setModalOpen(true);
   }
 
+  // ── AI Agent: Add Model Sub-Node (Groq LLM) ───────────────────────────────
+
+  function addModelSubNode(agentNodeId: string): void {
+    const agentNode = nodes.find((n) => n.id === agentNodeId);
+    if (!agentNode) return;
+
+    const existingModel = nodes.find(
+      (n) => n.type === "subNode" && (n.data as any).subType === "model" && (n.data as any).parentAgentId === agentNodeId
+    );
+    if (existingModel) {
+      addToast("LLM already attached", "info");
+      return;
+    }
+
+    const subId = `sub-model-${Date.now()}`;
+    const subNode: SubNodeType = {
+      id: subId,
+      type: "subNode",
+      position: {
+        x: agentNode.position.x - 100,
+        y: agentNode.position.y + 240,
+      },
+      data: {
+        label: "Groq\nLLaMA 3.3 70B",
+        subType: "model",
+        icon: "groq",
+        parentAgentId: agentNodeId,
+        config: { provider: "groq", model: "llama-3.3-70b-versatile" },
+        onDelete: () => deleteSubNode(subId, agentNodeId),
+      },
+    };
+
+    setNodes((nds) =>
+      [...nds, subNode].map((n) =>
+        n.id === agentNodeId && n.type === "aiAgent"
+          ? { ...n, data: { ...(n.data as AIAgentNodeData), modelAttached: true } }
+          : n
+      )
+    );
+    setEdges((eds) => [
+      ...eds,
+      {
+        id: `sub-edge-${agentNodeId}-${subId}`,
+        source: agentNodeId,
+        target: subId,
+        type: "smoothstep",
+        animated: false,
+        style: { stroke: "#10b981", strokeWidth: 2, strokeDasharray: "6, 4" },
+      },
+    ]);
+    addToast("Groq LLM attached — configure API key in settings", "success");
+  }
+
+  // ── AI Agent: Add Memory Sub-Node (PostgreSQL) ────────────────────────────
+
+  function addMemorySubNode(agentNodeId: string): void {
+    const agentNode = nodes.find((n) => n.id === agentNodeId);
+    if (!agentNode) return;
+
+    const existingMemory = nodes.find(
+      (n) => n.type === "subNode" && (n.data as any).subType === "memory" && (n.data as any).parentAgentId === agentNodeId
+    );
+    if (existingMemory) {
+      addToast("Memory already attached", "info");
+      return;
+    }
+
+    const subId = `sub-memory-${Date.now()}`;
+    const subNode: SubNodeType = {
+      id: subId,
+      type: "subNode",
+      position: {
+        x: agentNode.position.x - 10,
+        y: agentNode.position.y + 240,
+      },
+      data: {
+        label: "PostgreSQL\nMemory",
+        subType: "memory",
+        icon: "database",
+        parentAgentId: agentNodeId,
+        config: { type: "postgres", windowSize: "20" },
+        onDelete: () => deleteSubNode(subId, agentNodeId),
+      },
+    };
+
+    setNodes((nds) =>
+      [...nds, subNode].map((n) =>
+        n.id === agentNodeId && n.type === "aiAgent"
+          ? { ...n, data: { ...(n.data as AIAgentNodeData), memoryAttached: true } }
+          : n
+      )
+    );
+    setEdges((eds) => [
+      ...eds,
+      {
+        id: `sub-edge-${agentNodeId}-${subId}`,
+        source: agentNodeId,
+        target: subId,
+        type: "smoothstep",
+        animated: false,
+        style: { stroke: "#3b82f6", strokeWidth: 2, strokeDasharray: "6, 4" },
+      },
+    ]);
+    addToast("PostgreSQL Memory attached", "success");
+  }
+
+  // ── AI Agent: Add Output Sub-Node ─────────────────────────────────────────
+
+  function addOutputSubNode(agentNodeId: string): void {
+    const agentNode = nodes.find((n) => n.id === agentNodeId);
+    if (!agentNode) return;
+
+    const existingOutput = nodes.find(
+      (n) => n.type === "subNode" && (n.data as any).subType === "output" && (n.data as any).parentAgentId === agentNodeId
+    );
+    if (existingOutput) {
+      addToast("Output already attached", "info");
+      return;
+    }
+
+    const subId = `sub-output-${Date.now()}`;
+    const subNode: SubNodeType = {
+      id: subId,
+      type: "subNode",
+      position: {
+        x: agentNode.position.x + 230,
+        y: agentNode.position.y + 240,
+      },
+      data: {
+        label: "Text\nOutput",
+        subType: "output",
+        icon: "output",
+        parentAgentId: agentNodeId,
+        config: { format: "text" },
+        onDelete: () => deleteSubNode(subId, agentNodeId),
+      },
+    };
+
+    setNodes((nds) =>
+      [...nds, subNode].map((n) =>
+        n.id === agentNodeId && n.type === "aiAgent"
+          ? { ...n, data: { ...(n.data as AIAgentNodeData), outputAttached: true } }
+          : n
+      )
+    );
+    setEdges((eds) => [
+      ...eds,
+      {
+        id: `sub-edge-${agentNodeId}-${subId}`,
+        source: agentNodeId,
+        target: subId,
+        type: "smoothstep",
+        animated: false,
+        style: { stroke: "#f97316", strokeWidth: 2, strokeDasharray: "6, 4" },
+      },
+    ]);
+    addToast("Output format attached", "success");
+  }
+
+  // ── AI Agent: Open Tool Picker ────────────────────────────────────────────
+
+  function openToolPicker(agentNodeId: string): void {
+    setToolPickerAgentId(agentNodeId);
+    setToolPickerOpen(true);
+  }
+
+  // ── AI Agent: Add Tool Sub-Node ───────────────────────────────────────────
+
+  function addToolSubNode(agentNodeId: string, toolDef: typeof TOOL_SUB_NODES[0]): void {
+    const agentNode = nodes.find((n) => n.id === agentNodeId);
+    if (!agentNode) return;
+
+    // Count existing tool sub-nodes for this agent
+    const existingTools = nodes.filter(
+      (n) => n.type === "subNode" && (n.data as any).subType === "tool" && (n.data as any).parentAgentId === agentNodeId
+    );
+
+    // Check if this tool is already added
+    if (existingTools.some((n) => (n.data as any).config?.toolId === toolDef.id)) {
+      addToast(`${toolDef.name} already added`, "info");
+      return;
+    }
+
+    const subId = `sub-tool-${Date.now()}`;
+    const offsetX = existingTools.length * 90;
+    const subNode: SubNodeType = {
+      id: subId,
+      type: "subNode",
+      position: {
+        x: agentNode.position.x + 100 + offsetX,
+        y: agentNode.position.y + 220,
+      },
+      data: {
+        label: toolDef.name,
+        subType: "tool",
+        icon: toolDef.icon,
+        parentAgentId: agentNodeId,
+        config: { toolId: toolDef.id },
+        onDelete: () => deleteSubNode(subId, agentNodeId),
+      },
+    };
+
+    setNodes((nds) =>
+      [...nds, subNode].map((n) =>
+        n.id === agentNodeId && n.type === "aiAgent"
+          ? { ...n, data: { ...(n.data as AIAgentNodeData), toolCount: existingTools.length + 1 } }
+          : n
+      )
+    );
+    setEdges((eds) => [
+      ...eds,
+      {
+        id: `sub-edge-${agentNodeId}-${subId}`,
+        source: agentNodeId,
+        target: subId,
+        type: "smoothstep",
+        animated: false,
+        style: { stroke: "#8b5cf6", strokeWidth: 2, strokeDasharray: "6, 4" },
+      },
+    ]);
+    addToast(`${toolDef.name} tool added`, "success");
+  }
+
+  // ── Delete Sub-Node ────────────────────────────────────────────────────────
+
+  function deleteSubNode(subNodeId: string, agentNodeId: string): void {
+    const subNode = nodes.find((n) => n.id === subNodeId);
+    const subType = subNode ? (subNode.data as any).subType : null;
+
+    setNodes((nds) => {
+      const filtered = nds.filter((n) => n.id !== subNodeId);
+      return filtered.map((n) => {
+        if (n.id === agentNodeId && n.type === "aiAgent") {
+          const agentData = n.data as AIAgentNodeData;
+          if (subType === "model") {
+            return { ...n, data: { ...agentData, modelAttached: false } };
+          } else if (subType === "memory") {
+            return { ...n, data: { ...agentData, memoryAttached: false } };
+          } else if (subType === "tool") {
+            return { ...n, data: { ...agentData, toolCount: Math.max(0, agentData.toolCount - 1) } };
+          } else if (subType === "output") {
+            return { ...n, data: { ...agentData, outputAttached: false } };
+          }
+        }
+        return n;
+      });
+    });
+    setEdges((eds) => eds.filter((e) => e.source !== subNodeId && e.target !== subNodeId));
+  }
+
   // ── Delete node ────────────────────────────────────────────────────────────
 
   function deleteNode(nodeId: string): void {
-    setNodes((nds) => nds.filter((n) => n.id !== nodeId));
+    // If deleting an AI Agent, also delete all its sub-nodes
+    const subNodeIds = nodes
+      .filter((n) => n.type === "subNode" && (n.data as any).parentAgentId === nodeId)
+      .map((n) => n.id);
+    const idsToDelete = new Set([nodeId, ...subNodeIds]);
+
+    setNodes((nds) => nds.filter((n) => !idsToDelete.has(n.id)));
     setEdges((eds) =>
-      eds.filter((e) => e.source !== nodeId && e.target !== nodeId)
+      eds.filter((e) => !idsToDelete.has(e.source) && !idsToDelete.has(e.target))
     );
     setTimeout(refreshChildCounts, 0);
   }
@@ -493,6 +1045,133 @@ export default function WorkflowBuilder() {
       position = getChildPosition(parentNode, existingChildren);
     } else {
       position = { x: 400, y: 80 };
+    }
+
+    if (selectedItem.id === "ai-agent") {
+      const ts = Date.now();
+      const modelSubId = `sub-model-${ts}`;
+      const memorySubId = `sub-memory-${ts + 1}`;
+      const timerSubId = `sub-tool-${ts + 2}`;
+
+      const agentNode: AIAgentNodeType = {
+        id: nodeId,
+        type: "aiAgent",
+        position,
+        data: {
+          label: "AI Agent",
+          subtitle: "Tools Agent",
+          type: "action",
+          availableActionId: "ai-agent",
+          metadata: metadata, // Use the configured metadata from the modal!
+          childCount: 0,
+          onDelete: () => deleteNode(nodeId),
+          onAdd: () => handleAddFromNode(nodeId),
+          onAddModel: () => addModelSubNode(nodeId),
+          onAddMemory: () => addMemorySubNode(nodeId),
+          onAddTool: () => openToolPicker(nodeId),
+          onAddOutput: () => addOutputSubNode(nodeId),
+          modelAttached: true,
+          memoryAttached: true,
+          toolCount: 1,
+          outputAttached: false,
+        },
+      };
+
+      const modelSub: SubNodeType = {
+        id: modelSubId,
+        type: "subNode",
+        position: { x: position.x - 100, y: position.y + 240 },
+        data: {
+          label: "Groq\nLLaMA 3.3 70B",
+          subType: "model",
+          icon: "groq",
+          parentAgentId: nodeId,
+          config: { provider: "groq", model: "llama-3.3-70b-versatile" },
+          onDelete: () => deleteSubNode(modelSubId, nodeId),
+        },
+      };
+
+      const memorySub: SubNodeType = {
+        id: memorySubId,
+        type: "subNode",
+        position: { x: position.x - 10, y: position.y + 240 },
+        data: {
+          label: "PostgreSQL\nMemory",
+          subType: "memory",
+          icon: "database",
+          parentAgentId: nodeId,
+          config: { type: "postgres", windowSize: "20" },
+          onDelete: () => deleteSubNode(memorySubId, nodeId),
+        },
+      };
+
+      const timerSub: SubNodeType = {
+        id: timerSubId,
+        type: "subNode",
+        position: { x: position.x + 100, y: position.y + 220 },
+        data: {
+          label: "Timer",
+          subType: "tool",
+          icon: "clock",
+          parentAgentId: nodeId,
+          config: { toolId: "scheduleTimer" },
+          onDelete: () => deleteSubNode(timerSubId, nodeId),
+        },
+      };
+
+      setNodes((nds) => {
+        const updated = [...nds, agentNode as any, modelSub as any, memorySub as any, timerSub as any];
+        if (parentNode) {
+          return updated.map((n) =>
+            n.id === parentNode.id
+              ? { ...n, data: { ...n.data, childCount: countChildren(parentNode.id) + 1 } }
+              : n
+          );
+        }
+        return updated;
+      });
+
+      const subEdges = [
+        {
+          id: `sub-edge-${nodeId}-${modelSubId}`,
+          source: nodeId,
+          target: modelSubId,
+          type: "smoothstep",
+          animated: false,
+          style: { stroke: "#10b981", strokeWidth: 2, strokeDasharray: "6, 4" },
+        },
+        {
+          id: `sub-edge-${nodeId}-${memorySubId}`,
+          source: nodeId,
+          target: memorySubId,
+          type: "smoothstep",
+          animated: false,
+          style: { stroke: "#3b82f6", strokeWidth: 2, strokeDasharray: "6, 4" },
+        },
+        {
+          id: `sub-edge-${nodeId}-${timerSubId}`,
+          source: nodeId,
+          target: timerSubId,
+          type: "smoothstep",
+          animated: false,
+          style: { stroke: "#8b5cf6", strokeWidth: 2, strokeDasharray: "6, 4" },
+        },
+      ];
+
+      setEdges((eds) => {
+        const newEdges = [...eds, ...subEdges];
+        if (parentNode) {
+          return [...newEdges, createEdge(parentNode.id, nodeId)];
+        }
+        return newEdges;
+      });
+      
+      setModalOpen(false);
+      setSelectedItem(null);
+      setMetadata({});
+      setAddAfterNodeId(null);
+      addToast("AI Agent added with Groq LLM, PostgreSQL Memory, and Timer tool", "success");
+      return;
     }
 
     const newNode: CustomNodeType = {
@@ -533,8 +1212,8 @@ export default function WorkflowBuilder() {
   // ── Save workflow ──────────────────────────────────────────────────────────
 
   async function saveWorkflow(): Promise<void> {
-    const triggerNode = nodes.find((n) => n.data.type === "trigger");
-    const actionNodes = nodes.filter((n) => n.data.type === "action");
+    const triggerNode = nodes.find((n) => (n.data as any).type === "trigger");
+    const actionNodes = nodes.filter((n) => (n.data as any).type === "action");
 
     if (!triggerNode) {
       addToast("Please add a trigger first!", "error");
@@ -593,27 +1272,6 @@ export default function WorkflowBuilder() {
         withCredentials: true,
       });
 
-      // Auto-register Helius webhook if trigger has a wallet address
-      const walletAddress = triggerNode.data.metadata?.walletAddress;
-      if (walletAddress && walletAddress.trim().length > 0) {
-        try {
-          await axios.post(
-            `${API_BASE_URL}/api/v1/helius/register`,
-            {
-              workflowId: saveRes.data.workflowId,
-              walletAddress: walletAddress.trim(),
-            },
-            { withCredentials: true }
-          );
-          addToast("Wallet tracking registered via Helius!", "success");
-        } catch (heliusErr: unknown) {
-          addToast(
-            `Workflow saved but Helius registration failed: ${getErrorMessage(heliusErr)}`,
-            "error"
-          );
-        }
-      }
-
       addToast("Workflow saved successfully!", "success");
       setTimeout(() => router.push("/dashboard"), 1500);
     } catch (err: unknown) {
@@ -637,9 +1295,9 @@ export default function WorkflowBuilder() {
   // ── Derived state ──────────────────────────────────────────────────────────
 
   const currentItems = sidebarType === "trigger" ? triggers : actions;
-  const hasTrigger = nodes.some((n) => n.data.type === "trigger");
+  const hasTrigger = nodes.some((n) => (n.data as any).type === "trigger");
   const parentNodeLabel = addAfterNodeId
-    ? nodes.find((n) => n.id === addAfterNodeId)?.data.label
+    ? (nodes.find((n) => n.id === addAfterNodeId)?.data as any)?.label
     : null;
 
   // ── Render ─────────────────────────────────────────────────────────────────
@@ -726,7 +1384,68 @@ export default function WorkflowBuilder() {
                   Save
                 </button>
                 <button
-                  onClick={() => addToast("Execute workflow (coming soon)", "info")}
+                  onClick={async () => {
+                    // First save the workflow to get a workflow ID
+                    try {
+                      const triggerNode = nodes.find((n) => (n.data as any).type === "trigger");
+                      if (!triggerNode) {
+                        addToast("You must add a Trigger node first.", "error"); return;
+                      }
+                      
+                      const childrenMap = new Map<string, string[]>();
+                      for (const edge of edges) {
+                        const existing = childrenMap.get(edge.source) ?? [];
+                        existing.push(edge.target);
+                        childrenMap.set(edge.source, existing);
+                      }
+                      const orderedActionIds: string[] = [];
+                      const queue = [triggerNode.id];
+                      const visited = new Set<string>();
+                      while (queue.length > 0) {
+                        const current = queue.shift()!;
+                        if (visited.has(current)) continue;
+                        visited.add(current);
+                        const node = nodes.find((n) => n.id === current);
+                        if (node && (node.data as any).type === "action") {
+                          orderedActionIds.push(current);
+                        }
+                        const children = childrenMap.get(current) ?? [];
+                        queue.push(...children);
+                      }
+
+                      if (orderedActionIds.length === 0) {
+                        addToast("Warning: No actions connected to the trigger", "error");
+                        return; // Prevent running empty workflows
+                      }
+
+                      const payload = {
+                        availableTriggerId: (triggerNode.data as any).availableActionId,
+                        triggerMeta: triggerNode.data.metadata,
+                        actions: orderedActionIds.map((id, index) => {
+                          const node = nodes.find((n) => n.id === id)!;
+                          return {
+                            availableActionId: (node.data as any).availableActionId,
+                            actionMeta: node.data.metadata,
+                            sortingOrder: index,
+                          };
+                        }),
+                      };
+
+                      addToast("Saving workflow...", "info");
+                      const saveRes = await axios.post(`${API_BASE_URL}/api/v1/workflow`, payload, { withCredentials: true });
+                      const newWorkflowId = saveRes.data.workflowId || saveRes.data.workflow?.id || saveRes.data.id;
+                      
+                      if (!newWorkflowId) {
+                        addToast("Failed to create workflow to execute", "error"); return;
+                      }
+
+                      addToast("Running workflow...", "info");
+                      await axios.post(`${API_BASE_URL}/api/v1/workflow/${newWorkflowId}/execute`, {}, { withCredentials: true });
+                      addToast("Workflow executed successfully!", "success");
+                    } catch (err: unknown) {
+                      addToast(`Execute failed: ${(err as any)?.response?.data?.error || (err as any).message}`, "error");
+                    }
+                  }}
                   className="px-4 py-2 bg-neutral-900/80 backdrop-blur-xl border border-neutral-800 hover:border-neutral-700 text-white rounded-xl transition-all flex items-center gap-2 text-sm font-medium"
                 >
                   <PlayCircle className="w-4 h-4" />
@@ -855,6 +1574,77 @@ export default function WorkflowBuilder() {
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
           onClick={closeSidebar}
         />
+      )}
+
+      {/* ── Tool Picker Panel ──────────────────────────────────────────── */}
+      {toolPickerOpen && toolPickerAgentId && (
+        <div className="fixed inset-0 flex items-center justify-center z-[60]">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setToolPickerOpen(false)}
+          />
+          <div className="relative bg-neutral-900/95 backdrop-blur-2xl border border-neutral-800 rounded-2xl shadow-2xl shadow-black/50 w-[400px] max-h-[500px] overflow-hidden">
+            <div className="flex items-center justify-between p-5 border-b border-neutral-800">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 bg-violet-500/10 border border-violet-500/30 rounded-lg flex items-center justify-center">
+                  <Code className="w-5 h-5 text-violet-400" />
+                </div>
+                <div>
+                  <h2 className="text-base font-semibold text-white">Add Tool</h2>
+                  <p className="text-neutral-500 text-xs">Select a tool for the agent</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setToolPickerOpen(false)}
+                className="p-2 hover:bg-neutral-800 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5 text-neutral-400" />
+              </button>
+            </div>
+            <div className="p-3 space-y-1.5 overflow-y-auto max-h-[380px]">
+              {TOOL_SUB_NODES.map((toolDef) => {
+                const alreadyAdded = nodes.some(
+                  (n) => n.type === "subNode" && (n.data as any).config?.toolId === toolDef.id && (n.data as any).parentAgentId === toolPickerAgentId
+                );
+                return (
+                  <button
+                    key={toolDef.id}
+                    onClick={() => {
+                      if (!alreadyAdded) {
+                        addToolSubNode(toolPickerAgentId, toolDef);
+                      }
+                    }}
+                    disabled={alreadyAdded}
+                    className={`w-full p-3 rounded-xl transition-all flex items-center gap-3 group/tool ${
+                      alreadyAdded
+                        ? "bg-violet-500/5 border border-violet-500/20 opacity-60 cursor-default"
+                        : "bg-neutral-800/50 hover:bg-neutral-800 border border-neutral-800 hover:border-violet-500/30"
+                    }`}
+                  >
+                    <div className={`w-9 h-9 rounded-full flex items-center justify-center border ${
+                      alreadyAdded
+                        ? "bg-violet-500/10 border-violet-500/30"
+                        : "bg-neutral-700 border-neutral-600 group-hover/tool:border-violet-500/30"
+                    }`}>
+                      {getSubNodeIcon(toolDef.icon, `w-4 h-4 ${
+                        alreadyAdded ? "text-violet-400" : "text-neutral-400 group-hover/tool:text-violet-400"
+                      }`)}
+                    </div>
+                    <div className="text-left flex-1">
+                      <p className="text-white text-sm font-medium">{toolDef.name}</p>
+                      <p className="text-neutral-500 text-[10px]">{toolDef.description}</p>
+                    </div>
+                    {alreadyAdded && (
+                      <div className="w-5 h-5 bg-violet-500 rounded-full flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* ── Modal ────────────────────────────────────────────────────────── */}
@@ -1068,6 +1858,84 @@ export default function WorkflowBuilder() {
                 </>
               )}
 
+              {/* ── AI Agent fields ──────────────────────────────────── */}
+              {selectedItem.id === "ai-agent" && (
+                <>
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
+                      Task Instruction (Optional)
+                    </label>
+                    <textarea
+                      value={metadata.taskInstruction ?? ""}
+                      onChange={(e) =>
+                        setMetadata({ ...metadata, taskInstruction: e.target.value })
+                      }
+                      rows={3}
+                      placeholder="e.g. Set a timer for 2 minutes to send a Telegram message to 1225009749 saying hello"
+                      className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all text-sm mb-4"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
+                      System Prompt
+                    </label>
+                    <textarea
+                      value={metadata.systemPrompt ?? ""}
+                      onChange={(e) =>
+                        setMetadata({ ...metadata, systemPrompt: e.target.value })
+                      }
+                      rows={10}
+                      placeholder="Define the agent's role, capabilities, and behavior..."
+                      className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all resize-none font-mono text-xs leading-relaxed"
+                    />
+                    <p className="text-neutral-600 text-[10px] mt-1.5">
+                      Instructions that define how the agent behaves when this workflow runs
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
+                        Model
+                      </label>
+                      <select
+                        value={metadata.model ?? "llama-3.3-70b-versatile"}
+                        onChange={(e) =>
+                          setMetadata({ ...metadata, model: e.target.value })
+                        }
+                        className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all text-sm appearance-none cursor-pointer"
+                      >
+                        <option value="llama-3.3-70b-versatile">LLaMA 3.3 70B</option>
+                        <option value="llama-3.1-8b-instant">LLaMA 3.1 8B</option>
+                        <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">
+                        Max Steps
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        max="20"
+                        value={metadata.maxSteps ?? "6"}
+                        onChange={(e) =>
+                          setMetadata({ ...metadata, maxSteps: e.target.value })
+                        }
+                        className="w-full px-4 py-2.5 bg-neutral-800/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all text-sm"
+                      />
+                      <p className="text-neutral-600 text-[10px] mt-1.5">
+                        Max tool-call rounds before stopping
+                      </p>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-violet-500/5 border border-violet-500/15 rounded-xl">
+                    <p className="text-violet-400 text-xs font-medium mb-1">Available Tools</p>
+                    <p className="text-neutral-500 text-[10px] leading-relaxed">
+                      Timer — schedule messages to be sent at a specific date and time via Email, Telegram, or Discord.
+                    </p>
+                  </div>
+                </>
+              )}
 
               {/* Description */}
               <div>

@@ -1,31 +1,11 @@
-import { User } from "@repo/db";
-
 declare global {
   namespace Express {
     interface Request {
       user?: {
-        id: userId;
+        id: string;
         name: string | null;
         email: string;
       };
-    }
-  }
-}
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        userId: string;
-      };
-    }
-  }
-}
-
-declare global {
-  namespace Express {
-    interface Request {
-      id: string;
     }
   }
 }

@@ -11,6 +11,17 @@ export const signinSchema = z.object({
   password: z.string(),
 });
 
+export const scheduleCreateSchema = z.object({
+  channel: z.enum(["email", "telegram", "discord"]),
+  recipient: z.string().min(1).max(500),
+  message: z.string().min(1).max(4000),
+  subject: z.string().max(255).optional(),
+  username: z.string().max(80).optional(),
+  scheduledAt: z.coerce
+    .date()
+    .refine((d) => d > new Date(), "scheduledAt must be in the future"),
+});
+
 export const nodeCreateSchema = z.object({
   availableTriggerId: z.string(),
   triggerMeta: z.any().optional(),

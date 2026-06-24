@@ -6,69 +6,22 @@ app.use(express.json());
 const PORT = 4000;
 
 /**
- * Automatically extract human-readable fields from a Helius enhanced payload.
- * This means users can just use {fromWallet}, {toWallet}, {amount}, {signature}
- * in their email/telegram templates — no manual filling needed.
+ * Flatten the incoming webhook payload into clean template variables.
+ * Top-level keys are stringified so users can reference {key} in templates.
  */
-function flattenHeliusMeta(body: any): Record<string, string> {
-  // Helius sends an array of transactions
+function flattenWebhookMeta(body: any): Record<string, string> {
   const payload = Array.isArray(body) ? body[0] : body;
 
-  if (!payload) return body;
+  // Always return a well-formed object — a falsy/non-object body (empty array,
+  // missing Content-Type, etc.) must not leak a non-Record value into meta,
+  // which the worker's parse() later indexes by key.
+  if (!payload || typeof payload !== "object") return {};
 
-  // If it's not a Helius payload (no signature field), store as-is
-  if (!payload.signature) {
-    // Regular webhook — flatten top-level keys
-    const flat: Record<string, string> = {};
-    for (const [key, value] of Object.entries(payload)) {
-      flat[key] = String(value);
-    }
-    return flat;
+  const flat: Record<string, string> = {};
+  for (const [key, value] of Object.entries(payload)) {
+    flat[key] = String(value);
   }
-
-  // ── It's a Helius enhanced transaction ──────────────────────────────
-  const nativeTransfer = payload.nativeTransfers?.[0];
-  const tokenTransfer = payload.tokenTransfers?.[0];
-
-  const fromWallet =
-    nativeTransfer?.fromUserAccount ??
-    tokenTransfer?.fromUserAccount ??
-    "unknown";
-
-  const toWallet =
-    nativeTransfer?.toUserAccount ?? tokenTransfer?.toUserAccount ?? "unknown";
-
-  // Native transfers amount (raw units)
-  const rawAmount = nativeTransfer?.amount ?? 0;
-  const amount = (rawAmount / 1_000_000_000).toFixed(4);
-
-  // Token transfer amount (already in token units from Helius)
-  const tokenAmount = tokenTransfer?.tokenAmount ?? "0";
-  const tokenMint = tokenTransfer?.mint ?? "";
-
-  // Account balance changes
-  const balanceChangeRaw = payload.accountData?.[0]?.nativeBalanceChange ?? 0;
-  const balanceChange = (Math.abs(balanceChangeRaw) / 1_000_000_000).toFixed(4);
-
-  return {
-    // Core fields — users just write {fromWallet}, {amount}, etc.
-    signature: payload.signature ?? "",
-    type: payload.type ?? "UNKNOWN",
-    timestamp: payload.timestamp
-      ? new Date(payload.timestamp * 1000).toISOString()
-      : "",
-    fromWallet,
-    toWallet,
-    amount,
-    rawAmount: String(rawAmount),
-    tokenAmount: String(tokenAmount),
-    tokenMint,
-    balanceChange,
-    // Keep source marker for the worker
-    source: "helius",
-    // Stringify the full raw payload in case someone needs it
-    rawPayload: JSON.stringify(payload),
-  };
+  return flat;
 }
 
 app.post("/hooks/catch/:userId/:workflow", async (req, res) => {
@@ -76,34 +29,53 @@ app.post("/hooks/catch/:userId/:workflow", async (req, res) => {
   const workflowId = req.params.workflow;
   const body = req.body;
 
-  // Auto-flatten the Helius payload into clean template variables
-  const meta = flattenHeliusMeta(body);
+  // Flatten the payload into clean template variables
+  const meta = flattenWebhookMeta(body);
 
-  await prismaClient.$transaction(async (tx: any) => {
-    const run = await tx.workFlowRun.create({
-      data: {
-        workflowId: workflowId,
-        meta: meta,
-      },
+  try {
+    // Only trigger workflows that exist and belong to the user in the path —
+    // otherwise anyone could fire arbitrary workflows by guessing an id, and an
+    // invalid id would hit an unhandled FK violation.
+    const workflow = await prismaClient.workFlow.findFirst({
+      where: { id: workflowId, userId, deletedAt: null },
+      select: { id: true },
     });
 
-    await tx.workFlowOutBox.create({
-      data: {
-        WorkFlowRunId: run.id,
-      },
-    });
-  });
+    if (!workflow) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Workflow not found" });
+    }
 
-  res.json({
-    success: true,
-    message: "Webhook received and processed",
-    extractedData: {
-      fromWallet: meta.fromWallet,
-      toWallet: meta.toWallet,
-      amount: meta.amount,
-      signature: meta.signature,
-    },
-  });
+    await prismaClient.$transaction(async (tx: any) => {
+      const run = await tx.workFlowRun.create({
+        data: {
+          workflowId: workflowId,
+          meta: meta,
+        },
+      });
+
+      await tx.workFlowOutBox.create({
+        data: {
+          WorkFlowRunId: run.id,
+        },
+      });
+    });
+
+    return res.json({
+      success: true,
+      message: "Webhook received and processed",
+    });
+  } catch (err: any) {
+    console.error("Webhook processing failed", {
+      userId,
+      workflowId,
+      error: err?.message,
+    });
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to process webhook" });
+  }
 });
 
 app.listen(PORT, () => {

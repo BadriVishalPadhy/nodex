@@ -54,15 +54,15 @@ export type WorkFlowRun = $Result.DefaultSelection<Prisma.$WorkFlowRunPayload>
  */
 export type WorkFlowOutBox = $Result.DefaultSelection<Prisma.$WorkFlowOutBoxPayload>
 /**
- * Model Conversation
+ * Model ScheduledMessage
  * 
  */
-export type Conversation = $Result.DefaultSelection<Prisma.$ConversationPayload>
+export type ScheduledMessage = $Result.DefaultSelection<Prisma.$ScheduledMessagePayload>
 /**
- * Model Message
+ * Model ProcessedStage
  * 
  */
-export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+export type ProcessedStage = $Result.DefaultSelection<Prisma.$ProcessedStagePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -263,24 +263,24 @@ export class PrismaClient<
   get workFlowOutBox(): Prisma.WorkFlowOutBoxDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.conversation`: Exposes CRUD operations for the **Conversation** model.
+   * `prisma.scheduledMessage`: Exposes CRUD operations for the **ScheduledMessage** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Conversations
-    * const conversations = await prisma.conversation.findMany()
+    * // Fetch zero or more ScheduledMessages
+    * const scheduledMessages = await prisma.scheduledMessage.findMany()
     * ```
     */
-  get conversation(): Prisma.ConversationDelegate<ExtArgs, ClientOptions>;
+  get scheduledMessage(): Prisma.ScheduledMessageDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.message`: Exposes CRUD operations for the **Message** model.
+   * `prisma.processedStage`: Exposes CRUD operations for the **ProcessedStage** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Messages
-    * const messages = await prisma.message.findMany()
+    * // Fetch zero or more ProcessedStages
+    * const processedStages = await prisma.processedStage.findMany()
     * ```
     */
-  get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+  get processedStage(): Prisma.ProcessedStageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -730,8 +730,8 @@ export namespace Prisma {
     AvailableActionNodes: 'AvailableActionNodes',
     WorkFlowRun: 'WorkFlowRun',
     WorkFlowOutBox: 'WorkFlowOutBox',
-    Conversation: 'Conversation',
-    Message: 'Message'
+    ScheduledMessage: 'ScheduledMessage',
+    ProcessedStage: 'ProcessedStage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -750,7 +750,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "workFlow" | "triggerNodes" | "availableTriggerNodes" | "actionNodes" | "availableActionNodes" | "workFlowRun" | "workFlowOutBox" | "conversation" | "message"
+      modelProps: "user" | "workFlow" | "triggerNodes" | "availableTriggerNodes" | "actionNodes" | "availableActionNodes" | "workFlowRun" | "workFlowOutBox" | "scheduledMessage" | "processedStage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1346,151 +1346,151 @@ export namespace Prisma {
           }
         }
       }
-      Conversation: {
-        payload: Prisma.$ConversationPayload<ExtArgs>
-        fields: Prisma.ConversationFieldRefs
+      ScheduledMessage: {
+        payload: Prisma.$ScheduledMessagePayload<ExtArgs>
+        fields: Prisma.ScheduledMessageFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ConversationFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload> | null
+            args: Prisma.ScheduledMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ConversationFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>
+            args: Prisma.ScheduledMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
           }
           findFirst: {
-            args: Prisma.ConversationFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload> | null
+            args: Prisma.ScheduledMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ConversationFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>
+            args: Prisma.ScheduledMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
           }
           findMany: {
-            args: Prisma.ConversationFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>[]
+            args: Prisma.ScheduledMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>[]
           }
           create: {
-            args: Prisma.ConversationCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>
+            args: Prisma.ScheduledMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
           }
           createMany: {
-            args: Prisma.ConversationCreateManyArgs<ExtArgs>
+            args: Prisma.ScheduledMessageCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ConversationCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>[]
+            args: Prisma.ScheduledMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>[]
           }
           delete: {
-            args: Prisma.ConversationDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>
+            args: Prisma.ScheduledMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
           }
           update: {
-            args: Prisma.ConversationUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>
+            args: Prisma.ScheduledMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
           }
           deleteMany: {
-            args: Prisma.ConversationDeleteManyArgs<ExtArgs>
+            args: Prisma.ScheduledMessageDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ConversationUpdateManyArgs<ExtArgs>
+            args: Prisma.ScheduledMessageUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ConversationUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>[]
+            args: Prisma.ScheduledMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>[]
           }
           upsert: {
-            args: Prisma.ConversationUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ConversationPayload>
+            args: Prisma.ScheduledMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScheduledMessagePayload>
           }
           aggregate: {
-            args: Prisma.ConversationAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateConversation>
+            args: Prisma.ScheduledMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScheduledMessage>
           }
           groupBy: {
-            args: Prisma.ConversationGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ConversationGroupByOutputType>[]
+            args: Prisma.ScheduledMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScheduledMessageGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ConversationCountArgs<ExtArgs>
-            result: $Utils.Optional<ConversationCountAggregateOutputType> | number
+            args: Prisma.ScheduledMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<ScheduledMessageCountAggregateOutputType> | number
           }
         }
       }
-      Message: {
-        payload: Prisma.$MessagePayload<ExtArgs>
-        fields: Prisma.MessageFieldRefs
+      ProcessedStage: {
+        payload: Prisma.$ProcessedStagePayload<ExtArgs>
+        fields: Prisma.ProcessedStageFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.MessageFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload> | null
+            args: Prisma.ProcessedStageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.MessageFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.ProcessedStageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>
           }
           findFirst: {
-            args: Prisma.MessageFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload> | null
+            args: Prisma.ProcessedStageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.MessageFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.ProcessedStageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>
           }
           findMany: {
-            args: Prisma.MessageFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+            args: Prisma.ProcessedStageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>[]
           }
           create: {
-            args: Prisma.MessageCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.ProcessedStageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>
           }
           createMany: {
-            args: Prisma.MessageCreateManyArgs<ExtArgs>
+            args: Prisma.ProcessedStageCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.MessageCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+            args: Prisma.ProcessedStageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>[]
           }
           delete: {
-            args: Prisma.MessageDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.ProcessedStageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>
           }
           update: {
-            args: Prisma.MessageUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.ProcessedStageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>
           }
           deleteMany: {
-            args: Prisma.MessageDeleteManyArgs<ExtArgs>
+            args: Prisma.ProcessedStageDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.MessageUpdateManyArgs<ExtArgs>
+            args: Prisma.ProcessedStageUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.MessageUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>[]
+            args: Prisma.ProcessedStageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>[]
           }
           upsert: {
-            args: Prisma.MessageUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MessagePayload>
+            args: Prisma.ProcessedStageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProcessedStagePayload>
           }
           aggregate: {
-            args: Prisma.MessageAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMessage>
+            args: Prisma.ProcessedStageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProcessedStage>
           }
           groupBy: {
-            args: Prisma.MessageGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MessageGroupByOutputType>[]
+            args: Prisma.ProcessedStageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProcessedStageGroupByOutputType>[]
           }
           count: {
-            args: Prisma.MessageCountArgs<ExtArgs>
-            result: $Utils.Optional<MessageCountAggregateOutputType> | number
+            args: Prisma.ProcessedStageCountArgs<ExtArgs>
+            result: $Utils.Optional<ProcessedStageCountAggregateOutputType> | number
           }
         }
       }
@@ -1598,8 +1598,8 @@ export namespace Prisma {
     availableActionNodes?: AvailableActionNodesOmit
     workFlowRun?: WorkFlowRunOmit
     workFlowOutBox?: WorkFlowOutBoxOmit
-    conversation?: ConversationOmit
-    message?: MessageOmit
+    scheduledMessage?: ScheduledMessageOmit
+    processedStage?: ProcessedStageOmit
   }
 
   /* Types for Logging */
@@ -1681,12 +1681,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     workflows: number
-    conversations: number
+    scheduledMessages: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workflows?: boolean | UserCountOutputTypeCountWorkflowsArgs
-    conversations?: boolean | UserCountOutputTypeCountConversationsArgs
+    scheduledMessages?: boolean | UserCountOutputTypeCountScheduledMessagesArgs
   }
 
   // Custom InputTypes
@@ -1710,8 +1710,8 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ConversationWhereInput
+  export type UserCountOutputTypeCountScheduledMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScheduledMessageWhereInput
   }
 
 
@@ -1814,37 +1814,6 @@ export namespace Prisma {
    */
   export type AvailableActionNodesCountOutputTypeCountActionNodesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ActionNodesWhereInput
-  }
-
-
-  /**
-   * Count Type ConversationCountOutputType
-   */
-
-  export type ConversationCountOutputType = {
-    messages: number
-  }
-
-  export type ConversationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    messages?: boolean | ConversationCountOutputTypeCountMessagesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ConversationCountOutputType without action
-   */
-  export type ConversationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ConversationCountOutputType
-     */
-    select?: ConversationCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ConversationCountOutputType without action
-   */
-  export type ConversationCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MessageWhereInput
   }
 
 
@@ -2025,7 +1994,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     workflows?: boolean | User$workflowsArgs<ExtArgs>
-    conversations?: boolean | User$conversationsArgs<ExtArgs>
+    scheduledMessages?: boolean | User$scheduledMessagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2059,7 +2028,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workflows?: boolean | User$workflowsArgs<ExtArgs>
-    conversations?: boolean | User$conversationsArgs<ExtArgs>
+    scheduledMessages?: boolean | User$scheduledMessagesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2069,7 +2038,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       workflows: Prisma.$WorkFlowPayload<ExtArgs>[]
-      conversations: Prisma.$ConversationPayload<ExtArgs>[]
+      scheduledMessages: Prisma.$ScheduledMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2473,7 +2442,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     workflows<T extends User$workflowsArgs<ExtArgs> = {}>(args?: Subset<T, User$workflowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkFlowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    conversations<T extends User$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, User$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    scheduledMessages<T extends User$scheduledMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$scheduledMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2921,27 +2890,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.conversations
+   * User.scheduledMessages
    */
-  export type User$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$scheduledMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
-    where?: ConversationWhereInput
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
-    cursor?: ConversationWhereUniqueInput
+    include?: ScheduledMessageInclude<ExtArgs> | null
+    where?: ScheduledMessageWhereInput
+    orderBy?: ScheduledMessageOrderByWithRelationInput | ScheduledMessageOrderByWithRelationInput[]
+    cursor?: ScheduledMessageWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+    distinct?: ScheduledMessageScalarFieldEnum | ScheduledMessageScalarFieldEnum[]
   }
 
   /**
@@ -10406,355 +10375,434 @@ export namespace Prisma {
 
 
   /**
-   * Model Conversation
+   * Model ScheduledMessage
    */
 
-  export type AggregateConversation = {
-    _count: ConversationCountAggregateOutputType | null
-    _min: ConversationMinAggregateOutputType | null
-    _max: ConversationMaxAggregateOutputType | null
+  export type AggregateScheduledMessage = {
+    _count: ScheduledMessageCountAggregateOutputType | null
+    _min: ScheduledMessageMinAggregateOutputType | null
+    _max: ScheduledMessageMaxAggregateOutputType | null
   }
 
-  export type ConversationMinAggregateOutputType = {
+  export type ScheduledMessageMinAggregateOutputType = {
     id: string | null
-    userId: string | null
-    title: string | null
+    channel: string | null
+    recipient: string | null
+    message: string | null
+    subject: string | null
+    username: string | null
+    scheduledAt: Date | null
+    status: string | null
     createdAt: Date | null
-    updatedAt: Date | null
+    sentAt: Date | null
+    error: string | null
+    userId: string | null
   }
 
-  export type ConversationMaxAggregateOutputType = {
+  export type ScheduledMessageMaxAggregateOutputType = {
     id: string | null
-    userId: string | null
-    title: string | null
+    channel: string | null
+    recipient: string | null
+    message: string | null
+    subject: string | null
+    username: string | null
+    scheduledAt: Date | null
+    status: string | null
     createdAt: Date | null
-    updatedAt: Date | null
+    sentAt: Date | null
+    error: string | null
+    userId: string | null
   }
 
-  export type ConversationCountAggregateOutputType = {
+  export type ScheduledMessageCountAggregateOutputType = {
     id: number
-    userId: number
-    title: number
+    channel: number
+    recipient: number
+    message: number
+    subject: number
+    username: number
+    scheduledAt: number
+    status: number
     createdAt: number
-    updatedAt: number
+    sentAt: number
+    error: number
+    userId: number
     _all: number
   }
 
 
-  export type ConversationMinAggregateInputType = {
+  export type ScheduledMessageMinAggregateInputType = {
     id?: true
-    userId?: true
-    title?: true
+    channel?: true
+    recipient?: true
+    message?: true
+    subject?: true
+    username?: true
+    scheduledAt?: true
+    status?: true
     createdAt?: true
-    updatedAt?: true
+    sentAt?: true
+    error?: true
+    userId?: true
   }
 
-  export type ConversationMaxAggregateInputType = {
+  export type ScheduledMessageMaxAggregateInputType = {
     id?: true
-    userId?: true
-    title?: true
+    channel?: true
+    recipient?: true
+    message?: true
+    subject?: true
+    username?: true
+    scheduledAt?: true
+    status?: true
     createdAt?: true
-    updatedAt?: true
+    sentAt?: true
+    error?: true
+    userId?: true
   }
 
-  export type ConversationCountAggregateInputType = {
+  export type ScheduledMessageCountAggregateInputType = {
     id?: true
-    userId?: true
-    title?: true
+    channel?: true
+    recipient?: true
+    message?: true
+    subject?: true
+    username?: true
+    scheduledAt?: true
+    status?: true
     createdAt?: true
-    updatedAt?: true
+    sentAt?: true
+    error?: true
+    userId?: true
     _all?: true
   }
 
-  export type ConversationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Conversation to aggregate.
+     * Filter which ScheduledMessage to aggregate.
      */
-    where?: ConversationWhereInput
+    where?: ScheduledMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Conversations to fetch.
+     * Determine the order of ScheduledMessages to fetch.
      */
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    orderBy?: ScheduledMessageOrderByWithRelationInput | ScheduledMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ConversationWhereUniqueInput
+    cursor?: ScheduledMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Conversations from the position of the cursor.
+     * Take `±n` ScheduledMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Conversations.
+     * Skip the first `n` ScheduledMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Conversations
+     * Count returned ScheduledMessages
     **/
-    _count?: true | ConversationCountAggregateInputType
+    _count?: true | ScheduledMessageCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ConversationMinAggregateInputType
+    _min?: ScheduledMessageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ConversationMaxAggregateInputType
+    _max?: ScheduledMessageMaxAggregateInputType
   }
 
-  export type GetConversationAggregateType<T extends ConversationAggregateArgs> = {
-        [P in keyof T & keyof AggregateConversation]: P extends '_count' | 'count'
+  export type GetScheduledMessageAggregateType<T extends ScheduledMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateScheduledMessage]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateConversation[P]>
-      : GetScalarType<T[P], AggregateConversation[P]>
+        : GetScalarType<T[P], AggregateScheduledMessage[P]>
+      : GetScalarType<T[P], AggregateScheduledMessage[P]>
   }
 
 
 
 
-  export type ConversationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ConversationWhereInput
-    orderBy?: ConversationOrderByWithAggregationInput | ConversationOrderByWithAggregationInput[]
-    by: ConversationScalarFieldEnum[] | ConversationScalarFieldEnum
-    having?: ConversationScalarWhereWithAggregatesInput
+  export type ScheduledMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScheduledMessageWhereInput
+    orderBy?: ScheduledMessageOrderByWithAggregationInput | ScheduledMessageOrderByWithAggregationInput[]
+    by: ScheduledMessageScalarFieldEnum[] | ScheduledMessageScalarFieldEnum
+    having?: ScheduledMessageScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ConversationCountAggregateInputType | true
-    _min?: ConversationMinAggregateInputType
-    _max?: ConversationMaxAggregateInputType
+    _count?: ScheduledMessageCountAggregateInputType | true
+    _min?: ScheduledMessageMinAggregateInputType
+    _max?: ScheduledMessageMaxAggregateInputType
   }
 
-  export type ConversationGroupByOutputType = {
+  export type ScheduledMessageGroupByOutputType = {
     id: string
-    userId: string
-    title: string
+    channel: string
+    recipient: string
+    message: string
+    subject: string | null
+    username: string | null
+    scheduledAt: Date
+    status: string
     createdAt: Date
-    updatedAt: Date
-    _count: ConversationCountAggregateOutputType | null
-    _min: ConversationMinAggregateOutputType | null
-    _max: ConversationMaxAggregateOutputType | null
+    sentAt: Date | null
+    error: string | null
+    userId: string
+    _count: ScheduledMessageCountAggregateOutputType | null
+    _min: ScheduledMessageMinAggregateOutputType | null
+    _max: ScheduledMessageMaxAggregateOutputType | null
   }
 
-  type GetConversationGroupByPayload<T extends ConversationGroupByArgs> = Prisma.PrismaPromise<
+  type GetScheduledMessageGroupByPayload<T extends ScheduledMessageGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ConversationGroupByOutputType, T['by']> &
+      PickEnumerable<ScheduledMessageGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ConversationGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ScheduledMessageGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ConversationGroupByOutputType[P]>
-            : GetScalarType<T[P], ConversationGroupByOutputType[P]>
+              : GetScalarType<T[P], ScheduledMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], ScheduledMessageGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ConversationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ScheduledMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    title?: boolean
+    channel?: boolean
+    recipient?: boolean
+    message?: boolean
+    subject?: boolean
+    username?: boolean
+    scheduledAt?: boolean
+    status?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    sentAt?: boolean
+    error?: boolean
+    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    messages?: boolean | Conversation$messagesArgs<ExtArgs>
-    _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["conversation"]>
+  }, ExtArgs["result"]["scheduledMessage"]>
 
-  export type ConversationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ScheduledMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    title?: boolean
+    channel?: boolean
+    recipient?: boolean
+    message?: boolean
+    subject?: boolean
+    username?: boolean
+    scheduledAt?: boolean
+    status?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    sentAt?: boolean
+    error?: boolean
+    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["conversation"]>
+  }, ExtArgs["result"]["scheduledMessage"]>
 
-  export type ConversationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ScheduledMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
-    title?: boolean
+    channel?: boolean
+    recipient?: boolean
+    message?: boolean
+    subject?: boolean
+    username?: boolean
+    scheduledAt?: boolean
+    status?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    sentAt?: boolean
+    error?: boolean
+    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["conversation"]>
+  }, ExtArgs["result"]["scheduledMessage"]>
 
-  export type ConversationSelectScalar = {
+  export type ScheduledMessageSelectScalar = {
     id?: boolean
-    userId?: boolean
-    title?: boolean
+    channel?: boolean
+    recipient?: boolean
+    message?: boolean
+    subject?: boolean
+    username?: boolean
+    scheduledAt?: boolean
+    status?: boolean
     createdAt?: boolean
-    updatedAt?: boolean
+    sentAt?: boolean
+    error?: boolean
+    userId?: boolean
   }
 
-  export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "createdAt" | "updatedAt", ExtArgs["result"]["conversation"]>
-  export type ConversationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    messages?: boolean | Conversation$messagesArgs<ExtArgs>
-    _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type ConversationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "channel" | "recipient" | "message" | "subject" | "username" | "scheduledAt" | "status" | "createdAt" | "sentAt" | "error" | "userId", ExtArgs["result"]["scheduledMessage"]>
+  export type ScheduledMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type ConversationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ScheduledMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $ConversationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Conversation"
+  export type $ScheduledMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScheduledMessage"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
-      title: string
+      channel: string
+      recipient: string
+      message: string
+      subject: string | null
+      username: string | null
+      scheduledAt: Date
+      status: string
       createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["conversation"]>
+      sentAt: Date | null
+      error: string | null
+      userId: string
+    }, ExtArgs["result"]["scheduledMessage"]>
     composites: {}
   }
 
-  type ConversationGetPayload<S extends boolean | null | undefined | ConversationDefaultArgs> = $Result.GetResult<Prisma.$ConversationPayload, S>
+  type ScheduledMessageGetPayload<S extends boolean | null | undefined | ScheduledMessageDefaultArgs> = $Result.GetResult<Prisma.$ScheduledMessagePayload, S>
 
-  type ConversationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ConversationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ConversationCountAggregateInputType | true
+  type ScheduledMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScheduledMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScheduledMessageCountAggregateInputType | true
     }
 
-  export interface ConversationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Conversation'], meta: { name: 'Conversation' } }
+  export interface ScheduledMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScheduledMessage'], meta: { name: 'ScheduledMessage' } }
     /**
-     * Find zero or one Conversation that matches the filter.
-     * @param {ConversationFindUniqueArgs} args - Arguments to find a Conversation
+     * Find zero or one ScheduledMessage that matches the filter.
+     * @param {ScheduledMessageFindUniqueArgs} args - Arguments to find a ScheduledMessage
      * @example
-     * // Get one Conversation
-     * const conversation = await prisma.conversation.findUnique({
+     * // Get one ScheduledMessage
+     * const scheduledMessage = await prisma.scheduledMessage.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ConversationFindUniqueArgs>(args: SelectSubset<T, ConversationFindUniqueArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ScheduledMessageFindUniqueArgs>(args: SelectSubset<T, ScheduledMessageFindUniqueArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Conversation that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ScheduledMessage that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ConversationFindUniqueOrThrowArgs} args - Arguments to find a Conversation
+     * @param {ScheduledMessageFindUniqueOrThrowArgs} args - Arguments to find a ScheduledMessage
      * @example
-     * // Get one Conversation
-     * const conversation = await prisma.conversation.findUniqueOrThrow({
+     * // Get one ScheduledMessage
+     * const scheduledMessage = await prisma.scheduledMessage.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ConversationFindUniqueOrThrowArgs>(args: SelectSubset<T, ConversationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ScheduledMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, ScheduledMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Conversation that matches the filter.
+     * Find the first ScheduledMessage that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationFindFirstArgs} args - Arguments to find a Conversation
+     * @param {ScheduledMessageFindFirstArgs} args - Arguments to find a ScheduledMessage
      * @example
-     * // Get one Conversation
-     * const conversation = await prisma.conversation.findFirst({
+     * // Get one ScheduledMessage
+     * const scheduledMessage = await prisma.scheduledMessage.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ConversationFindFirstArgs>(args?: SelectSubset<T, ConversationFindFirstArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ScheduledMessageFindFirstArgs>(args?: SelectSubset<T, ScheduledMessageFindFirstArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Conversation that matches the filter or
+     * Find the first ScheduledMessage that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationFindFirstOrThrowArgs} args - Arguments to find a Conversation
+     * @param {ScheduledMessageFindFirstOrThrowArgs} args - Arguments to find a ScheduledMessage
      * @example
-     * // Get one Conversation
-     * const conversation = await prisma.conversation.findFirstOrThrow({
+     * // Get one ScheduledMessage
+     * const scheduledMessage = await prisma.scheduledMessage.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ConversationFindFirstOrThrowArgs>(args?: SelectSubset<T, ConversationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ScheduledMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, ScheduledMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Conversations that matches the filter.
+     * Find zero or more ScheduledMessages that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ScheduledMessageFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Conversations
-     * const conversations = await prisma.conversation.findMany()
+     * // Get all ScheduledMessages
+     * const scheduledMessages = await prisma.scheduledMessage.findMany()
      * 
-     * // Get first 10 Conversations
-     * const conversations = await prisma.conversation.findMany({ take: 10 })
+     * // Get first 10 ScheduledMessages
+     * const scheduledMessages = await prisma.scheduledMessage.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const conversationWithIdOnly = await prisma.conversation.findMany({ select: { id: true } })
+     * const scheduledMessageWithIdOnly = await prisma.scheduledMessage.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ConversationFindManyArgs>(args?: SelectSubset<T, ConversationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ScheduledMessageFindManyArgs>(args?: SelectSubset<T, ScheduledMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Conversation.
-     * @param {ConversationCreateArgs} args - Arguments to create a Conversation.
+     * Create a ScheduledMessage.
+     * @param {ScheduledMessageCreateArgs} args - Arguments to create a ScheduledMessage.
      * @example
-     * // Create one Conversation
-     * const Conversation = await prisma.conversation.create({
+     * // Create one ScheduledMessage
+     * const ScheduledMessage = await prisma.scheduledMessage.create({
      *   data: {
-     *     // ... data to create a Conversation
+     *     // ... data to create a ScheduledMessage
      *   }
      * })
      * 
      */
-    create<T extends ConversationCreateArgs>(args: SelectSubset<T, ConversationCreateArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ScheduledMessageCreateArgs>(args: SelectSubset<T, ScheduledMessageCreateArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Conversations.
-     * @param {ConversationCreateManyArgs} args - Arguments to create many Conversations.
+     * Create many ScheduledMessages.
+     * @param {ScheduledMessageCreateManyArgs} args - Arguments to create many ScheduledMessages.
      * @example
-     * // Create many Conversations
-     * const conversation = await prisma.conversation.createMany({
+     * // Create many ScheduledMessages
+     * const scheduledMessage = await prisma.scheduledMessage.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ConversationCreateManyArgs>(args?: SelectSubset<T, ConversationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ScheduledMessageCreateManyArgs>(args?: SelectSubset<T, ScheduledMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Conversations and returns the data saved in the database.
-     * @param {ConversationCreateManyAndReturnArgs} args - Arguments to create many Conversations.
+     * Create many ScheduledMessages and returns the data saved in the database.
+     * @param {ScheduledMessageCreateManyAndReturnArgs} args - Arguments to create many ScheduledMessages.
      * @example
-     * // Create many Conversations
-     * const conversation = await prisma.conversation.createManyAndReturn({
+     * // Create many ScheduledMessages
+     * const scheduledMessage = await prisma.scheduledMessage.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Conversations and only return the `id`
-     * const conversationWithIdOnly = await prisma.conversation.createManyAndReturn({
+     * // Create many ScheduledMessages and only return the `id`
+     * const scheduledMessageWithIdOnly = await prisma.scheduledMessage.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -10764,28 +10812,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ConversationCreateManyAndReturnArgs>(args?: SelectSubset<T, ConversationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ScheduledMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, ScheduledMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Conversation.
-     * @param {ConversationDeleteArgs} args - Arguments to delete one Conversation.
+     * Delete a ScheduledMessage.
+     * @param {ScheduledMessageDeleteArgs} args - Arguments to delete one ScheduledMessage.
      * @example
-     * // Delete one Conversation
-     * const Conversation = await prisma.conversation.delete({
+     * // Delete one ScheduledMessage
+     * const ScheduledMessage = await prisma.scheduledMessage.delete({
      *   where: {
-     *     // ... filter to delete one Conversation
+     *     // ... filter to delete one ScheduledMessage
      *   }
      * })
      * 
      */
-    delete<T extends ConversationDeleteArgs>(args: SelectSubset<T, ConversationDeleteArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ScheduledMessageDeleteArgs>(args: SelectSubset<T, ScheduledMessageDeleteArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Conversation.
-     * @param {ConversationUpdateArgs} args - Arguments to update one Conversation.
+     * Update one ScheduledMessage.
+     * @param {ScheduledMessageUpdateArgs} args - Arguments to update one ScheduledMessage.
      * @example
-     * // Update one Conversation
-     * const conversation = await prisma.conversation.update({
+     * // Update one ScheduledMessage
+     * const scheduledMessage = await prisma.scheduledMessage.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10795,30 +10843,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ConversationUpdateArgs>(args: SelectSubset<T, ConversationUpdateArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ScheduledMessageUpdateArgs>(args: SelectSubset<T, ScheduledMessageUpdateArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Conversations.
-     * @param {ConversationDeleteManyArgs} args - Arguments to filter Conversations to delete.
+     * Delete zero or more ScheduledMessages.
+     * @param {ScheduledMessageDeleteManyArgs} args - Arguments to filter ScheduledMessages to delete.
      * @example
-     * // Delete a few Conversations
-     * const { count } = await prisma.conversation.deleteMany({
+     * // Delete a few ScheduledMessages
+     * const { count } = await prisma.scheduledMessage.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ConversationDeleteManyArgs>(args?: SelectSubset<T, ConversationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ScheduledMessageDeleteManyArgs>(args?: SelectSubset<T, ScheduledMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Conversations.
+     * Update zero or more ScheduledMessages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ScheduledMessageUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Conversations
-     * const conversation = await prisma.conversation.updateMany({
+     * // Update many ScheduledMessages
+     * const scheduledMessage = await prisma.scheduledMessage.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10828,14 +10876,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ConversationUpdateManyArgs>(args: SelectSubset<T, ConversationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ScheduledMessageUpdateManyArgs>(args: SelectSubset<T, ScheduledMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Conversations and returns the data updated in the database.
-     * @param {ConversationUpdateManyAndReturnArgs} args - Arguments to update many Conversations.
+     * Update zero or more ScheduledMessages and returns the data updated in the database.
+     * @param {ScheduledMessageUpdateManyAndReturnArgs} args - Arguments to update many ScheduledMessages.
      * @example
-     * // Update many Conversations
-     * const conversation = await prisma.conversation.updateManyAndReturn({
+     * // Update many ScheduledMessages
+     * const scheduledMessage = await prisma.scheduledMessage.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10844,8 +10892,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Conversations and only return the `id`
-     * const conversationWithIdOnly = await prisma.conversation.updateManyAndReturn({
+     * // Update zero or more ScheduledMessages and only return the `id`
+     * const scheduledMessageWithIdOnly = await prisma.scheduledMessage.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -10858,56 +10906,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ConversationUpdateManyAndReturnArgs>(args: SelectSubset<T, ConversationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ScheduledMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, ScheduledMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Conversation.
-     * @param {ConversationUpsertArgs} args - Arguments to update or create a Conversation.
+     * Create or update one ScheduledMessage.
+     * @param {ScheduledMessageUpsertArgs} args - Arguments to update or create a ScheduledMessage.
      * @example
-     * // Update or create a Conversation
-     * const conversation = await prisma.conversation.upsert({
+     * // Update or create a ScheduledMessage
+     * const scheduledMessage = await prisma.scheduledMessage.upsert({
      *   create: {
-     *     // ... data to create a Conversation
+     *     // ... data to create a ScheduledMessage
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Conversation we want to update
+     *     // ... the filter for the ScheduledMessage we want to update
      *   }
      * })
      */
-    upsert<T extends ConversationUpsertArgs>(args: SelectSubset<T, ConversationUpsertArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ScheduledMessageUpsertArgs>(args: SelectSubset<T, ScheduledMessageUpsertArgs<ExtArgs>>): Prisma__ScheduledMessageClient<$Result.GetResult<Prisma.$ScheduledMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Conversations.
+     * Count the number of ScheduledMessages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationCountArgs} args - Arguments to filter Conversations to count.
+     * @param {ScheduledMessageCountArgs} args - Arguments to filter ScheduledMessages to count.
      * @example
-     * // Count the number of Conversations
-     * const count = await prisma.conversation.count({
+     * // Count the number of ScheduledMessages
+     * const count = await prisma.scheduledMessage.count({
      *   where: {
-     *     // ... the filter for the Conversations we want to count
+     *     // ... the filter for the ScheduledMessages we want to count
      *   }
      * })
     **/
-    count<T extends ConversationCountArgs>(
-      args?: Subset<T, ConversationCountArgs>,
+    count<T extends ScheduledMessageCountArgs>(
+      args?: Subset<T, ScheduledMessageCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ConversationCountAggregateOutputType>
+          : GetScalarType<T['select'], ScheduledMessageCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Conversation.
+     * Allows you to perform aggregations operations on a ScheduledMessage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ScheduledMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -10927,13 +10975,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ConversationAggregateArgs>(args: Subset<T, ConversationAggregateArgs>): Prisma.PrismaPromise<GetConversationAggregateType<T>>
+    aggregate<T extends ScheduledMessageAggregateArgs>(args: Subset<T, ScheduledMessageAggregateArgs>): Prisma.PrismaPromise<GetScheduledMessageAggregateType<T>>
 
     /**
-     * Group by Conversation.
+     * Group by ScheduledMessage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ConversationGroupByArgs} args - Group by arguments.
+     * @param {ScheduledMessageGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -10948,14 +10996,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ConversationGroupByArgs,
+      T extends ScheduledMessageGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ConversationGroupByArgs['orderBy'] }
-        : { orderBy?: ConversationGroupByArgs['orderBy'] },
+        ? { orderBy: ScheduledMessageGroupByArgs['orderBy'] }
+        : { orderBy?: ScheduledMessageGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -11004,23 +11052,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ConversationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConversationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ScheduledMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScheduledMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Conversation model
+   * Fields of the ScheduledMessage model
    */
-  readonly fields: ConversationFieldRefs;
+  readonly fields: ScheduledMessageFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Conversation.
+   * The delegate class that acts as a "Promise-like" for ScheduledMessage.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ScheduledMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    messages<T extends Conversation$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11047,794 +11094,777 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Conversation model
+   * Fields of the ScheduledMessage model
    */
-  interface ConversationFieldRefs {
-    readonly id: FieldRef<"Conversation", 'String'>
-    readonly userId: FieldRef<"Conversation", 'String'>
-    readonly title: FieldRef<"Conversation", 'String'>
-    readonly createdAt: FieldRef<"Conversation", 'DateTime'>
-    readonly updatedAt: FieldRef<"Conversation", 'DateTime'>
+  interface ScheduledMessageFieldRefs {
+    readonly id: FieldRef<"ScheduledMessage", 'String'>
+    readonly channel: FieldRef<"ScheduledMessage", 'String'>
+    readonly recipient: FieldRef<"ScheduledMessage", 'String'>
+    readonly message: FieldRef<"ScheduledMessage", 'String'>
+    readonly subject: FieldRef<"ScheduledMessage", 'String'>
+    readonly username: FieldRef<"ScheduledMessage", 'String'>
+    readonly scheduledAt: FieldRef<"ScheduledMessage", 'DateTime'>
+    readonly status: FieldRef<"ScheduledMessage", 'String'>
+    readonly createdAt: FieldRef<"ScheduledMessage", 'DateTime'>
+    readonly sentAt: FieldRef<"ScheduledMessage", 'DateTime'>
+    readonly error: FieldRef<"ScheduledMessage", 'String'>
+    readonly userId: FieldRef<"ScheduledMessage", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Conversation findUnique
+   * ScheduledMessage findUnique
    */
-  export type ConversationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Conversation to fetch.
+     * Filter, which ScheduledMessage to fetch.
      */
-    where: ConversationWhereUniqueInput
+    where: ScheduledMessageWhereUniqueInput
   }
 
   /**
-   * Conversation findUniqueOrThrow
+   * ScheduledMessage findUniqueOrThrow
    */
-  export type ConversationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Conversation to fetch.
+     * Filter, which ScheduledMessage to fetch.
      */
-    where: ConversationWhereUniqueInput
+    where: ScheduledMessageWhereUniqueInput
   }
 
   /**
-   * Conversation findFirst
+   * ScheduledMessage findFirst
    */
-  export type ConversationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Conversation to fetch.
+     * Filter, which ScheduledMessage to fetch.
      */
-    where?: ConversationWhereInput
+    where?: ScheduledMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Conversations to fetch.
+     * Determine the order of ScheduledMessages to fetch.
      */
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    orderBy?: ScheduledMessageOrderByWithRelationInput | ScheduledMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Conversations.
+     * Sets the position for searching for ScheduledMessages.
      */
-    cursor?: ConversationWhereUniqueInput
+    cursor?: ScheduledMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Conversations from the position of the cursor.
+     * Take `±n` ScheduledMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Conversations.
+     * Skip the first `n` ScheduledMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Conversations.
+     * Filter by unique combinations of ScheduledMessages.
      */
-    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+    distinct?: ScheduledMessageScalarFieldEnum | ScheduledMessageScalarFieldEnum[]
   }
 
   /**
-   * Conversation findFirstOrThrow
+   * ScheduledMessage findFirstOrThrow
    */
-  export type ConversationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Conversation to fetch.
+     * Filter, which ScheduledMessage to fetch.
      */
-    where?: ConversationWhereInput
+    where?: ScheduledMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Conversations to fetch.
+     * Determine the order of ScheduledMessages to fetch.
      */
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    orderBy?: ScheduledMessageOrderByWithRelationInput | ScheduledMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Conversations.
+     * Sets the position for searching for ScheduledMessages.
      */
-    cursor?: ConversationWhereUniqueInput
+    cursor?: ScheduledMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Conversations from the position of the cursor.
+     * Take `±n` ScheduledMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Conversations.
+     * Skip the first `n` ScheduledMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Conversations.
+     * Filter by unique combinations of ScheduledMessages.
      */
-    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+    distinct?: ScheduledMessageScalarFieldEnum | ScheduledMessageScalarFieldEnum[]
   }
 
   /**
-   * Conversation findMany
+   * ScheduledMessage findMany
    */
-  export type ConversationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * Filter, which Conversations to fetch.
+     * Filter, which ScheduledMessages to fetch.
      */
-    where?: ConversationWhereInput
+    where?: ScheduledMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Conversations to fetch.
+     * Determine the order of ScheduledMessages to fetch.
      */
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    orderBy?: ScheduledMessageOrderByWithRelationInput | ScheduledMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Conversations.
+     * Sets the position for listing ScheduledMessages.
      */
-    cursor?: ConversationWhereUniqueInput
+    cursor?: ScheduledMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Conversations from the position of the cursor.
+     * Take `±n` ScheduledMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Conversations.
+     * Skip the first `n` ScheduledMessages.
      */
     skip?: number
-    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+    distinct?: ScheduledMessageScalarFieldEnum | ScheduledMessageScalarFieldEnum[]
   }
 
   /**
-   * Conversation create
+   * ScheduledMessage create
    */
-  export type ConversationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * The data needed to create a Conversation.
+     * The data needed to create a ScheduledMessage.
      */
-    data: XOR<ConversationCreateInput, ConversationUncheckedCreateInput>
+    data: XOR<ScheduledMessageCreateInput, ScheduledMessageUncheckedCreateInput>
   }
 
   /**
-   * Conversation createMany
+   * ScheduledMessage createMany
    */
-  export type ConversationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Conversations.
+     * The data used to create many ScheduledMessages.
      */
-    data: ConversationCreateManyInput | ConversationCreateManyInput[]
+    data: ScheduledMessageCreateManyInput | ScheduledMessageCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Conversation createManyAndReturn
+   * ScheduledMessage createManyAndReturn
    */
-  export type ConversationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ScheduledMessageSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
-     * The data used to create many Conversations.
+     * The data used to create many ScheduledMessages.
      */
-    data: ConversationCreateManyInput | ConversationCreateManyInput[]
+    data: ScheduledMessageCreateManyInput | ScheduledMessageCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ScheduledMessageIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Conversation update
+   * ScheduledMessage update
    */
-  export type ConversationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * The data needed to update a Conversation.
+     * The data needed to update a ScheduledMessage.
      */
-    data: XOR<ConversationUpdateInput, ConversationUncheckedUpdateInput>
+    data: XOR<ScheduledMessageUpdateInput, ScheduledMessageUncheckedUpdateInput>
     /**
-     * Choose, which Conversation to update.
+     * Choose, which ScheduledMessage to update.
      */
-    where: ConversationWhereUniqueInput
+    where: ScheduledMessageWhereUniqueInput
   }
 
   /**
-   * Conversation updateMany
+   * ScheduledMessage updateMany
    */
-  export type ConversationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Conversations.
+     * The data used to update ScheduledMessages.
      */
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyInput>
+    data: XOR<ScheduledMessageUpdateManyMutationInput, ScheduledMessageUncheckedUpdateManyInput>
     /**
-     * Filter which Conversations to update
+     * Filter which ScheduledMessages to update
      */
-    where?: ConversationWhereInput
+    where?: ScheduledMessageWhereInput
     /**
-     * Limit how many Conversations to update.
+     * Limit how many ScheduledMessages to update.
      */
     limit?: number
   }
 
   /**
-   * Conversation updateManyAndReturn
+   * ScheduledMessage updateManyAndReturn
    */
-  export type ConversationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ScheduledMessageSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
-     * The data used to update Conversations.
+     * The data used to update ScheduledMessages.
      */
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyInput>
+    data: XOR<ScheduledMessageUpdateManyMutationInput, ScheduledMessageUncheckedUpdateManyInput>
     /**
-     * Filter which Conversations to update
+     * Filter which ScheduledMessages to update
      */
-    where?: ConversationWhereInput
+    where?: ScheduledMessageWhereInput
     /**
-     * Limit how many Conversations to update.
+     * Limit how many ScheduledMessages to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ScheduledMessageIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Conversation upsert
+   * ScheduledMessage upsert
    */
-  export type ConversationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * The filter to search for the Conversation to update in case it exists.
+     * The filter to search for the ScheduledMessage to update in case it exists.
      */
-    where: ConversationWhereUniqueInput
+    where: ScheduledMessageWhereUniqueInput
     /**
-     * In case the Conversation found by the `where` argument doesn't exist, create a new Conversation with this data.
+     * In case the ScheduledMessage found by the `where` argument doesn't exist, create a new ScheduledMessage with this data.
      */
-    create: XOR<ConversationCreateInput, ConversationUncheckedCreateInput>
+    create: XOR<ScheduledMessageCreateInput, ScheduledMessageUncheckedCreateInput>
     /**
-     * In case the Conversation was found with the provided `where` argument, update it with this data.
+     * In case the ScheduledMessage was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ConversationUpdateInput, ConversationUncheckedUpdateInput>
+    update: XOR<ScheduledMessageUpdateInput, ScheduledMessageUncheckedUpdateInput>
   }
 
   /**
-   * Conversation delete
+   * ScheduledMessage delete
    */
-  export type ConversationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
     /**
-     * Filter which Conversation to delete.
+     * Filter which ScheduledMessage to delete.
      */
-    where: ConversationWhereUniqueInput
+    where: ScheduledMessageWhereUniqueInput
   }
 
   /**
-   * Conversation deleteMany
+   * ScheduledMessage deleteMany
    */
-  export type ConversationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Conversations to delete
+     * Filter which ScheduledMessages to delete
      */
-    where?: ConversationWhereInput
+    where?: ScheduledMessageWhereInput
     /**
-     * Limit how many Conversations to delete.
+     * Limit how many ScheduledMessages to delete.
      */
     limit?: number
   }
 
   /**
-   * Conversation.messages
+   * ScheduledMessage without action
    */
-  export type Conversation$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ScheduledMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ScheduledMessage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ScheduledMessageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ScheduledMessage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ScheduledMessageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MessageInclude<ExtArgs> | null
-    where?: MessageWhereInput
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
-    cursor?: MessageWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
-  }
-
-  /**
-   * Conversation without action
-   */
-  export type ConversationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Conversation
-     */
-    select?: ConversationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Conversation
-     */
-    omit?: ConversationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ConversationInclude<ExtArgs> | null
+    include?: ScheduledMessageInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model Message
+   * Model ProcessedStage
    */
 
-  export type AggregateMessage = {
-    _count: MessageCountAggregateOutputType | null
-    _min: MessageMinAggregateOutputType | null
-    _max: MessageMaxAggregateOutputType | null
+  export type AggregateProcessedStage = {
+    _count: ProcessedStageCountAggregateOutputType | null
+    _avg: ProcessedStageAvgAggregateOutputType | null
+    _sum: ProcessedStageSumAggregateOutputType | null
+    _min: ProcessedStageMinAggregateOutputType | null
+    _max: ProcessedStageMaxAggregateOutputType | null
   }
 
-  export type MessageMinAggregateOutputType = {
-    id: string | null
-    conversationId: string | null
-    role: string | null
-    createdAt: Date | null
+  export type ProcessedStageAvgAggregateOutputType = {
+    stage: number | null
   }
 
-  export type MessageMaxAggregateOutputType = {
-    id: string | null
-    conversationId: string | null
-    role: string | null
-    createdAt: Date | null
+  export type ProcessedStageSumAggregateOutputType = {
+    stage: number | null
   }
 
-  export type MessageCountAggregateOutputType = {
-    id: number
-    conversationId: number
-    role: number
-    content: number
-    createdAt: number
+  export type ProcessedStageMinAggregateOutputType = {
+    workFlowRunId: string | null
+    stage: number | null
+    processedAt: Date | null
+  }
+
+  export type ProcessedStageMaxAggregateOutputType = {
+    workFlowRunId: string | null
+    stage: number | null
+    processedAt: Date | null
+  }
+
+  export type ProcessedStageCountAggregateOutputType = {
+    workFlowRunId: number
+    stage: number
+    processedAt: number
     _all: number
   }
 
 
-  export type MessageMinAggregateInputType = {
-    id?: true
-    conversationId?: true
-    role?: true
-    createdAt?: true
+  export type ProcessedStageAvgAggregateInputType = {
+    stage?: true
   }
 
-  export type MessageMaxAggregateInputType = {
-    id?: true
-    conversationId?: true
-    role?: true
-    createdAt?: true
+  export type ProcessedStageSumAggregateInputType = {
+    stage?: true
   }
 
-  export type MessageCountAggregateInputType = {
-    id?: true
-    conversationId?: true
-    role?: true
-    content?: true
-    createdAt?: true
+  export type ProcessedStageMinAggregateInputType = {
+    workFlowRunId?: true
+    stage?: true
+    processedAt?: true
+  }
+
+  export type ProcessedStageMaxAggregateInputType = {
+    workFlowRunId?: true
+    stage?: true
+    processedAt?: true
+  }
+
+  export type ProcessedStageCountAggregateInputType = {
+    workFlowRunId?: true
+    stage?: true
+    processedAt?: true
     _all?: true
   }
 
-  export type MessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Message to aggregate.
+     * Filter which ProcessedStage to aggregate.
      */
-    where?: MessageWhereInput
+    where?: ProcessedStageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of ProcessedStages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: ProcessedStageOrderByWithRelationInput | ProcessedStageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: ProcessedStageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` ProcessedStages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` ProcessedStages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Messages
+     * Count returned ProcessedStages
     **/
-    _count?: true | MessageCountAggregateInputType
+    _count?: true | ProcessedStageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProcessedStageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProcessedStageSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: MessageMinAggregateInputType
+    _min?: ProcessedStageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: MessageMaxAggregateInputType
+    _max?: ProcessedStageMaxAggregateInputType
   }
 
-  export type GetMessageAggregateType<T extends MessageAggregateArgs> = {
-        [P in keyof T & keyof AggregateMessage]: P extends '_count' | 'count'
+  export type GetProcessedStageAggregateType<T extends ProcessedStageAggregateArgs> = {
+        [P in keyof T & keyof AggregateProcessedStage]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateMessage[P]>
-      : GetScalarType<T[P], AggregateMessage[P]>
+        : GetScalarType<T[P], AggregateProcessedStage[P]>
+      : GetScalarType<T[P], AggregateProcessedStage[P]>
   }
 
 
 
 
-  export type MessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MessageWhereInput
-    orderBy?: MessageOrderByWithAggregationInput | MessageOrderByWithAggregationInput[]
-    by: MessageScalarFieldEnum[] | MessageScalarFieldEnum
-    having?: MessageScalarWhereWithAggregatesInput
+  export type ProcessedStageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProcessedStageWhereInput
+    orderBy?: ProcessedStageOrderByWithAggregationInput | ProcessedStageOrderByWithAggregationInput[]
+    by: ProcessedStageScalarFieldEnum[] | ProcessedStageScalarFieldEnum
+    having?: ProcessedStageScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: MessageCountAggregateInputType | true
-    _min?: MessageMinAggregateInputType
-    _max?: MessageMaxAggregateInputType
+    _count?: ProcessedStageCountAggregateInputType | true
+    _avg?: ProcessedStageAvgAggregateInputType
+    _sum?: ProcessedStageSumAggregateInputType
+    _min?: ProcessedStageMinAggregateInputType
+    _max?: ProcessedStageMaxAggregateInputType
   }
 
-  export type MessageGroupByOutputType = {
-    id: string
-    conversationId: string
-    role: string
-    content: JsonValue
-    createdAt: Date
-    _count: MessageCountAggregateOutputType | null
-    _min: MessageMinAggregateOutputType | null
-    _max: MessageMaxAggregateOutputType | null
+  export type ProcessedStageGroupByOutputType = {
+    workFlowRunId: string
+    stage: number
+    processedAt: Date
+    _count: ProcessedStageCountAggregateOutputType | null
+    _avg: ProcessedStageAvgAggregateOutputType | null
+    _sum: ProcessedStageSumAggregateOutputType | null
+    _min: ProcessedStageMinAggregateOutputType | null
+    _max: ProcessedStageMaxAggregateOutputType | null
   }
 
-  type GetMessageGroupByPayload<T extends MessageGroupByArgs> = Prisma.PrismaPromise<
+  type GetProcessedStageGroupByPayload<T extends ProcessedStageGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<MessageGroupByOutputType, T['by']> &
+      PickEnumerable<ProcessedStageGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof MessageGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ProcessedStageGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], MessageGroupByOutputType[P]>
-            : GetScalarType<T[P], MessageGroupByOutputType[P]>
+              : GetScalarType<T[P], ProcessedStageGroupByOutputType[P]>
+            : GetScalarType<T[P], ProcessedStageGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type MessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    conversationId?: boolean
-    role?: boolean
-    content?: boolean
-    createdAt?: boolean
-    conversation?: boolean | ConversationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["message"]>
+  export type ProcessedStageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    workFlowRunId?: boolean
+    stage?: boolean
+    processedAt?: boolean
+  }, ExtArgs["result"]["processedStage"]>
 
-  export type MessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    conversationId?: boolean
-    role?: boolean
-    content?: boolean
-    createdAt?: boolean
-    conversation?: boolean | ConversationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["message"]>
+  export type ProcessedStageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    workFlowRunId?: boolean
+    stage?: boolean
+    processedAt?: boolean
+  }, ExtArgs["result"]["processedStage"]>
 
-  export type MessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    conversationId?: boolean
-    role?: boolean
-    content?: boolean
-    createdAt?: boolean
-    conversation?: boolean | ConversationDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["message"]>
+  export type ProcessedStageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    workFlowRunId?: boolean
+    stage?: boolean
+    processedAt?: boolean
+  }, ExtArgs["result"]["processedStage"]>
 
-  export type MessageSelectScalar = {
-    id?: boolean
-    conversationId?: boolean
-    role?: boolean
-    content?: boolean
-    createdAt?: boolean
+  export type ProcessedStageSelectScalar = {
+    workFlowRunId?: boolean
+    stage?: boolean
+    processedAt?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "role" | "content" | "createdAt", ExtArgs["result"]["message"]>
-  export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversation?: boolean | ConversationDefaultArgs<ExtArgs>
-  }
-  export type MessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversation?: boolean | ConversationDefaultArgs<ExtArgs>
-  }
-  export type MessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    conversation?: boolean | ConversationDefaultArgs<ExtArgs>
-  }
+  export type ProcessedStageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"workFlowRunId" | "stage" | "processedAt", ExtArgs["result"]["processedStage"]>
 
-  export type $MessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Message"
-    objects: {
-      conversation: Prisma.$ConversationPayload<ExtArgs>
-    }
+  export type $ProcessedStagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProcessedStage"
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      id: string
-      conversationId: string
-      role: string
-      content: Prisma.JsonValue
-      createdAt: Date
-    }, ExtArgs["result"]["message"]>
+      workFlowRunId: string
+      stage: number
+      processedAt: Date
+    }, ExtArgs["result"]["processedStage"]>
     composites: {}
   }
 
-  type MessageGetPayload<S extends boolean | null | undefined | MessageDefaultArgs> = $Result.GetResult<Prisma.$MessagePayload, S>
+  type ProcessedStageGetPayload<S extends boolean | null | undefined | ProcessedStageDefaultArgs> = $Result.GetResult<Prisma.$ProcessedStagePayload, S>
 
-  type MessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MessageCountAggregateInputType | true
+  type ProcessedStageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProcessedStageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProcessedStageCountAggregateInputType | true
     }
 
-  export interface MessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Message'], meta: { name: 'Message' } }
+  export interface ProcessedStageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProcessedStage'], meta: { name: 'ProcessedStage' } }
     /**
-     * Find zero or one Message that matches the filter.
-     * @param {MessageFindUniqueArgs} args - Arguments to find a Message
+     * Find zero or one ProcessedStage that matches the filter.
+     * @param {ProcessedStageFindUniqueArgs} args - Arguments to find a ProcessedStage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findUnique({
+     * // Get one ProcessedStage
+     * const processedStage = await prisma.processedStage.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends MessageFindUniqueArgs>(args: SelectSubset<T, MessageFindUniqueArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ProcessedStageFindUniqueArgs>(args: SelectSubset<T, ProcessedStageFindUniqueArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Message that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ProcessedStage that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {MessageFindUniqueOrThrowArgs} args - Arguments to find a Message
+     * @param {ProcessedStageFindUniqueOrThrowArgs} args - Arguments to find a ProcessedStage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findUniqueOrThrow({
+     * // Get one ProcessedStage
+     * const processedStage = await prisma.processedStage.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends MessageFindUniqueOrThrowArgs>(args: SelectSubset<T, MessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ProcessedStageFindUniqueOrThrowArgs>(args: SelectSubset<T, ProcessedStageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Message that matches the filter.
+     * Find the first ProcessedStage that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageFindFirstArgs} args - Arguments to find a Message
+     * @param {ProcessedStageFindFirstArgs} args - Arguments to find a ProcessedStage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findFirst({
+     * // Get one ProcessedStage
+     * const processedStage = await prisma.processedStage.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends MessageFindFirstArgs>(args?: SelectSubset<T, MessageFindFirstArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ProcessedStageFindFirstArgs>(args?: SelectSubset<T, ProcessedStageFindFirstArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Message that matches the filter or
+     * Find the first ProcessedStage that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageFindFirstOrThrowArgs} args - Arguments to find a Message
+     * @param {ProcessedStageFindFirstOrThrowArgs} args - Arguments to find a ProcessedStage
      * @example
-     * // Get one Message
-     * const message = await prisma.message.findFirstOrThrow({
+     * // Get one ProcessedStage
+     * const processedStage = await prisma.processedStage.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends MessageFindFirstOrThrowArgs>(args?: SelectSubset<T, MessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ProcessedStageFindFirstOrThrowArgs>(args?: SelectSubset<T, ProcessedStageFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Messages that matches the filter.
+     * Find zero or more ProcessedStages that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ProcessedStageFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Messages
-     * const messages = await prisma.message.findMany()
+     * // Get all ProcessedStages
+     * const processedStages = await prisma.processedStage.findMany()
      * 
-     * // Get first 10 Messages
-     * const messages = await prisma.message.findMany({ take: 10 })
+     * // Get first 10 ProcessedStages
+     * const processedStages = await prisma.processedStage.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const messageWithIdOnly = await prisma.message.findMany({ select: { id: true } })
+     * // Only select the `workFlowRunId`
+     * const processedStageWithWorkFlowRunIdOnly = await prisma.processedStage.findMany({ select: { workFlowRunId: true } })
      * 
      */
-    findMany<T extends MessageFindManyArgs>(args?: SelectSubset<T, MessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ProcessedStageFindManyArgs>(args?: SelectSubset<T, ProcessedStageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Message.
-     * @param {MessageCreateArgs} args - Arguments to create a Message.
+     * Create a ProcessedStage.
+     * @param {ProcessedStageCreateArgs} args - Arguments to create a ProcessedStage.
      * @example
-     * // Create one Message
-     * const Message = await prisma.message.create({
+     * // Create one ProcessedStage
+     * const ProcessedStage = await prisma.processedStage.create({
      *   data: {
-     *     // ... data to create a Message
+     *     // ... data to create a ProcessedStage
      *   }
      * })
      * 
      */
-    create<T extends MessageCreateArgs>(args: SelectSubset<T, MessageCreateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ProcessedStageCreateArgs>(args: SelectSubset<T, ProcessedStageCreateArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Messages.
-     * @param {MessageCreateManyArgs} args - Arguments to create many Messages.
+     * Create many ProcessedStages.
+     * @param {ProcessedStageCreateManyArgs} args - Arguments to create many ProcessedStages.
      * @example
-     * // Create many Messages
-     * const message = await prisma.message.createMany({
+     * // Create many ProcessedStages
+     * const processedStage = await prisma.processedStage.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends MessageCreateManyArgs>(args?: SelectSubset<T, MessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ProcessedStageCreateManyArgs>(args?: SelectSubset<T, ProcessedStageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Messages and returns the data saved in the database.
-     * @param {MessageCreateManyAndReturnArgs} args - Arguments to create many Messages.
+     * Create many ProcessedStages and returns the data saved in the database.
+     * @param {ProcessedStageCreateManyAndReturnArgs} args - Arguments to create many ProcessedStages.
      * @example
-     * // Create many Messages
-     * const message = await prisma.message.createManyAndReturn({
+     * // Create many ProcessedStages
+     * const processedStage = await prisma.processedStage.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Messages and only return the `id`
-     * const messageWithIdOnly = await prisma.message.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many ProcessedStages and only return the `workFlowRunId`
+     * const processedStageWithWorkFlowRunIdOnly = await prisma.processedStage.createManyAndReturn({
+     *   select: { workFlowRunId: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -11843,28 +11873,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends MessageCreateManyAndReturnArgs>(args?: SelectSubset<T, MessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ProcessedStageCreateManyAndReturnArgs>(args?: SelectSubset<T, ProcessedStageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Message.
-     * @param {MessageDeleteArgs} args - Arguments to delete one Message.
+     * Delete a ProcessedStage.
+     * @param {ProcessedStageDeleteArgs} args - Arguments to delete one ProcessedStage.
      * @example
-     * // Delete one Message
-     * const Message = await prisma.message.delete({
+     * // Delete one ProcessedStage
+     * const ProcessedStage = await prisma.processedStage.delete({
      *   where: {
-     *     // ... filter to delete one Message
+     *     // ... filter to delete one ProcessedStage
      *   }
      * })
      * 
      */
-    delete<T extends MessageDeleteArgs>(args: SelectSubset<T, MessageDeleteArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ProcessedStageDeleteArgs>(args: SelectSubset<T, ProcessedStageDeleteArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Message.
-     * @param {MessageUpdateArgs} args - Arguments to update one Message.
+     * Update one ProcessedStage.
+     * @param {ProcessedStageUpdateArgs} args - Arguments to update one ProcessedStage.
      * @example
-     * // Update one Message
-     * const message = await prisma.message.update({
+     * // Update one ProcessedStage
+     * const processedStage = await prisma.processedStage.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -11874,30 +11904,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends MessageUpdateArgs>(args: SelectSubset<T, MessageUpdateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ProcessedStageUpdateArgs>(args: SelectSubset<T, ProcessedStageUpdateArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Messages.
-     * @param {MessageDeleteManyArgs} args - Arguments to filter Messages to delete.
+     * Delete zero or more ProcessedStages.
+     * @param {ProcessedStageDeleteManyArgs} args - Arguments to filter ProcessedStages to delete.
      * @example
-     * // Delete a few Messages
-     * const { count } = await prisma.message.deleteMany({
+     * // Delete a few ProcessedStages
+     * const { count } = await prisma.processedStage.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends MessageDeleteManyArgs>(args?: SelectSubset<T, MessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ProcessedStageDeleteManyArgs>(args?: SelectSubset<T, ProcessedStageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Messages.
+     * Update zero or more ProcessedStages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ProcessedStageUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Messages
-     * const message = await prisma.message.updateMany({
+     * // Update many ProcessedStages
+     * const processedStage = await prisma.processedStage.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -11907,14 +11937,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends MessageUpdateManyArgs>(args: SelectSubset<T, MessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ProcessedStageUpdateManyArgs>(args: SelectSubset<T, ProcessedStageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Messages and returns the data updated in the database.
-     * @param {MessageUpdateManyAndReturnArgs} args - Arguments to update many Messages.
+     * Update zero or more ProcessedStages and returns the data updated in the database.
+     * @param {ProcessedStageUpdateManyAndReturnArgs} args - Arguments to update many ProcessedStages.
      * @example
-     * // Update many Messages
-     * const message = await prisma.message.updateManyAndReturn({
+     * // Update many ProcessedStages
+     * const processedStage = await prisma.processedStage.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -11923,9 +11953,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Messages and only return the `id`
-     * const messageWithIdOnly = await prisma.message.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more ProcessedStages and only return the `workFlowRunId`
+     * const processedStageWithWorkFlowRunIdOnly = await prisma.processedStage.updateManyAndReturn({
+     *   select: { workFlowRunId: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -11937,56 +11967,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends MessageUpdateManyAndReturnArgs>(args: SelectSubset<T, MessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ProcessedStageUpdateManyAndReturnArgs>(args: SelectSubset<T, ProcessedStageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Message.
-     * @param {MessageUpsertArgs} args - Arguments to update or create a Message.
+     * Create or update one ProcessedStage.
+     * @param {ProcessedStageUpsertArgs} args - Arguments to update or create a ProcessedStage.
      * @example
-     * // Update or create a Message
-     * const message = await prisma.message.upsert({
+     * // Update or create a ProcessedStage
+     * const processedStage = await prisma.processedStage.upsert({
      *   create: {
-     *     // ... data to create a Message
+     *     // ... data to create a ProcessedStage
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Message we want to update
+     *     // ... the filter for the ProcessedStage we want to update
      *   }
      * })
      */
-    upsert<T extends MessageUpsertArgs>(args: SelectSubset<T, MessageUpsertArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ProcessedStageUpsertArgs>(args: SelectSubset<T, ProcessedStageUpsertArgs<ExtArgs>>): Prisma__ProcessedStageClient<$Result.GetResult<Prisma.$ProcessedStagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Messages.
+     * Count the number of ProcessedStages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageCountArgs} args - Arguments to filter Messages to count.
+     * @param {ProcessedStageCountArgs} args - Arguments to filter ProcessedStages to count.
      * @example
-     * // Count the number of Messages
-     * const count = await prisma.message.count({
+     * // Count the number of ProcessedStages
+     * const count = await prisma.processedStage.count({
      *   where: {
-     *     // ... the filter for the Messages we want to count
+     *     // ... the filter for the ProcessedStages we want to count
      *   }
      * })
     **/
-    count<T extends MessageCountArgs>(
-      args?: Subset<T, MessageCountArgs>,
+    count<T extends ProcessedStageCountArgs>(
+      args?: Subset<T, ProcessedStageCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], MessageCountAggregateOutputType>
+          : GetScalarType<T['select'], ProcessedStageCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Message.
+     * Allows you to perform aggregations operations on a ProcessedStage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ProcessedStageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -12006,13 +12036,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends MessageAggregateArgs>(args: Subset<T, MessageAggregateArgs>): Prisma.PrismaPromise<GetMessageAggregateType<T>>
+    aggregate<T extends ProcessedStageAggregateArgs>(args: Subset<T, ProcessedStageAggregateArgs>): Prisma.PrismaPromise<GetProcessedStageAggregateType<T>>
 
     /**
-     * Group by Message.
+     * Group by ProcessedStage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageGroupByArgs} args - Group by arguments.
+     * @param {ProcessedStageGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -12027,14 +12057,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends MessageGroupByArgs,
+      T extends ProcessedStageGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MessageGroupByArgs['orderBy'] }
-        : { orderBy?: MessageGroupByArgs['orderBy'] },
+        ? { orderBy: ProcessedStageGroupByArgs['orderBy'] }
+        : { orderBy?: ProcessedStageGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -12083,22 +12113,21 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, MessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ProcessedStageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProcessedStageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Message model
+   * Fields of the ProcessedStage model
    */
-  readonly fields: MessageFieldRefs;
+  readonly fields: ProcessedStageFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Message.
+   * The delegate class that acts as a "Promise-like" for ProcessedStage.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__MessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ProcessedStageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    conversation<T extends ConversationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ConversationDefaultArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12125,425 +12154,375 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Message model
+   * Fields of the ProcessedStage model
    */
-  interface MessageFieldRefs {
-    readonly id: FieldRef<"Message", 'String'>
-    readonly conversationId: FieldRef<"Message", 'String'>
-    readonly role: FieldRef<"Message", 'String'>
-    readonly content: FieldRef<"Message", 'Json'>
-    readonly createdAt: FieldRef<"Message", 'DateTime'>
+  interface ProcessedStageFieldRefs {
+    readonly workFlowRunId: FieldRef<"ProcessedStage", 'String'>
+    readonly stage: FieldRef<"ProcessedStage", 'Int'>
+    readonly processedAt: FieldRef<"ProcessedStage", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Message findUnique
+   * ProcessedStage findUnique
    */
-  export type MessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which ProcessedStage to fetch.
      */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * Filter, which Message to fetch.
-     */
-    where: MessageWhereUniqueInput
+    where: ProcessedStageWhereUniqueInput
   }
 
   /**
-   * Message findUniqueOrThrow
+   * ProcessedStage findUniqueOrThrow
    */
-  export type MessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which ProcessedStage to fetch.
      */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * Filter, which Message to fetch.
-     */
-    where: MessageWhereUniqueInput
+    where: ProcessedStageWhereUniqueInput
   }
 
   /**
-   * Message findFirst
+   * ProcessedStage findFirst
    */
-  export type MessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which ProcessedStage to fetch.
      */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * Filter, which Message to fetch.
-     */
-    where?: MessageWhereInput
+    where?: ProcessedStageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of ProcessedStages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: ProcessedStageOrderByWithRelationInput | ProcessedStageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Messages.
+     * Sets the position for searching for ProcessedStages.
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: ProcessedStageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` ProcessedStages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` ProcessedStages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Messages.
+     * Filter by unique combinations of ProcessedStages.
      */
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+    distinct?: ProcessedStageScalarFieldEnum | ProcessedStageScalarFieldEnum[]
   }
 
   /**
-   * Message findFirstOrThrow
+   * ProcessedStage findFirstOrThrow
    */
-  export type MessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which ProcessedStage to fetch.
      */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * Filter, which Message to fetch.
-     */
-    where?: MessageWhereInput
+    where?: ProcessedStageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of ProcessedStages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: ProcessedStageOrderByWithRelationInput | ProcessedStageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Messages.
+     * Sets the position for searching for ProcessedStages.
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: ProcessedStageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` ProcessedStages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` ProcessedStages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Messages.
+     * Filter by unique combinations of ProcessedStages.
      */
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+    distinct?: ProcessedStageScalarFieldEnum | ProcessedStageScalarFieldEnum[]
   }
 
   /**
-   * Message findMany
+   * ProcessedStage findMany
    */
-  export type MessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * Filter, which ProcessedStages to fetch.
      */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * Filter, which Messages to fetch.
-     */
-    where?: MessageWhereInput
+    where?: ProcessedStageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Messages to fetch.
+     * Determine the order of ProcessedStages to fetch.
      */
-    orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
+    orderBy?: ProcessedStageOrderByWithRelationInput | ProcessedStageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Messages.
+     * Sets the position for listing ProcessedStages.
      */
-    cursor?: MessageWhereUniqueInput
+    cursor?: ProcessedStageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Messages from the position of the cursor.
+     * Take `±n` ProcessedStages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Messages.
+     * Skip the first `n` ProcessedStages.
      */
     skip?: number
-    distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+    distinct?: ProcessedStageScalarFieldEnum | ProcessedStageScalarFieldEnum[]
   }
 
   /**
-   * Message create
+   * ProcessedStage create
    */
-  export type MessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to create a ProcessedStage.
      */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Message.
-     */
-    data: XOR<MessageCreateInput, MessageUncheckedCreateInput>
+    data: XOR<ProcessedStageCreateInput, ProcessedStageUncheckedCreateInput>
   }
 
   /**
-   * Message createMany
+   * ProcessedStage createMany
    */
-  export type MessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Messages.
+     * The data used to create many ProcessedStages.
      */
-    data: MessageCreateManyInput | MessageCreateManyInput[]
+    data: ProcessedStageCreateManyInput | ProcessedStageCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Message createManyAndReturn
+   * ProcessedStage createManyAndReturn
    */
-  export type MessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ProcessedStageSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * The data used to create many Messages.
+     * The data used to create many ProcessedStages.
      */
-    data: MessageCreateManyInput | MessageCreateManyInput[]
+    data: ProcessedStageCreateManyInput | ProcessedStageCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MessageIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Message update
+   * ProcessedStage update
    */
-  export type MessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The data needed to update a ProcessedStage.
      */
-    include?: MessageInclude<ExtArgs> | null
+    data: XOR<ProcessedStageUpdateInput, ProcessedStageUncheckedUpdateInput>
     /**
-     * The data needed to update a Message.
+     * Choose, which ProcessedStage to update.
      */
-    data: XOR<MessageUpdateInput, MessageUncheckedUpdateInput>
-    /**
-     * Choose, which Message to update.
-     */
-    where: MessageWhereUniqueInput
+    where: ProcessedStageWhereUniqueInput
   }
 
   /**
-   * Message updateMany
+   * ProcessedStage updateMany
    */
-  export type MessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Messages.
+     * The data used to update ProcessedStages.
      */
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyInput>
+    data: XOR<ProcessedStageUpdateManyMutationInput, ProcessedStageUncheckedUpdateManyInput>
     /**
-     * Filter which Messages to update
+     * Filter which ProcessedStages to update
      */
-    where?: MessageWhereInput
+    where?: ProcessedStageWhereInput
     /**
-     * Limit how many Messages to update.
+     * Limit how many ProcessedStages to update.
      */
     limit?: number
   }
 
   /**
-   * Message updateManyAndReturn
+   * ProcessedStage updateManyAndReturn
    */
-  export type MessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ProcessedStageSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * The data used to update Messages.
+     * The data used to update ProcessedStages.
      */
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyInput>
+    data: XOR<ProcessedStageUpdateManyMutationInput, ProcessedStageUncheckedUpdateManyInput>
     /**
-     * Filter which Messages to update
+     * Filter which ProcessedStages to update
      */
-    where?: MessageWhereInput
+    where?: ProcessedStageWhereInput
     /**
-     * Limit how many Messages to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MessageIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Message upsert
-   */
-  export type MessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Message
-     */
-    select?: MessageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Message
-     */
-    omit?: MessageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Message to update in case it exists.
-     */
-    where: MessageWhereUniqueInput
-    /**
-     * In case the Message found by the `where` argument doesn't exist, create a new Message with this data.
-     */
-    create: XOR<MessageCreateInput, MessageUncheckedCreateInput>
-    /**
-     * In case the Message was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<MessageUpdateInput, MessageUncheckedUpdateInput>
-  }
-
-  /**
-   * Message delete
-   */
-  export type MessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Message
-     */
-    select?: MessageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Message
-     */
-    omit?: MessageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MessageInclude<ExtArgs> | null
-    /**
-     * Filter which Message to delete.
-     */
-    where: MessageWhereUniqueInput
-  }
-
-  /**
-   * Message deleteMany
-   */
-  export type MessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Messages to delete
-     */
-    where?: MessageWhereInput
-    /**
-     * Limit how many Messages to delete.
+     * Limit how many ProcessedStages to update.
      */
     limit?: number
   }
 
   /**
-   * Message without action
+   * ProcessedStage upsert
    */
-  export type MessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProcessedStageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Message
+     * Select specific fields to fetch from the ProcessedStage
      */
-    select?: MessageSelect<ExtArgs> | null
+    select?: ProcessedStageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Message
+     * Omit specific fields from the ProcessedStage
      */
-    omit?: MessageOmit<ExtArgs> | null
+    omit?: ProcessedStageOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
+     * The filter to search for the ProcessedStage to update in case it exists.
      */
-    include?: MessageInclude<ExtArgs> | null
+    where: ProcessedStageWhereUniqueInput
+    /**
+     * In case the ProcessedStage found by the `where` argument doesn't exist, create a new ProcessedStage with this data.
+     */
+    create: XOR<ProcessedStageCreateInput, ProcessedStageUncheckedCreateInput>
+    /**
+     * In case the ProcessedStage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProcessedStageUpdateInput, ProcessedStageUncheckedUpdateInput>
+  }
+
+  /**
+   * ProcessedStage delete
+   */
+  export type ProcessedStageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProcessedStage
+     */
+    select?: ProcessedStageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProcessedStage
+     */
+    omit?: ProcessedStageOmit<ExtArgs> | null
+    /**
+     * Filter which ProcessedStage to delete.
+     */
+    where: ProcessedStageWhereUniqueInput
+  }
+
+  /**
+   * ProcessedStage deleteMany
+   */
+  export type ProcessedStageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProcessedStages to delete
+     */
+    where?: ProcessedStageWhereInput
+    /**
+     * Limit how many ProcessedStages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProcessedStage without action
+   */
+  export type ProcessedStageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProcessedStage
+     */
+    select?: ProcessedStageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProcessedStage
+     */
+    omit?: ProcessedStageOmit<ExtArgs> | null
   }
 
 
@@ -12640,26 +12619,31 @@ export namespace Prisma {
   export type WorkFlowOutBoxScalarFieldEnum = (typeof WorkFlowOutBoxScalarFieldEnum)[keyof typeof WorkFlowOutBoxScalarFieldEnum]
 
 
-  export const ConversationScalarFieldEnum: {
+  export const ScheduledMessageScalarFieldEnum: {
     id: 'id',
-    userId: 'userId',
-    title: 'title',
+    channel: 'channel',
+    recipient: 'recipient',
+    message: 'message',
+    subject: 'subject',
+    username: 'username',
+    scheduledAt: 'scheduledAt',
+    status: 'status',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    sentAt: 'sentAt',
+    error: 'error',
+    userId: 'userId'
   };
 
-  export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
+  export type ScheduledMessageScalarFieldEnum = (typeof ScheduledMessageScalarFieldEnum)[keyof typeof ScheduledMessageScalarFieldEnum]
 
 
-  export const MessageScalarFieldEnum: {
-    id: 'id',
-    conversationId: 'conversationId',
-    role: 'role',
-    content: 'content',
-    createdAt: 'createdAt'
+  export const ProcessedStageScalarFieldEnum: {
+    workFlowRunId: 'workFlowRunId',
+    stage: 'stage',
+    processedAt: 'processedAt'
   };
 
-  export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+  export type ProcessedStageScalarFieldEnum = (typeof ProcessedStageScalarFieldEnum)[keyof typeof ProcessedStageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -12791,7 +12775,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     workflows?: WorkFlowListRelationFilter
-    conversations?: ConversationListRelationFilter
+    scheduledMessages?: ScheduledMessageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12802,7 +12786,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     workflows?: WorkFlowOrderByRelationAggregateInput
-    conversations?: ConversationOrderByRelationAggregateInput
+    scheduledMessages?: ScheduledMessageOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -12816,7 +12800,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     workflows?: WorkFlowListRelationFilter
-    conversations?: ConversationListRelationFilter
+    scheduledMessages?: ScheduledMessageListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -13198,117 +13182,139 @@ export namespace Prisma {
     WorkFlowRunId?: StringWithAggregatesFilter<"WorkFlowOutBox"> | string
   }
 
-  export type ConversationWhereInput = {
-    AND?: ConversationWhereInput | ConversationWhereInput[]
-    OR?: ConversationWhereInput[]
-    NOT?: ConversationWhereInput | ConversationWhereInput[]
-    id?: StringFilter<"Conversation"> | string
-    userId?: StringFilter<"Conversation"> | string
-    title?: StringFilter<"Conversation"> | string
-    createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
+  export type ScheduledMessageWhereInput = {
+    AND?: ScheduledMessageWhereInput | ScheduledMessageWhereInput[]
+    OR?: ScheduledMessageWhereInput[]
+    NOT?: ScheduledMessageWhereInput | ScheduledMessageWhereInput[]
+    id?: StringFilter<"ScheduledMessage"> | string
+    channel?: StringFilter<"ScheduledMessage"> | string
+    recipient?: StringFilter<"ScheduledMessage"> | string
+    message?: StringFilter<"ScheduledMessage"> | string
+    subject?: StringNullableFilter<"ScheduledMessage"> | string | null
+    username?: StringNullableFilter<"ScheduledMessage"> | string | null
+    scheduledAt?: DateTimeFilter<"ScheduledMessage"> | Date | string
+    status?: StringFilter<"ScheduledMessage"> | string
+    createdAt?: DateTimeFilter<"ScheduledMessage"> | Date | string
+    sentAt?: DateTimeNullableFilter<"ScheduledMessage"> | Date | string | null
+    error?: StringNullableFilter<"ScheduledMessage"> | string | null
+    userId?: StringFilter<"ScheduledMessage"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    messages?: MessageListRelationFilter
   }
 
-  export type ConversationOrderByWithRelationInput = {
+  export type ScheduledMessageOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
-    title?: SortOrder
+    channel?: SortOrder
+    recipient?: SortOrder
+    message?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    sentAt?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    userId?: SortOrder
     user?: UserOrderByWithRelationInput
-    messages?: MessageOrderByRelationAggregateInput
   }
 
-  export type ConversationWhereUniqueInput = Prisma.AtLeast<{
+  export type ScheduledMessageWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: ConversationWhereInput | ConversationWhereInput[]
-    OR?: ConversationWhereInput[]
-    NOT?: ConversationWhereInput | ConversationWhereInput[]
-    userId?: StringFilter<"Conversation"> | string
-    title?: StringFilter<"Conversation"> | string
-    createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
+    AND?: ScheduledMessageWhereInput | ScheduledMessageWhereInput[]
+    OR?: ScheduledMessageWhereInput[]
+    NOT?: ScheduledMessageWhereInput | ScheduledMessageWhereInput[]
+    channel?: StringFilter<"ScheduledMessage"> | string
+    recipient?: StringFilter<"ScheduledMessage"> | string
+    message?: StringFilter<"ScheduledMessage"> | string
+    subject?: StringNullableFilter<"ScheduledMessage"> | string | null
+    username?: StringNullableFilter<"ScheduledMessage"> | string | null
+    scheduledAt?: DateTimeFilter<"ScheduledMessage"> | Date | string
+    status?: StringFilter<"ScheduledMessage"> | string
+    createdAt?: DateTimeFilter<"ScheduledMessage"> | Date | string
+    sentAt?: DateTimeNullableFilter<"ScheduledMessage"> | Date | string | null
+    error?: StringNullableFilter<"ScheduledMessage"> | string | null
+    userId?: StringFilter<"ScheduledMessage"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    messages?: MessageListRelationFilter
   }, "id">
 
-  export type ConversationOrderByWithAggregationInput = {
+  export type ScheduledMessageOrderByWithAggregationInput = {
     id?: SortOrder
+    channel?: SortOrder
+    recipient?: SortOrder
+    message?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: ConversationCountOrderByAggregateInput
-    _max?: ConversationMaxOrderByAggregateInput
-    _min?: ConversationMinOrderByAggregateInput
+    _count?: ScheduledMessageCountOrderByAggregateInput
+    _max?: ScheduledMessageMaxOrderByAggregateInput
+    _min?: ScheduledMessageMinOrderByAggregateInput
   }
 
-  export type ConversationScalarWhereWithAggregatesInput = {
-    AND?: ConversationScalarWhereWithAggregatesInput | ConversationScalarWhereWithAggregatesInput[]
-    OR?: ConversationScalarWhereWithAggregatesInput[]
-    NOT?: ConversationScalarWhereWithAggregatesInput | ConversationScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Conversation"> | string
-    userId?: StringWithAggregatesFilter<"Conversation"> | string
-    title?: StringWithAggregatesFilter<"Conversation"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Conversation"> | Date | string
+  export type ScheduledMessageScalarWhereWithAggregatesInput = {
+    AND?: ScheduledMessageScalarWhereWithAggregatesInput | ScheduledMessageScalarWhereWithAggregatesInput[]
+    OR?: ScheduledMessageScalarWhereWithAggregatesInput[]
+    NOT?: ScheduledMessageScalarWhereWithAggregatesInput | ScheduledMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScheduledMessage"> | string
+    channel?: StringWithAggregatesFilter<"ScheduledMessage"> | string
+    recipient?: StringWithAggregatesFilter<"ScheduledMessage"> | string
+    message?: StringWithAggregatesFilter<"ScheduledMessage"> | string
+    subject?: StringNullableWithAggregatesFilter<"ScheduledMessage"> | string | null
+    username?: StringNullableWithAggregatesFilter<"ScheduledMessage"> | string | null
+    scheduledAt?: DateTimeWithAggregatesFilter<"ScheduledMessage"> | Date | string
+    status?: StringWithAggregatesFilter<"ScheduledMessage"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ScheduledMessage"> | Date | string
+    sentAt?: DateTimeNullableWithAggregatesFilter<"ScheduledMessage"> | Date | string | null
+    error?: StringNullableWithAggregatesFilter<"ScheduledMessage"> | string | null
+    userId?: StringWithAggregatesFilter<"ScheduledMessage"> | string
   }
 
-  export type MessageWhereInput = {
-    AND?: MessageWhereInput | MessageWhereInput[]
-    OR?: MessageWhereInput[]
-    NOT?: MessageWhereInput | MessageWhereInput[]
-    id?: StringFilter<"Message"> | string
-    conversationId?: StringFilter<"Message"> | string
-    role?: StringFilter<"Message"> | string
-    content?: JsonFilter<"Message">
-    createdAt?: DateTimeFilter<"Message"> | Date | string
-    conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
+  export type ProcessedStageWhereInput = {
+    AND?: ProcessedStageWhereInput | ProcessedStageWhereInput[]
+    OR?: ProcessedStageWhereInput[]
+    NOT?: ProcessedStageWhereInput | ProcessedStageWhereInput[]
+    workFlowRunId?: StringFilter<"ProcessedStage"> | string
+    stage?: IntFilter<"ProcessedStage"> | number
+    processedAt?: DateTimeFilter<"ProcessedStage"> | Date | string
   }
 
-  export type MessageOrderByWithRelationInput = {
-    id?: SortOrder
-    conversationId?: SortOrder
-    role?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    conversation?: ConversationOrderByWithRelationInput
+  export type ProcessedStageOrderByWithRelationInput = {
+    workFlowRunId?: SortOrder
+    stage?: SortOrder
+    processedAt?: SortOrder
   }
 
-  export type MessageWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: MessageWhereInput | MessageWhereInput[]
-    OR?: MessageWhereInput[]
-    NOT?: MessageWhereInput | MessageWhereInput[]
-    conversationId?: StringFilter<"Message"> | string
-    role?: StringFilter<"Message"> | string
-    content?: JsonFilter<"Message">
-    createdAt?: DateTimeFilter<"Message"> | Date | string
-    conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
-  }, "id">
+  export type ProcessedStageWhereUniqueInput = Prisma.AtLeast<{
+    workFlowRunId_stage?: ProcessedStageWorkFlowRunIdStageCompoundUniqueInput
+    AND?: ProcessedStageWhereInput | ProcessedStageWhereInput[]
+    OR?: ProcessedStageWhereInput[]
+    NOT?: ProcessedStageWhereInput | ProcessedStageWhereInput[]
+    workFlowRunId?: StringFilter<"ProcessedStage"> | string
+    stage?: IntFilter<"ProcessedStage"> | number
+    processedAt?: DateTimeFilter<"ProcessedStage"> | Date | string
+  }, "workFlowRunId_stage">
 
-  export type MessageOrderByWithAggregationInput = {
-    id?: SortOrder
-    conversationId?: SortOrder
-    role?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
-    _count?: MessageCountOrderByAggregateInput
-    _max?: MessageMaxOrderByAggregateInput
-    _min?: MessageMinOrderByAggregateInput
+  export type ProcessedStageOrderByWithAggregationInput = {
+    workFlowRunId?: SortOrder
+    stage?: SortOrder
+    processedAt?: SortOrder
+    _count?: ProcessedStageCountOrderByAggregateInput
+    _avg?: ProcessedStageAvgOrderByAggregateInput
+    _max?: ProcessedStageMaxOrderByAggregateInput
+    _min?: ProcessedStageMinOrderByAggregateInput
+    _sum?: ProcessedStageSumOrderByAggregateInput
   }
 
-  export type MessageScalarWhereWithAggregatesInput = {
-    AND?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
-    OR?: MessageScalarWhereWithAggregatesInput[]
-    NOT?: MessageScalarWhereWithAggregatesInput | MessageScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Message"> | string
-    conversationId?: StringWithAggregatesFilter<"Message"> | string
-    role?: StringWithAggregatesFilter<"Message"> | string
-    content?: JsonWithAggregatesFilter<"Message">
-    createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
+  export type ProcessedStageScalarWhereWithAggregatesInput = {
+    AND?: ProcessedStageScalarWhereWithAggregatesInput | ProcessedStageScalarWhereWithAggregatesInput[]
+    OR?: ProcessedStageScalarWhereWithAggregatesInput[]
+    NOT?: ProcessedStageScalarWhereWithAggregatesInput | ProcessedStageScalarWhereWithAggregatesInput[]
+    workFlowRunId?: StringWithAggregatesFilter<"ProcessedStage"> | string
+    stage?: IntWithAggregatesFilter<"ProcessedStage"> | number
+    processedAt?: DateTimeWithAggregatesFilter<"ProcessedStage"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -13319,7 +13325,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     workflows?: WorkFlowCreateNestedManyWithoutUserInput
-    conversations?: ConversationCreateNestedManyWithoutUserInput
+    scheduledMessages?: ScheduledMessageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13330,7 +13336,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     workflows?: WorkFlowUncheckedCreateNestedManyWithoutUserInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
+    scheduledMessages?: ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -13341,7 +13347,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workflows?: WorkFlowUpdateManyWithoutUserNestedInput
-    conversations?: ConversationUpdateManyWithoutUserNestedInput
+    scheduledMessages?: ScheduledMessageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13352,7 +13358,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workflows?: WorkFlowUncheckedUpdateManyWithoutUserNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
+    scheduledMessages?: ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -13721,118 +13727,150 @@ export namespace Prisma {
     WorkFlowRunId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ConversationCreateInput = {
+  export type ScheduledMessageCreateInput = {
     id?: string
-    title?: string
+    channel: string
+    recipient: string
+    message: string
+    subject?: string | null
+    username?: string | null
+    scheduledAt: Date | string
+    status?: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutConversationsInput
-    messages?: MessageCreateNestedManyWithoutConversationInput
+    sentAt?: Date | string | null
+    error?: string | null
+    user: UserCreateNestedOneWithoutScheduledMessagesInput
   }
 
-  export type ConversationUncheckedCreateInput = {
+  export type ScheduledMessageUncheckedCreateInput = {
     id?: string
+    channel: string
+    recipient: string
+    message: string
+    subject?: string | null
+    username?: string | null
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    sentAt?: Date | string | null
+    error?: string | null
     userId: string
-    title?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
-  export type ConversationUpdateInput = {
+  export type ScheduledMessageUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutConversationsNestedInput
-    messages?: MessageUpdateManyWithoutConversationNestedInput
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutScheduledMessagesNestedInput
   }
 
-  export type ConversationUncheckedUpdateInput = {
+  export type ScheduledMessageUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
-  export type ConversationCreateManyInput = {
+  export type ScheduledMessageCreateManyInput = {
     id?: string
+    channel: string
+    recipient: string
+    message: string
+    subject?: string | null
+    username?: string | null
+    scheduledAt: Date | string
+    status?: string
+    createdAt?: Date | string
+    sentAt?: Date | string | null
+    error?: string | null
     userId: string
-    title?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
-  export type ConversationUpdateManyMutationInput = {
+  export type ScheduledMessageUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ConversationUncheckedUpdateManyInput = {
+  export type ScheduledMessageUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MessageCreateInput = {
-    id?: string
-    role: string
-    content: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    conversation: ConversationCreateNestedOneWithoutMessagesInput
+  export type ProcessedStageCreateInput = {
+    workFlowRunId: string
+    stage: number
+    processedAt?: Date | string
   }
 
-  export type MessageUncheckedCreateInput = {
-    id?: string
-    conversationId: string
-    role: string
-    content: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
+  export type ProcessedStageUncheckedCreateInput = {
+    workFlowRunId: string
+    stage: number
+    processedAt?: Date | string
   }
 
-  export type MessageUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    content?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversation?: ConversationUpdateOneRequiredWithoutMessagesNestedInput
+  export type ProcessedStageUpdateInput = {
+    workFlowRunId?: StringFieldUpdateOperationsInput | string
+    stage?: IntFieldUpdateOperationsInput | number
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MessageUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    conversationId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    content?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ProcessedStageUncheckedUpdateInput = {
+    workFlowRunId?: StringFieldUpdateOperationsInput | string
+    stage?: IntFieldUpdateOperationsInput | number
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MessageCreateManyInput = {
-    id?: string
-    conversationId: string
-    role: string
-    content: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
+  export type ProcessedStageCreateManyInput = {
+    workFlowRunId: string
+    stage: number
+    processedAt?: Date | string
   }
 
-  export type MessageUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    content?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ProcessedStageUpdateManyMutationInput = {
+    workFlowRunId?: StringFieldUpdateOperationsInput | string
+    stage?: IntFieldUpdateOperationsInput | number
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MessageUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    conversationId?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    content?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ProcessedStageUncheckedUpdateManyInput = {
+    workFlowRunId?: StringFieldUpdateOperationsInput | string
+    stage?: IntFieldUpdateOperationsInput | number
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -13882,10 +13920,10 @@ export namespace Prisma {
     none?: WorkFlowWhereInput
   }
 
-  export type ConversationListRelationFilter = {
-    every?: ConversationWhereInput
-    some?: ConversationWhereInput
-    none?: ConversationWhereInput
+  export type ScheduledMessageListRelationFilter = {
+    every?: ScheduledMessageWhereInput
+    some?: ScheduledMessageWhereInput
+    none?: ScheduledMessageWhereInput
   }
 
   export type SortOrderInput = {
@@ -13897,7 +13935,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ConversationOrderByRelationAggregateInput = {
+  export type ScheduledMessageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14284,65 +14322,80 @@ export namespace Prisma {
     WorkFlowRunId?: SortOrder
   }
 
-  export type MessageListRelationFilter = {
-    every?: MessageWhereInput
-    some?: MessageWhereInput
-    none?: MessageWhereInput
-  }
-
-  export type MessageOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ConversationCountOrderByAggregateInput = {
+  export type ScheduledMessageCountOrderByAggregateInput = {
     id?: SortOrder
+    channel?: SortOrder
+    recipient?: SortOrder
+    message?: SortOrder
+    subject?: SortOrder
+    username?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrder
+    error?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type ConversationMaxOrderByAggregateInput = {
+  export type ScheduledMessageMaxOrderByAggregateInput = {
     id?: SortOrder
+    channel?: SortOrder
+    recipient?: SortOrder
+    message?: SortOrder
+    subject?: SortOrder
+    username?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrder
+    error?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type ConversationMinOrderByAggregateInput = {
+  export type ScheduledMessageMinOrderByAggregateInput = {
     id?: SortOrder
+    channel?: SortOrder
+    recipient?: SortOrder
+    message?: SortOrder
+    subject?: SortOrder
+    username?: SortOrder
+    scheduledAt?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrder
+    error?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type ConversationScalarRelationFilter = {
-    is?: ConversationWhereInput
-    isNot?: ConversationWhereInput
+  export type ProcessedStageWorkFlowRunIdStageCompoundUniqueInput = {
+    workFlowRunId: string
+    stage: number
   }
 
-  export type MessageCountOrderByAggregateInput = {
-    id?: SortOrder
-    conversationId?: SortOrder
-    role?: SortOrder
-    content?: SortOrder
-    createdAt?: SortOrder
+  export type ProcessedStageCountOrderByAggregateInput = {
+    workFlowRunId?: SortOrder
+    stage?: SortOrder
+    processedAt?: SortOrder
   }
 
-  export type MessageMaxOrderByAggregateInput = {
-    id?: SortOrder
-    conversationId?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
+  export type ProcessedStageAvgOrderByAggregateInput = {
+    stage?: SortOrder
   }
 
-  export type MessageMinOrderByAggregateInput = {
-    id?: SortOrder
-    conversationId?: SortOrder
-    role?: SortOrder
-    createdAt?: SortOrder
+  export type ProcessedStageMaxOrderByAggregateInput = {
+    workFlowRunId?: SortOrder
+    stage?: SortOrder
+    processedAt?: SortOrder
+  }
+
+  export type ProcessedStageMinOrderByAggregateInput = {
+    workFlowRunId?: SortOrder
+    stage?: SortOrder
+    processedAt?: SortOrder
+  }
+
+  export type ProcessedStageSumOrderByAggregateInput = {
+    stage?: SortOrder
   }
 
   export type WorkFlowCreateNestedManyWithoutUserInput = {
@@ -14352,11 +14405,11 @@ export namespace Prisma {
     connect?: WorkFlowWhereUniqueInput | WorkFlowWhereUniqueInput[]
   }
 
-  export type ConversationCreateNestedManyWithoutUserInput = {
-    create?: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput> | ConversationCreateWithoutUserInput[] | ConversationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutUserInput | ConversationCreateOrConnectWithoutUserInput[]
-    createMany?: ConversationCreateManyUserInputEnvelope
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  export type ScheduledMessageCreateNestedManyWithoutUserInput = {
+    create?: XOR<ScheduledMessageCreateWithoutUserInput, ScheduledMessageUncheckedCreateWithoutUserInput> | ScheduledMessageCreateWithoutUserInput[] | ScheduledMessageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledMessageCreateOrConnectWithoutUserInput | ScheduledMessageCreateOrConnectWithoutUserInput[]
+    createMany?: ScheduledMessageCreateManyUserInputEnvelope
+    connect?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
   }
 
   export type WorkFlowUncheckedCreateNestedManyWithoutUserInput = {
@@ -14366,11 +14419,11 @@ export namespace Prisma {
     connect?: WorkFlowWhereUniqueInput | WorkFlowWhereUniqueInput[]
   }
 
-  export type ConversationUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput> | ConversationCreateWithoutUserInput[] | ConversationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutUserInput | ConversationCreateOrConnectWithoutUserInput[]
-    createMany?: ConversationCreateManyUserInputEnvelope
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  export type ScheduledMessageUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ScheduledMessageCreateWithoutUserInput, ScheduledMessageUncheckedCreateWithoutUserInput> | ScheduledMessageCreateWithoutUserInput[] | ScheduledMessageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledMessageCreateOrConnectWithoutUserInput | ScheduledMessageCreateOrConnectWithoutUserInput[]
+    createMany?: ScheduledMessageCreateManyUserInputEnvelope
+    connect?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -14399,18 +14452,18 @@ export namespace Prisma {
     deleteMany?: WorkFlowScalarWhereInput | WorkFlowScalarWhereInput[]
   }
 
-  export type ConversationUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput> | ConversationCreateWithoutUserInput[] | ConversationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutUserInput | ConversationCreateOrConnectWithoutUserInput[]
-    upsert?: ConversationUpsertWithWhereUniqueWithoutUserInput | ConversationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ConversationCreateManyUserInputEnvelope
-    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    update?: ConversationUpdateWithWhereUniqueWithoutUserInput | ConversationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ConversationUpdateManyWithWhereWithoutUserInput | ConversationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  export type ScheduledMessageUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ScheduledMessageCreateWithoutUserInput, ScheduledMessageUncheckedCreateWithoutUserInput> | ScheduledMessageCreateWithoutUserInput[] | ScheduledMessageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledMessageCreateOrConnectWithoutUserInput | ScheduledMessageCreateOrConnectWithoutUserInput[]
+    upsert?: ScheduledMessageUpsertWithWhereUniqueWithoutUserInput | ScheduledMessageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ScheduledMessageCreateManyUserInputEnvelope
+    set?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    disconnect?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    delete?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    connect?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    update?: ScheduledMessageUpdateWithWhereUniqueWithoutUserInput | ScheduledMessageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ScheduledMessageUpdateManyWithWhereWithoutUserInput | ScheduledMessageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ScheduledMessageScalarWhereInput | ScheduledMessageScalarWhereInput[]
   }
 
   export type WorkFlowUncheckedUpdateManyWithoutUserNestedInput = {
@@ -14427,18 +14480,18 @@ export namespace Prisma {
     deleteMany?: WorkFlowScalarWhereInput | WorkFlowScalarWhereInput[]
   }
 
-  export type ConversationUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput> | ConversationCreateWithoutUserInput[] | ConversationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutUserInput | ConversationCreateOrConnectWithoutUserInput[]
-    upsert?: ConversationUpsertWithWhereUniqueWithoutUserInput | ConversationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ConversationCreateManyUserInputEnvelope
-    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    update?: ConversationUpdateWithWhereUniqueWithoutUserInput | ConversationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ConversationUpdateManyWithWhereWithoutUserInput | ConversationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  export type ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ScheduledMessageCreateWithoutUserInput, ScheduledMessageUncheckedCreateWithoutUserInput> | ScheduledMessageCreateWithoutUserInput[] | ScheduledMessageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ScheduledMessageCreateOrConnectWithoutUserInput | ScheduledMessageCreateOrConnectWithoutUserInput[]
+    upsert?: ScheduledMessageUpsertWithWhereUniqueWithoutUserInput | ScheduledMessageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ScheduledMessageCreateManyUserInputEnvelope
+    set?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    disconnect?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    delete?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    connect?: ScheduledMessageWhereUniqueInput | ScheduledMessageWhereUniqueInput[]
+    update?: ScheduledMessageUpdateWithWhereUniqueWithoutUserInput | ScheduledMessageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ScheduledMessageUpdateManyWithWhereWithoutUserInput | ScheduledMessageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ScheduledMessageScalarWhereInput | ScheduledMessageScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutWorkflowsInput = {
@@ -14783,74 +14836,18 @@ export namespace Prisma {
     update?: XOR<XOR<WorkFlowRunUpdateToOneWithWhereWithoutOutboxInput, WorkFlowRunUpdateWithoutOutboxInput>, WorkFlowRunUncheckedUpdateWithoutOutboxInput>
   }
 
-  export type UserCreateNestedOneWithoutConversationsInput = {
-    create?: XOR<UserCreateWithoutConversationsInput, UserUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutConversationsInput
+  export type UserCreateNestedOneWithoutScheduledMessagesInput = {
+    create?: XOR<UserCreateWithoutScheduledMessagesInput, UserUncheckedCreateWithoutScheduledMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScheduledMessagesInput
     connect?: UserWhereUniqueInput
   }
 
-  export type MessageCreateNestedManyWithoutConversationInput = {
-    create?: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput> | MessageCreateWithoutConversationInput[] | MessageUncheckedCreateWithoutConversationInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutConversationInput | MessageCreateOrConnectWithoutConversationInput[]
-    createMany?: MessageCreateManyConversationInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type MessageUncheckedCreateNestedManyWithoutConversationInput = {
-    create?: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput> | MessageCreateWithoutConversationInput[] | MessageUncheckedCreateWithoutConversationInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutConversationInput | MessageCreateOrConnectWithoutConversationInput[]
-    createMany?: MessageCreateManyConversationInputEnvelope
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutConversationsNestedInput = {
-    create?: XOR<UserCreateWithoutConversationsInput, UserUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutConversationsInput
-    upsert?: UserUpsertWithoutConversationsInput
+  export type UserUpdateOneRequiredWithoutScheduledMessagesNestedInput = {
+    create?: XOR<UserCreateWithoutScheduledMessagesInput, UserUncheckedCreateWithoutScheduledMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScheduledMessagesInput
+    upsert?: UserUpsertWithoutScheduledMessagesInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutConversationsInput, UserUpdateWithoutConversationsInput>, UserUncheckedUpdateWithoutConversationsInput>
-  }
-
-  export type MessageUpdateManyWithoutConversationNestedInput = {
-    create?: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput> | MessageCreateWithoutConversationInput[] | MessageUncheckedCreateWithoutConversationInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutConversationInput | MessageCreateOrConnectWithoutConversationInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutConversationInput | MessageUpsertWithWhereUniqueWithoutConversationInput[]
-    createMany?: MessageCreateManyConversationInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutConversationInput | MessageUpdateWithWhereUniqueWithoutConversationInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutConversationInput | MessageUpdateManyWithWhereWithoutConversationInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type MessageUncheckedUpdateManyWithoutConversationNestedInput = {
-    create?: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput> | MessageCreateWithoutConversationInput[] | MessageUncheckedCreateWithoutConversationInput[]
-    connectOrCreate?: MessageCreateOrConnectWithoutConversationInput | MessageCreateOrConnectWithoutConversationInput[]
-    upsert?: MessageUpsertWithWhereUniqueWithoutConversationInput | MessageUpsertWithWhereUniqueWithoutConversationInput[]
-    createMany?: MessageCreateManyConversationInputEnvelope
-    set?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    disconnect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    delete?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
-    update?: MessageUpdateWithWhereUniqueWithoutConversationInput | MessageUpdateWithWhereUniqueWithoutConversationInput[]
-    updateMany?: MessageUpdateManyWithWhereWithoutConversationInput | MessageUpdateManyWithWhereWithoutConversationInput[]
-    deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
-  }
-
-  export type ConversationCreateNestedOneWithoutMessagesInput = {
-    create?: XOR<ConversationCreateWithoutMessagesInput, ConversationUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: ConversationCreateOrConnectWithoutMessagesInput
-    connect?: ConversationWhereUniqueInput
-  }
-
-  export type ConversationUpdateOneRequiredWithoutMessagesNestedInput = {
-    create?: XOR<ConversationCreateWithoutMessagesInput, ConversationUncheckedCreateWithoutMessagesInput>
-    connectOrCreate?: ConversationCreateOrConnectWithoutMessagesInput
-    upsert?: ConversationUpsertWithoutMessagesInput
-    connect?: ConversationWhereUniqueInput
-    update?: XOR<XOR<ConversationUpdateToOneWithWhereWithoutMessagesInput, ConversationUpdateWithoutMessagesInput>, ConversationUncheckedUpdateWithoutMessagesInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutScheduledMessagesInput, UserUpdateWithoutScheduledMessagesInput>, UserUncheckedUpdateWithoutScheduledMessagesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -15071,29 +15068,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ConversationCreateWithoutUserInput = {
+  export type ScheduledMessageCreateWithoutUserInput = {
     id?: string
-    title?: string
+    channel: string
+    recipient: string
+    message: string
+    subject?: string | null
+    username?: string | null
+    scheduledAt: Date | string
+    status?: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageCreateNestedManyWithoutConversationInput
+    sentAt?: Date | string | null
+    error?: string | null
   }
 
-  export type ConversationUncheckedCreateWithoutUserInput = {
+  export type ScheduledMessageUncheckedCreateWithoutUserInput = {
     id?: string
-    title?: string
+    channel: string
+    recipient: string
+    message: string
+    subject?: string | null
+    username?: string | null
+    scheduledAt: Date | string
+    status?: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
+    sentAt?: Date | string | null
+    error?: string | null
   }
 
-  export type ConversationCreateOrConnectWithoutUserInput = {
-    where: ConversationWhereUniqueInput
-    create: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput>
+  export type ScheduledMessageCreateOrConnectWithoutUserInput = {
+    where: ScheduledMessageWhereUniqueInput
+    create: XOR<ScheduledMessageCreateWithoutUserInput, ScheduledMessageUncheckedCreateWithoutUserInput>
   }
 
-  export type ConversationCreateManyUserInputEnvelope = {
-    data: ConversationCreateManyUserInput | ConversationCreateManyUserInput[]
+  export type ScheduledMessageCreateManyUserInputEnvelope = {
+    data: ScheduledMessageCreateManyUserInput | ScheduledMessageCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -15126,31 +15135,38 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"WorkFlow"> | Date | string | null
   }
 
-  export type ConversationUpsertWithWhereUniqueWithoutUserInput = {
-    where: ConversationWhereUniqueInput
-    update: XOR<ConversationUpdateWithoutUserInput, ConversationUncheckedUpdateWithoutUserInput>
-    create: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput>
+  export type ScheduledMessageUpsertWithWhereUniqueWithoutUserInput = {
+    where: ScheduledMessageWhereUniqueInput
+    update: XOR<ScheduledMessageUpdateWithoutUserInput, ScheduledMessageUncheckedUpdateWithoutUserInput>
+    create: XOR<ScheduledMessageCreateWithoutUserInput, ScheduledMessageUncheckedCreateWithoutUserInput>
   }
 
-  export type ConversationUpdateWithWhereUniqueWithoutUserInput = {
-    where: ConversationWhereUniqueInput
-    data: XOR<ConversationUpdateWithoutUserInput, ConversationUncheckedUpdateWithoutUserInput>
+  export type ScheduledMessageUpdateWithWhereUniqueWithoutUserInput = {
+    where: ScheduledMessageWhereUniqueInput
+    data: XOR<ScheduledMessageUpdateWithoutUserInput, ScheduledMessageUncheckedUpdateWithoutUserInput>
   }
 
-  export type ConversationUpdateManyWithWhereWithoutUserInput = {
-    where: ConversationScalarWhereInput
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutUserInput>
+  export type ScheduledMessageUpdateManyWithWhereWithoutUserInput = {
+    where: ScheduledMessageScalarWhereInput
+    data: XOR<ScheduledMessageUpdateManyMutationInput, ScheduledMessageUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type ConversationScalarWhereInput = {
-    AND?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-    OR?: ConversationScalarWhereInput[]
-    NOT?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-    id?: StringFilter<"Conversation"> | string
-    userId?: StringFilter<"Conversation"> | string
-    title?: StringFilter<"Conversation"> | string
-    createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
+  export type ScheduledMessageScalarWhereInput = {
+    AND?: ScheduledMessageScalarWhereInput | ScheduledMessageScalarWhereInput[]
+    OR?: ScheduledMessageScalarWhereInput[]
+    NOT?: ScheduledMessageScalarWhereInput | ScheduledMessageScalarWhereInput[]
+    id?: StringFilter<"ScheduledMessage"> | string
+    channel?: StringFilter<"ScheduledMessage"> | string
+    recipient?: StringFilter<"ScheduledMessage"> | string
+    message?: StringFilter<"ScheduledMessage"> | string
+    subject?: StringNullableFilter<"ScheduledMessage"> | string | null
+    username?: StringNullableFilter<"ScheduledMessage"> | string | null
+    scheduledAt?: DateTimeFilter<"ScheduledMessage"> | Date | string
+    status?: StringFilter<"ScheduledMessage"> | string
+    createdAt?: DateTimeFilter<"ScheduledMessage"> | Date | string
+    sentAt?: DateTimeNullableFilter<"ScheduledMessage"> | Date | string | null
+    error?: StringNullableFilter<"ScheduledMessage"> | string | null
+    userId?: StringFilter<"ScheduledMessage"> | string
   }
 
   export type UserCreateWithoutWorkflowsInput = {
@@ -15160,7 +15176,7 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    conversations?: ConversationCreateNestedManyWithoutUserInput
+    scheduledMessages?: ScheduledMessageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWorkflowsInput = {
@@ -15170,7 +15186,7 @@ export namespace Prisma {
     name?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
+    scheduledMessages?: ScheduledMessageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWorkflowsInput = {
@@ -15259,7 +15275,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUpdateManyWithoutUserNestedInput
+    scheduledMessages?: ScheduledMessageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWorkflowsInput = {
@@ -15269,7 +15285,7 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
+    scheduledMessages?: ScheduledMessageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TriggerNodesUpsertWithoutWorkflowInput = {
@@ -15771,7 +15787,7 @@ export namespace Prisma {
     meta?: JsonNullValueInput | InputJsonValue
   }
 
-  export type UserCreateWithoutConversationsInput = {
+  export type UserCreateWithoutScheduledMessagesInput = {
     id?: string
     email: string
     password: string
@@ -15781,7 +15797,7 @@ export namespace Prisma {
     workflows?: WorkFlowCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutConversationsInput = {
+  export type UserUncheckedCreateWithoutScheduledMessagesInput = {
     id?: string
     email: string
     password: string
@@ -15791,47 +15807,23 @@ export namespace Prisma {
     workflows?: WorkFlowUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutConversationsInput = {
+  export type UserCreateOrConnectWithoutScheduledMessagesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutConversationsInput, UserUncheckedCreateWithoutConversationsInput>
+    create: XOR<UserCreateWithoutScheduledMessagesInput, UserUncheckedCreateWithoutScheduledMessagesInput>
   }
 
-  export type MessageCreateWithoutConversationInput = {
-    id?: string
-    role: string
-    content: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
-  export type MessageUncheckedCreateWithoutConversationInput = {
-    id?: string
-    role: string
-    content: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
-  export type MessageCreateOrConnectWithoutConversationInput = {
-    where: MessageWhereUniqueInput
-    create: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput>
-  }
-
-  export type MessageCreateManyConversationInputEnvelope = {
-    data: MessageCreateManyConversationInput | MessageCreateManyConversationInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithoutConversationsInput = {
-    update: XOR<UserUpdateWithoutConversationsInput, UserUncheckedUpdateWithoutConversationsInput>
-    create: XOR<UserCreateWithoutConversationsInput, UserUncheckedCreateWithoutConversationsInput>
+  export type UserUpsertWithoutScheduledMessagesInput = {
+    update: XOR<UserUpdateWithoutScheduledMessagesInput, UserUncheckedUpdateWithoutScheduledMessagesInput>
+    create: XOR<UserCreateWithoutScheduledMessagesInput, UserUncheckedCreateWithoutScheduledMessagesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutConversationsInput = {
+  export type UserUpdateToOneWithWhereWithoutScheduledMessagesInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutConversationsInput, UserUncheckedUpdateWithoutConversationsInput>
+    data: XOR<UserUpdateWithoutScheduledMessagesInput, UserUncheckedUpdateWithoutScheduledMessagesInput>
   }
 
-  export type UserUpdateWithoutConversationsInput = {
+  export type UserUpdateWithoutScheduledMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -15841,7 +15833,7 @@ export namespace Prisma {
     workflows?: WorkFlowUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutConversationsInput = {
+  export type UserUncheckedUpdateWithoutScheduledMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -15849,81 +15841,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workflows?: WorkFlowUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
-    where: MessageWhereUniqueInput
-    update: XOR<MessageUpdateWithoutConversationInput, MessageUncheckedUpdateWithoutConversationInput>
-    create: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput>
-  }
-
-  export type MessageUpdateWithWhereUniqueWithoutConversationInput = {
-    where: MessageWhereUniqueInput
-    data: XOR<MessageUpdateWithoutConversationInput, MessageUncheckedUpdateWithoutConversationInput>
-  }
-
-  export type MessageUpdateManyWithWhereWithoutConversationInput = {
-    where: MessageScalarWhereInput
-    data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutConversationInput>
-  }
-
-  export type MessageScalarWhereInput = {
-    AND?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    OR?: MessageScalarWhereInput[]
-    NOT?: MessageScalarWhereInput | MessageScalarWhereInput[]
-    id?: StringFilter<"Message"> | string
-    conversationId?: StringFilter<"Message"> | string
-    role?: StringFilter<"Message"> | string
-    content?: JsonFilter<"Message">
-    createdAt?: DateTimeFilter<"Message"> | Date | string
-  }
-
-  export type ConversationCreateWithoutMessagesInput = {
-    id?: string
-    title?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutConversationsInput
-  }
-
-  export type ConversationUncheckedCreateWithoutMessagesInput = {
-    id?: string
-    userId: string
-    title?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ConversationCreateOrConnectWithoutMessagesInput = {
-    where: ConversationWhereUniqueInput
-    create: XOR<ConversationCreateWithoutMessagesInput, ConversationUncheckedCreateWithoutMessagesInput>
-  }
-
-  export type ConversationUpsertWithoutMessagesInput = {
-    update: XOR<ConversationUpdateWithoutMessagesInput, ConversationUncheckedUpdateWithoutMessagesInput>
-    create: XOR<ConversationCreateWithoutMessagesInput, ConversationUncheckedCreateWithoutMessagesInput>
-    where?: ConversationWhereInput
-  }
-
-  export type ConversationUpdateToOneWithWhereWithoutMessagesInput = {
-    where?: ConversationWhereInput
-    data: XOR<ConversationUpdateWithoutMessagesInput, ConversationUncheckedUpdateWithoutMessagesInput>
-  }
-
-  export type ConversationUpdateWithoutMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutConversationsNestedInput
-  }
-
-  export type ConversationUncheckedUpdateWithoutMessagesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WorkFlowCreateManyUserInput = {
@@ -15935,11 +15852,18 @@ export namespace Prisma {
     deletedAt?: Date | string | null
   }
 
-  export type ConversationCreateManyUserInput = {
+  export type ScheduledMessageCreateManyUserInput = {
     id?: string
-    title?: string
+    channel: string
+    recipient: string
+    message: string
+    subject?: string | null
+    username?: string | null
+    scheduledAt: Date | string
+    status?: string
     createdAt?: Date | string
-    updatedAt?: Date | string
+    sentAt?: Date | string | null
+    error?: string | null
   }
 
   export type WorkFlowUpdateWithoutUserInput = {
@@ -15975,27 +15899,46 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type ConversationUpdateWithoutUserInput = {
+  export type ScheduledMessageUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUpdateManyWithoutConversationNestedInput
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ConversationUncheckedUpdateWithoutUserInput = {
+  export type ScheduledMessageUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ConversationUncheckedUpdateManyWithoutUserInput = {
+  export type ScheduledMessageUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ActionNodesCreateManyWorkflowInput = {
@@ -16098,34 +16041,6 @@ export namespace Prisma {
     workflowId?: StringFieldUpdateOperationsInput | string
     metadata?: JsonNullValueInput | InputJsonValue
     sortingOrder?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MessageCreateManyConversationInput = {
-    id?: string
-    role: string
-    content: JsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-  }
-
-  export type MessageUpdateWithoutConversationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    content?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MessageUncheckedUpdateWithoutConversationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    content?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MessageUncheckedUpdateManyWithoutConversationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
-    content?: JsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

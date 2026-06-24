@@ -23,7 +23,7 @@ const fullWorkflowInclude = {
 // ────────────────────────────────────────────────────────────────────
 nodeRouter.post("/", authMiddleware, async (req, res) => {
   const parsedData = nodeCreateSchema.safeParse(req.body);
-  const id: string = req.user?.id;
+  const id: string = req.user!.id;
 
   if (!parsedData.success) {
     return res.status(400).json({
@@ -78,7 +78,7 @@ nodeRouter.post("/", authMiddleware, async (req, res) => {
 // GET / — List all active workflows for the user
 // ────────────────────────────────────────────────────────────────────
 nodeRouter.get("/", authMiddleware, async (req, res) => {
-  const id: string = req.user?.id;
+  const id: string = req.user!.id;
   try {
     const workFlows = await prismaClient.workFlow.findMany({
       where: activeWorkflowScope(id),
@@ -97,7 +97,7 @@ nodeRouter.get("/", authMiddleware, async (req, res) => {
 // GET /:workFlowId — Get a single active workflow
 // ────────────────────────────────────────────────────────────────────
 nodeRouter.get("/:workFlowId", authMiddleware, async (req, res) => {
-  const id: string = req.user?.id;
+  const id: string = req.user!.id;
   const workFlowId = req.params.workFlowId;
 
   try {
@@ -121,7 +121,7 @@ nodeRouter.get("/:workFlowId", authMiddleware, async (req, res) => {
 // PUT /:workFlowId — Edit workflow (name, nodes, edges, metadata)
 // ────────────────────────────────────────────────────────────────────
 nodeRouter.put("/:workFlowId", authMiddleware, async (req, res) => {
-  const userId: string = req.user?.id;
+  const userId: string = req.user!.id;
   const workFlowId = req.params.workFlowId as string;
 
   const parsedData = workflowUpdateSchema.safeParse(req.body);
@@ -143,6 +143,20 @@ nodeRouter.put("/:workFlowId", authMiddleware, async (req, res) => {
 
     if (!existing) {
       return res.status(404).json({ error: "Workflow not found" });
+    }
+
+    // Reject triggerMeta when there is no trigger to attach it to and no
+    // availableTriggerId to create one — otherwise the metadata is silently
+    // dropped while the API still returns 200.
+    if (
+      triggerMeta !== undefined &&
+      availableTriggerId === undefined &&
+      !existing.triggerNodes
+    ) {
+      return res.status(400).json({
+        error:
+          "Cannot set triggerMeta: workflow has no trigger. Provide availableTriggerId to create one.",
+      });
     }
 
     const updatedWorkflow = await prismaClient.$transaction(async (tx) => {
@@ -223,7 +237,7 @@ nodeRouter.put("/:workFlowId", authMiddleware, async (req, res) => {
 // DELETE /:workFlowId — Soft-delete workflow
 // ────────────────────────────────────────────────────────────────────
 nodeRouter.delete("/:workFlowId", authMiddleware, async (req, res) => {
-  const id: string = req.user?.id;
+  const id: string = req.user!.id;
   const workFlowId = req.params.workFlowId;
 
   try {
@@ -252,7 +266,7 @@ nodeRouter.delete("/:workFlowId", authMiddleware, async (req, res) => {
 // POST /:workFlowId/execute — Trigger manual execution
 // ────────────────────────────────────────────────────────────────────
 nodeRouter.post("/:workFlowId/execute", authMiddleware, async (req, res) => {
-  const id: string = req.user?.id;
+  const id: string = req.user!.id;
   const workFlowId = req.params.workFlowId;
 
   try {

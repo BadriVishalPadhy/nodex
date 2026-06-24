@@ -6,4 +6,5 @@ dist
 *.md
 .env*
 .turbo
-certs
+certs/
+*.save

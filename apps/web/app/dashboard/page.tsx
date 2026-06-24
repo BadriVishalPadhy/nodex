@@ -14,7 +14,7 @@ import {
   RefreshCw,
   Calendar,
   LogOut,
-  Sparkles,
+
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -46,7 +46,7 @@ interface Workflow {
   triggerId: string;
   userId: string;
   actionsNodes: ActionNode[];
-  triggerNodes: TriggerNode;
+  triggerNodes: TriggerNode | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -124,9 +124,20 @@ export default function Dashboard() {
 
   const handleCreateWorkflow = () => router.push("/workflow/create");
 
-  const handleLogout = () => {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    router.push("/signin");
+  const handleLogout = async () => {
+    // The auth token is an httpOnly cookie, so JS cannot clear it — the server
+    // must expire it. Always navigate away even if the request fails.
+    try {
+      await axios.post(
+        `${API_BASE_URL}/api/v1/user/signout`,
+        {},
+        { withCredentials: true },
+      );
+    } catch {
+      // ignore network error; still navigate away
+    } finally {
+      router.push("/signin");
+    }
   };
 
   // ── Loading State ──────────────────────────────────────────────────
@@ -206,13 +217,7 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => router.push("/agent")}
-              className="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white rounded-xl transition-all flex items-center gap-2 font-medium shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] active:scale-[0.98] text-sm"
-            >
-              <Sparkles className="w-4 h-4" />
-              AI Agent
-            </button>
+
             <button
               onClick={handleCreateWorkflow}
               className="px-5 py-2.5 bg-white hover:bg-neutral-200 text-black rounded-xl transition-all flex items-center gap-2 font-medium shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] text-sm"
@@ -283,7 +288,10 @@ function WorkflowCard({
   const [copied, setCopied] = useState(false);
   const webhookUrl =
     typeof window !== "undefined"
-      ? `${window.location.hostname}:4000/hooks/catch/${workflow.userId}/${workflow.id}`
+      ? `${
+          process.env.NEXT_PUBLIC_WEBHOOK_URL ||
+          `${window.location.protocol}//${window.location.hostname}:4000`
+        }/hooks/catch/${workflow.userId}/${workflow.id}`
       : "";
 
   const handleCopyWebhook = () => {
@@ -352,7 +360,7 @@ function WorkflowCard({
               <Zap className="w-6 h-6 text-white" />
             </div>
             <span className="text-[10px] text-neutral-500 truncate max-w-[70px] text-center">
-              {workflow.triggerNodes.type.name}
+              {workflow.triggerNodes ? workflow.triggerNodes.type.name : "No trigger"}
             </span>
           </div>
 
